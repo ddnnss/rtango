@@ -1,0 +1,94 @@
+{% extends 'basic.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container main-container headerOffset globalPaddingBottom">
+      <div class="row">
+        <div class="breadcrumbDiv col-lg-12">
+            <ul class="breadcrumb">
+                <li><a href="/">ГЛАВНАЯ</a></li>
+                <li><a href="{% url 'account' %}">ЛИЧНЫЙ КАБИНЕТ</a></li>
+                <li class="active">ПЕРСОНАЛЬНЫЕ ДАННЫЕ</li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-9 col-md-9 col-sm-7">
+
+            <div class="row userInfo">
+                <div class="col-lg-12">
+                    <h2 class="block-title-2"> Заполнение всех полей обязательно для формирования заказа.</h2>
+{{ form.errors }}
+                </div>
+                <form action="{% url 'account_edit' %}" method="post">{% csrf_token %}
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="form-group required">
+                            <label for="InputName">Ваше имя <sup>*</sup> </label>
+                            <input required="required" name="{{ form.name.name }}" type="text" class="form-control"  placeholder="Ваше имя" value="{% if not client.name %}{% else %}{{ client.name }}{% endif %}">
+                        </div>
+                       <div class="form-group required">
+                            <label for="InputName">Ваша фамилия <sup>*</sup> </label>
+                            <input required="required" name="{{ form.family.name }}" type="text" class="form-control"  placeholder="Ваша фамилия" value="{% if not client.family %}{% else %}{{ client.family }}{% endif %}">
+                        </div>
+                    <div class="form-group required">
+                            <label for="InputName">Ваше отчество  </label>
+                            <input  name="{{ form.otchestvo.name }}" type="text" class="form-control"  placeholder="Ваше отчество" value="{% if not client.otchestvo %}{% else %}{{ client.otchestvo }}{% endif %}">
+                        </div>
+                        <div class="form-group required">
+                            <label for="InputEmail">Ваш E-Mail <sup>*</sup></label>
+                            <input type="email" required="required" name="{{ form.email.name }}" class="form-control"  placeholder="Ваш E-Mail" value="{{ client.email }}">
+                        </div>
+                     <div class="form-group required">
+                            <label for="InputEmail">Ваш телефон <sup>*</sup></label>
+                            <input type="tel" required="required" name="{{ form.phone.name }}" class="form-control"  placeholder="Ваш телефон" value="{% if not client.phone %}{% else %}{{ client.phone }}{% endif %}">
+                        </div>
+
+                    </div>
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="form-group required">
+                            <label for="InputEmail">Страна <sup>*</sup></label>
+                            <input type="tel" required="required" name="{{ form.country.name }}" class="form-control"  placeholder="Страна" value="{% if not client.country %}{% else %}{{ client.country }}{% endif %}">
+                        </div>
+                         <div class="form-group required">
+                            <label for="InputEmail">Город <sup>*</sup></label>
+                            <input type="tel" required="required" name="{{ form.city.name }}" class="form-control"  placeholder="Город" value="{% if not client.city %}{% else %}{{ client.city }}{% endif %}">
+                        </div>
+                         <div class="form-group required">
+                            <label for="InputEmail">Индекс <sup>*</sup></label>
+                            <input type="tel" required="required" name="{{ form.post_code.name }}" class="form-control"  placeholder="Индекс" value="{% if not client.post_code %}{% else %}{{ client.post_code }}{% endif %}">
+                        </div>
+                         <div class="form-group required">
+                            <label for="InputEmail">Адрес доставки <sup>*</sup></label>
+                             <textarea required="required" name="{{ form.address.name }}" class="form-control" rows="5"  placeholder="Адрес доставки">{% if not client.address %}{% else %}{{ client.address }}{% endif %}</textarea>
+                        </div>
+
+
+
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group ">
+
+                                <div class="icheckbox_square-green iCheck-margin" style="position: relative;">
+                            <input type="checkbox" {% if client.is_allow_email %}checked="checked"{% endif %}  name="{{ form.is_allow_email.name }}" id="is_allow_email" style="position: absolute; opacity: 0;">
+                             </div>
+                                <label for="is_allow_email">Вы хотите получать E-Mail рассылку с предложениями и скидками ?</label>
+
+
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <button type="submit" class="btn   btn-primary"><i class="fa fa-save"></i> &nbsp; Сохранить</button>
+                    </div>
+                </form>
+
+            </div>
+            <!--/row end-->
+
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-5"></div>
+    </div>
+    <!--/row-->
+
+    <div style="clear:both"></div>
+</div>
+{% endblock%}

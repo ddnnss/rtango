@@ -1,0 +1,162 @@
+{% extends 'basic.html' %}
+{% load static %}
+
+{% block content %}
+
+  <div class="breadcrumb-area gray-bg">
+            <div class="container">
+                <div class="breadcrumb-content">
+                    <ul>
+                        <li><a href="/">Главная</a></li>
+                        <li class="active">{{ category.name }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="shop-page-area pt-75 pb-75">
+            <div class="container">
+                <div class="row flex-row-reverse">
+                    <div class="col-lg-9">
+                        <div class="banner-area pb-30">
+                            <a href="product-details.html"><img alt="" src="assets/img/banner/banner-49.jpg"></a>
+                        </div>
+                        <div class="shop-topbar-wrapper">
+                            <div class="shop-topbar-left">
+                                <ul class="view-mode">
+                                    <li class="active"><a href="#product-grid" data-view="product-grid"><i class="fa fa-th"></i></a></li>
+                                    <li><a href="#product-list" data-view="product-list"><i class="fa fa-list-ul"></i></a></li>
+                                </ul>
+{#                                <p>Showing 1 - 20 of 30 results  </p>#}
+                            </div>
+                            <div class="product-sorting-wrapper">
+                                <div class="product-shorting shorting-style">
+                                    <label>Показывать по:</label>
+                                    <select>
+                                        <option value=""> 9</option>
+                                        <option value=""> 15</option>
+                                        <option value=""> 21</option>
+                                    </select>
+                                </div>
+                                <div class="product-show shorting-style">
+                                    <label>Сортировать по:</label>
+                                    <select>
+                                        <option value="">Цене -</option>
+                                        <option value="">Цене +</option>
+                                        <option value=""> Названию (А-Я)</option>
+                                        <option value=""> Названию (Я-А)</option>
+                                        <option value=""> Новинки</option>
+                                        <option value=""> Со скидкой</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid-list-product-wrapper">
+                            <div class="product-grid product-view pb-20">
+                                <div class="row">
+                                    {% for item in items %}
+                                        {% include 'page/item_card.html' %}
+                                    {% endfor %}
+
+                                </div>
+                            </div>
+                            <div class="pagination-total-pages">
+                                <div class="pagination-style">
+                                    <ul>
+                                        <li><a class="prev-next prev" href="#"><i class="ion-ios-arrow-left"></i> Prev</a></li>
+                                        <li><a class="active" href="#">1</a></li>
+                                        <li><a href="#">2</a></li>
+                                        <li><a href="#">3</a></li>
+                                        <li><a href="#">...</a></li>
+                                        <li><a href="#">10</a></li>
+                                        <li><a class="prev-next next" href="#">Next<i class="ion-ios-arrow-right"></i> </a></li>
+                                    </ul>
+                                </div>
+                                <div class="total-pages">
+                                    <p>Showing 1 - 20 of 30 results  </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="shop-sidebar-wrapper gray-bg-7 shop-sidebar-mrg">
+                            <div class="shop-widget">
+                                <h4 class="shop-sidebar-title">Все категории</h4>
+                                <div class="shop-catigory">
+                                    <ul id="faq">
+                                        {% for cat in all_cat %}
+                                        <li> <a data-toggle="collapse" data-parent="#faq" href="#cat-{{ cat.id }}">{{ cat.name }} <i class="ion-ios-arrow-down"></i></a>
+                                            <ul id="cat-{{ cat.id }}" class="panel-collapse collapse {% if cat.id == category.id %}show{% endif %}">
+                                                <li><a href="{% url 'category' cat.name_slug %}"><strong>Все предложения</strong></a></li>
+                                             {% for filter in cat.filters.all %}
+                                                            <li><a href="about-us.html">{{ filter.name }}</a></li>
+                                                        {% endfor %}
+
+                                            </ul>
+                                        </li>
+                                        {% endfor %}
+{#                                        <li> <a href="#">Custom Orders</a></li>#}
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="shop-price-filter mt-40 shop-sidebar-border pt-35">
+                                <h4 class="shop-sidebar-title">Фильтр по цене</h4>
+                                <div class="price_filter mt-25">
+{#                                    <span>Range:  $100.00 - 1.300.00 </span>#}
+                                    <div id="slider-range"></div>
+                                    <div class="price_slider_amount">
+                                        <div class="label-input">
+                                            <input type="text" id="amount" name="price" disabled   />
+                                        </div>
+                                        <button type="button">Показать</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="shop-widget mt-40 shop-sidebar-border pt-35">
+                                <h4 class="shop-sidebar-title">Фильтр 1</h4>
+                                <div class="sidebar-list-style mt-20">
+                                    <ul>
+                                        <li><input type="checkbox"><a href="#">Фильтр 1 </a></li>
+                                        <li><input type="checkbox"><a href="#">Фильтр 1 </a></li>
+                                        <li><input type="checkbox"><a href="#">Фильтр 1 </a></li>
+                                        <li><input type="checkbox"><a href="#">Фильтр 1 </a></li>
+                                        <li><input type="checkbox"><a href="#">Фильтр 1 </a></li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="shop-widget mt-40 shop-sidebar-border pt-35">
+                                <h4 class="shop-sidebar-title">Фильтр 2</h4>
+                                <div class="sidebar-list-style mt-20">
+                                    <ul>
+                                        <li><input type="checkbox"><a href="#">Фильтр 2 </a></li>
+                                        <li><input type="checkbox"><a href="#">Фильтр 2 </a></li>
+                                        <li><input type="checkbox"><a href="#">Фильтр 2 </a></li>
+                                        <li><input type="checkbox"><a href="#">Фильтр 2 </a></li>
+                                        <li><input type="checkbox"><a href="#">Фильтр 2</a></li>
+                                        <li><input type="checkbox"><a href="#">Фильтр 2  </a></li>
+                                        <li><input type="checkbox"><a href="#">Фильтр 2   </a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="shop-widget mt-40 shop-sidebar-border pt-35">
+                                <h4 class="shop-sidebar-title">Популярные категории</h4>
+                                <div class="shop-tags mt-25">
+                                    <ul>
+                                        <li><a href="#">Категория 1</a></li>
+                                        <li><a href="#">Категория 2</a></li>
+                                        <li><a href="#">Категория 3</a></li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+{% endblock %}

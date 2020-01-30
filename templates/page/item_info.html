@@ -1,0 +1,88 @@
+{% load static %}
+
+<div class="item col-sm-3 col-lg-3 col-md-3 col-xs-6">
+    <div class="product">
+        {% if item.id in wishlist_ids %}
+            <a style="background-color: #ff3a72;" onclick="return false;" data-placement="left" data-original-title="Add to Wishlist" data-toggle="tooltip" class="add-fav tooltipHere">
+                <i  class="glyphicon glyphicon-heart"></i>
+            </a>
+        {% else %}
+            <a onclick="wishlist_add({{ item.id }});return false;" data-placement="left" data-original-title="Add to Wishlist" data-toggle="tooltip" class="add-fav tooltipHere">
+                <i  class="glyphicon glyphicon-heart-empty"></i>
+            </a>
+        {% endif %}
+        <div class="image">
+            <div class="quickview">
+                <a data-toggle="modal" class="btn btn-xs btn-quickview" href="#" onclick="quick_view({{ item.id }});return false">БЫСТРЫЙ ПРОСМОТР </a>
+            </div>
+            <a href="{% url 'item_page' item.name_slug %}"><img class="img-responsive watermark_test" alt="img"
+                    {% for image in item.itemimage_set.all %}
+                        {% if image.is_main %}
+                           src="{{ image.image_small }}">
+                        {% endif %}
+                    {% endfor %}
+
+            </a>
+            <div class="promotion">
+                {% if item.is_new %}
+                    <span class="new-product" style="background-color: #F2486E !important;"> НОВИНКА</span>
+                {% endif %}
+                {% if item.discount > 0 %}
+                    <span class="discount" style="background-color: #D33061 !important;">- {{ item.discount }}% </span>
+                {% endif %}
+                {% if item.is_reserved %}
+                    <span class="new-product" style="background-color: #A839A8 !important;"> РЕЗЕРВ</span>
+                {% endif %}
+            </div>
+        </div>
+        <div class="description" style="padding-top: 5px;">
+            <div style="height: 60px; padding-bottom: 10px;">
+                <a style="text-decoration: none; font-size: 16px; font-weight: bold;" href="{% url 'item_page' item.name_slug %}"> {{ item.name }}</a>
+            </div>
+            <div class="grid-description" style="height: 20px;">
+                <p style="padding-top: 10px;" > АРТИКУЛ : {{ item.article }}</p>
+            </div>
+            {#                            <span class="size">XL / XXL / S </span>#}
+        </div>
+        {#                    {{ item.filter }}#}
+        {#                    {{ item.collection.all.first }}#}
+        {% if item.discount > 0 %}
+
+            <div class="price" style="padding-bottom: 5px;">
+                <span style="font-size: 20px;">
+                    <span>{{ item.discount_value }} &#8381;</span>
+                    <span class="old-price">{{ item.price }} &#8381;</span>
+                </span>
+            </div>
+        {% else %}
+            <div class="price" style="padding-bottom: 5px;"><span style="font-size: 20px;">{{ item.price }} &#8381;</span></div>
+        {% endif %}
+        <div class="action-control">
+            <form action="{% url 'add_to_cart' %}"   method="post"
+                  onsubmit="add_to_cart(this,{{ item.id }});return false;">{% csrf_token %}
+                <div style="display: inline-flex;" class="row">
+                    {% if item.is_present %}
+                        <div class="col-lg-offset-1 col-lg-4 col-sm-6">
+                            <input class="form-control" type="number" id="{{ item.id }}_items_number" min="1"  value="1" >
+                        </div>
+                        <div class=" col-lg-2 col-sm-6">
+                            <button type="submit" class="btn btn-primary" id="{{ item.id }}_submit"
+                                    data-item_id="{{ item.id }}"
+                                    data-item_name="{{ item.name }}"
+                                    data-item_price="{{ item.price }}"
+                                    data-item_image="{{ item.itemimage_set.first.image_small }}">
+                                <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> В КОРЗИНУ </span>
+                            </button>
+                        </div>
+                    {% else %}
+                        <strong>НЕТ В НАЛИЧИИ</strong>
+                    {% endif %}
+                </div>
+            </form>
+
+        </div>
+        {% if request.user.is_staff %}
+            <a class="btn btn-xs btn-danger" href="/admin/item/item/{{ item.id }}/change/" target="_blank"> РЕДАКТИРОВАТЬ</a>
+        {% endif %}
+    </div>
+</div>

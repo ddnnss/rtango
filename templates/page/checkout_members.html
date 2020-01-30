@@ -1,0 +1,147 @@
+{% load static %}
+<div class="container main-container headerOffset">
+    <div class="row">
+        <div class="breadcrumbDiv col-lg-12">
+            <ul class="breadcrumb">
+                <li><a href="/">ГЛАВНАЯ</a></li>
+                <li><a href="{% url 'show_cart' %}">КОРЗИНА</a></li>
+                <li class="active"> ОФОРМЛЕНИЕ ЗАКАЗА</li>
+            </ul>
+        </div>
+    </div>
+    <!--/.row-->
+
+
+    <div class="row ">
+
+        <div class="col-lg-9 col-md-9 col-sm-7 col-xs-6 col-xxs-12">
+
+            <h3 class="boxes-title-1"><span>ИНФОРМАЦИЯ О ПОКУПАТЕЛЕ</span></h3>
+
+
+
+
+{{ form.errors }}
+
+                <form action="{% url 'checkout' %}" method="post">{% csrf_token %}
+ <div class="row userInfo">
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="form-group required">
+                            <label for="InputName">Ваше имя <sup>*</sup> </label>
+                            <input oninput="checkout_form_change();" required="required" name="{{ form.name.name }}" type="text" class="form-control"  placeholder="Ваше имя" value="{% if not client.name %}{% else %}{{ client.name }}{% endif %}">
+                        </div>
+                       <div class="form-group required">
+                            <label for="InputName">Ваша фамилия <sup>*</sup> </label>
+                            <input oninput="checkout_form_change();" required="required" name="{{ form.family.name }}" type="text" class="form-control"  placeholder="Ваша фамилия" value="{% if not client.family %}{% else %}{{ client.family }}{% endif %}">
+                        </div>
+                    <div class="form-group required">
+                            <label for="InputName">Ваше отчество  </label>
+                            <input oninput="checkout_form_change();"  name="{{ form.otchestvo.name }}" type="text" class="form-control"  placeholder="Ваше отчество" value="{% if not client.otchestvo %}{% else %}{{ client.otchestvo }}{% endif %}">
+                        </div>
+                        <div class="form-group required">
+                            <label for="InputEmail">Ваш E-Mail <sup>*</sup></label>
+                            <input oninput="checkout_form_change();" type="email" required="required" name="{{ form.email.name }}" class="form-control"  placeholder="Ваш E-Mail" value="{{ client.email }}">
+                        </div>
+                     <div class="form-group required">
+                            <label for="InputEmail">Ваш телефон <sup>*</sup></label>
+                            <input oninput="checkout_form_change();" type="tel" required="required" name="{{ form.phone.name }}" class="form-control"  placeholder="Ваш телефон" value="{% if not client.phone %}{% else %}{{ client.phone }}{% endif %}">
+                        </div>
+
+                    </div>
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="form-group required">
+                            <label for="InputEmail">Страна <sup>*</sup></label>
+                            <input oninput="checkout_form_change();" type="text" required="required" name="{{ form.country.name }}" class="form-control"  placeholder="Страна" value="{% if not client.country %}{% else %}{{ client.country }}{% endif %}">
+                        </div>
+                         <div class="form-group required">
+                            <label for="InputEmail">Город <sup>*</sup></label>
+                            <input oninput="checkout_form_change();" type="text" required="required" name="{{ form.city.name }}" class="form-control"  placeholder="Город" value="{% if not client.city %}{% else %}{{ client.city }}{% endif %}">
+                        </div>
+                         <div class="form-group required">
+                            <label for="InputEmail">Индекс <sup>*</sup></label>
+                            <input oninput="checkout_form_change();" type="number" required="required" name="{{ form.post_code.name }}" class="form-control"  placeholder="Индекс" value="{% if not client.post_code %}{% else %}{{ client.post_code }}{% endif %}">
+                        </div>
+                         <div class="form-group required">
+                            <label for="InputEmail">Адрес доставки <sup>*</sup></label>
+                             <textarea oninput="checkout_form_change();" required="required" name="{{ form.address.name }}" class="form-control" rows="5"  placeholder="Адрес доставки">{% if not client.address %}{% else %}{{ client.address }}{% endif %}</textarea>
+                        </div>
+
+
+
+                    </div>
+                        <input type="hidden" name="form_type" value="user_info">
+
+                      <div class="col-lg-12">
+                        <button id="checkout_user_info_btn"  style="display: none;"  type="submit" class="btn   btn-primary"><i class="fa fa-save"></i> &nbsp; Сохранить изменения</button>
+                    </div>
+   </div>
+                </form>
+
+
+         <form action="{% url 'checkout' %}" method="post">{% csrf_token %}
+
+
+         <h3 class="boxes-title-1"><span>СПОСОБ ДОСТАВКИ ТОВАРА</span></h3>
+            {% for ship in shipping %}
+            <label class="radio">
+                <input type="radio" name="shipping"
+                       id="optionsRadios{{ ship.id }}" value="{{ ship.id }}" required="required">
+            {{ ship.name }}
+            </label>
+            {% endfor %}
+
+
+        <h3 class="boxes-title-1"><span>СПОСОБ ОПЛАТЫ ТОВАРА</span></h3>
+         {% for pay in payment %}
+            <label class="radio">
+                <input type="radio" name="payment"
+                       id="optionsRadios{{ pay.id }}{{ pay.id }}" value="{{ pay.id }}" required="required">
+            {{ pay.name }}
+            </label>
+            {% endfor %}
+            <input type="hidden" name="form_type" value="checkout">
+                {% if client.profile_ok %}
+                        <button id="checkout_btn"   type="submit" class="btn   btn-primary"><i class="fa fa-save"></i> &nbsp; ОФОРМИТЬ ЗАКАЗ</button>
+                {% else %}
+                    <div class="cartFooter w100 site-color"><strong>Ваш профиль заполнен не полностью. Проверьте Ваши данные <a class="link" href="{% url 'account_edit' %}">ТУТ</a> </strong> </div>
+                {% endif %}
+</form>
+            </div>
+            <!--/row end-->
+   <div class="col-lg-3 col-md-3 col-sm-5 rightSidebar col-xs-6 col-xxs-12 ">
+           <div class="w100 cartMiniTable">
+                            <table id="cart-summary" class="std table">
+                                <tbody>
+                                <tr>
+                                    <td style="vertical-align: middle;" width="40%">Общая стоимость :</td>
+                                    <td style="vertical-align: middle;" id="cart_subtotal_price_side" class="price">{{ total_cart_price }} &#8381;</td>
+                                </tr>
+
+                                <tr class="cart-total-price ">
+                                    <td style="vertical-align: middle;">Скидка по промо-коду :</td>
+                                    <td style="vertical-align: middle;" id="promo_value" class="price">{{ promo_discount_value }} %</td>
+                                </tr>
+
+                                <tr>
+                                    <td style="vertical-align: middle;"> ИТОГО</td>
+                                    <td style="font-size: 30px; font-weight: 600; vertical-align: middle;" class="site-color" id="cart_total_price_side">{{ total_cart_price_with_discount }} &#8381;</td>
+                                </tr>
+
+                                </tbody>
+
+                            </table>
+                        </div>
+            <!--  /cartMiniTable-->
+
+        </div>
+        </div>
+
+        <!--/rightSidebar-->
+
+    </div>
+    <!--/row-->
+
+    <div style="clear:both"></div>
+</div>
+<!-- /.main-container-->
+<div class="gap"></div>

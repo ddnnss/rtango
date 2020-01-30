@@ -1,0 +1,161 @@
+{% extends 'basic.html' %}
+{% load static %}
+
+{% block content %}
+
+<!DOCTYPE html>
+
+
+<div class="container main-container headerOffset">
+      <div class="row">
+        <div class="breadcrumbDiv col-lg-12">
+            <ul class="breadcrumb">
+                <li><a href="/">ГЛАВНАЯ</a></li>
+                <li><a href="{% url 'account' %}">ЛИЧНЫЙ КАБИНЕТ</a></li>
+                 <li><a href="{% url 'orders' %}">ВАШИ ЗАКАЗЫ</a></li>
+                <li class="active">ЗАКАЗ #{{ order.id }} ID:{{ order.order_code }}</li>
+            </ul>
+        </div>
+    </div>
+
+
+
+    <div class="row">
+        <div class="col-lg-9 col-md-9 col-sm-7">
+
+            <div class="row userInfo">
+
+
+                <div class="statusContent">
+
+
+                    <div class="col-sm-12">
+                        <div class=" statusTop">
+                            <p><strong>Статус заказа:</strong> {% if order.status %}{{ order.status.name }}{% else %}Обработка{% endif %}</p>
+
+                            <p><strong>Дата заказа:</strong> {{ order.created_at|date:"D, d M Y, H:i" }} </p>
+
+                            <p><strong>Номер и ID заказа:</strong> #{{ order.id }} ID:{{ order.order_code }} </p>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 clearfix">
+                        <div class="order-box">
+                            <div class="order-box-header">
+
+                                В заказе
+                            </div>
+
+
+                            <div class="order-box-content">
+                                <div class="table-responsive">
+                                    <table class="order-details-cart">
+                                        <tbody>
+                                        {% for item in order.itemsinorder_set.all %}
+                                        <tr class="cartProduct">
+                                            <td class="cartProductThumb" style="width:20%">
+                                                <div><a href="{% url 'item_page' item.item.name_slug %}"> <img alt="img"
+                                                        {% for image in item.item.itemimage_set.all %}
+                                                            {% if image.is_main %}
+                                                               src="{{ image.image_small }}
+                                                            {% endif %}
+                                                        {% endfor %}">
+                                                </a>
+                                                </div>
+                                            </td>
+                                            <td style="width:40%">
+                                                <div class="miniCartDescription">
+                                                    <h4><a href="{% url 'item_page' item.item.name_slug %}"> {{ item.item.name }} </a></h4>
+
+                                                    {% if item.item.discount > 0 %}
+
+                                                        <div class="price" style="padding-bottom: 5px;">
+                                                         <span style="font-size: 20px;">
+                                                             <span>{{ item.item.discount_value }} &#8381;</span>
+                                                             <span class="old-price">{{ item.item.price }} &#8381;</span>
+                                                         </span>
+                                                        </div>
+                                                    {% else %}
+                                                        <div class="price" style="padding-bottom: 5px;"><span style="font-size: 20px;">{{ item.item.price }} &#8381;</span></div>
+                                                    {% endif %}
+                                                </div>
+                                            </td>
+                                            <td class="" style="width:10%"><a> X {{ item.number }} ед.</a></td>
+                                            <td class="" style="width:15%"><span> {{ item.total_price }} &#8381;</span></td>
+
+                                        </tr>
+                                        {% endfor %}
+
+                                        <tr class="cartTotalTr blank">
+                                            <td class="" style="width:20%">
+                                                <div></div>
+                                            </td>
+                                            <td style="width:40%"></td>
+                                            <td class="" style="width:20%"></td>
+                                            <td class="" style="width:15%"><span>  </span></td>
+
+                                        </tr>
+
+                                        <tr class="cartTotalTr">
+                                            <td class="" style="width:20%">
+                                                <div></div>
+                                            </td>
+                                            <td colspan="2" style="width:40%">Общая сумма</td>
+                                            <td class="" style="width:15%"><span> {{ order.total_price }} &#8381;</span></td>
+
+                                        </tr>
+                                        <tr class="cartTotalTr">
+                                            <td class="" style="width:20%">
+                                                <div></div>
+                                            </td>
+                                            <td colspan="2" style="width:40%">Скидка по промо-коду</td>
+                                            <td class="" style="width:15%"><span> {% if order.promo_code %}{{ order.promo_code.promo_discount }}{% else %}0{% endif %} %</span></td>
+
+                                        </tr>
+
+                                        <tr class="cartTotalTr">
+                                            <td class="" style="width:20%">
+                                                <div></div>
+                                            </td>
+                                            <td style="width:40%"></td>
+                                            <td class="" style="width:20%">ИТОГО</td>
+                                             {% if order.total_price_with_code %}
+                                                  <td class="" style="width:15%"><span class="price"> {{ order.total_price_with_code }} &#8381;</span></td>
+
+                                            {% else %}
+                                                  <td class="" style="width:15%"><span class="price"> {{ order.total_price }} &#8381;</span></td>
+
+                                            {% endif %}
+
+
+                                        </tr>
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+            <!--/row end-->
+
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-5"></div>
+    </div>
+    <!--/row-->
+
+    <div style="clear:both"></div>
+</div>
+<!-- /main-container -->
+
+<div class="gap"></div>
+
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends 'basic.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container main-container headerOffset globalPaddingBottom">
+   <div class="row">
+        <div class="breadcrumbDiv col-lg-12">
+            <ul class="breadcrumb">
+                <li><a href="/">ГЛАВНАЯ</a></li>
+                <li><a href="{% url 'account' %}">ЛИЧНЫЙ КАБИНЕТ</a></li>
+                <li class="active">ЗАКЛАДКИ</li>
+            </ul>
+        </div>
+    </div>
+    <!--/.row-->
+
+    <div class="row">
+        <div class="col-lg-9 col-md-9 col-sm-7">
+
+
+            <div class="row userInfo">
+
+                <div class="col-xs-12 col-sm-12">
+                    <table>
+                        <tbody>
+
+                        {% for item in wl %}
+                        <tr id="wl_{{ item.id }}" class="CartProduct">
+                            <td style="width:10%" class="CartProductThumb">
+                                <div><a href="{% url 'item_page' item.item.name_slug %}"><img src="{{ item.item.itemimage_set.first.image_small }}" alt="img"></a></div>
+                            </td>
+                            <td style="width:40%">
+                                <div class="CartDescription">
+                                    <h4><a href="{% url 'item_page' item.item.name_slug %}">{{ item.item.name }}</a></h4>
+                                    <span class="size">{{ item.item.subcategory.name }}</span>
+
+                                    {% if item.item.discount > 0 %}
+
+                                     <div class="price" style="padding-bottom: 5px;"><span style="font-size: 20px;"><span>{{ item.item.discount_value }} &#8381;</span> <span class="old-price">{{ item.item.price }} &#8381;</span></div>
+                                {% else %}
+                                     <div class="price" style="padding-bottom: 5px;"><span style="font-size: 20px;">{{ item.item.price }} &#8381;</span></div>
+                                {% endif %}
+                                </div>
+                            </td>
+
+                            <td style="width:40%" class="delete"><a  onclick="wishlist_delete({{ item.id }})" title="Удалить"> <i class="glyphicon glyphicon-trash fa-2x"></i> </a></td>
+                        </tr>
+                        {% endfor %}
+
+
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+            <!--/row end-->
+
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-5"></div>
+    </div>
+    <!--/.row-->
+    <div style="clear:both"></div>
+</div>
+{% endblock %}

@@ -1,0 +1,62 @@
+   <div class="product-width col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12 mb-30">
+                                        <div class="product-wrapper">
+                                            <div class="product-img">
+                                                <a href="{% url 'item_page' category.name_slug item.name_slug %}">
+                                                    <img alt="{{ item.name }}" src="{{ item.images.first.image_small }}">
+                                                </a>
+
+                                                {% if item.discount > 0 %}
+                                                    <span>-{{ item.discount }}%</span>
+                                                {% endif %}
+
+                                                <div class="product-action">
+                                                    <a class="action-wishlist" href="#" title="Wishlist">
+                                                        <i class="icon-heart"></i>
+                                                    </a>
+                                                    <a class="action-cart" href="#" title="Add To Cart">
+                                                        <i class="icon-handbag"></i>
+                                                    </a>
+                                                    <a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal" title="Quick View">
+                                                        <i class="icon-magnifier-add"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="product-content text-center">
+                                                <h4>
+                                                    <a href="product-details.html">{{ item.name }}</a>
+                                                </h4>
+                                                <div class="product-price-wrapper">
+                                                    {% if item.discount > 0 %}
+                                                     <span>{{ item.discount_value }} <i class="fa fa-rub"></i></span>
+                                                    <span class="product-price-old">{{ item.price }} <i class="fa fa-rub"></i></span>
+                                                        {% else %}
+                                                        <span>{{ item.price }} <i class="fa fa-rub"></i></span>
+
+                                                    {% endif %}
+
+                                                </div>
+                                            </div>
+                                            <div class="product-list-details">
+                                                <h4>
+                                                    <a href="product-details.html">{{ item.name }}</a>
+                                                </h4>
+                                                <div class="product-price-wrapper">
+                                                    {% if item.discount > 0 %}
+                                                     <span>{{ item.discount_value }} <i class="fa fa-rub"></i></span>
+                                                    <span class="product-price-old">{{ item.price }} <i class="fa fa-rub"></i></span>
+                                                        {% else %}
+                                                        <span>{{ item.price }} <i class="fa fa-rub"></i></span>
+
+                                                    {% endif %}
+                                                </div>
+                                                <p>{{ item.description | truncatewords_html:2 }}</p>
+                                                <div class="shop-list-cart-wishlist">
+                                                    <a href="#" title="Wishlist"><i class="icon-heart"></i></a>
+                                                    <a href="#" title="Add To Cart"><i class="icon-handbag"></i></a>
+                                                    <a href="#" data-target="#exampleModal" data-toggle="modal" title="Quick View">
+                                                        <i class="icon-magnifier-add"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>

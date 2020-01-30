@@ -1,0 +1,51 @@
+User-agent: Yandex
+Disallow: /cart
+Disallow: /user
+Disallow: /admin
+Disallow: /?gclid=
+Disallow: /?utm_source=
+Disallow: /?yclid=
+Disallow: /*_openstat*
+Disallow: /*filter=
+Disallow: /*search=
+Disallow: /*order=
+
+Host: https://www.lakshmi888.ru/
+
+User-agent: Googlebot
+Disallow: /cart
+Disallow: /user
+Disallow: /admin
+Disallow: /?gclid=
+Disallow: /?utm_source=
+Disallow: /?yclid=
+Disallow: /*_openstat*
+Disallow: /*filter=
+Disallow: /*search=
+Disallow: /*order=
+
+User-agent: Mail.ru
+Disallow: /cart
+Disallow: /user
+Disallow: /admin
+Disallow: /?gclid=
+Disallow: /?utm_source=
+Disallow: /?yclid=
+Disallow: /*_openstat*
+Disallow: /*filter=
+Disallow: /*search=
+Disallow: /*order=
+
+User-agent: *
+Disallow: /cart
+Disallow: /user
+Disallow: /admin
+Disallow: /?gclid=
+Disallow: /?utm_source=
+Disallow: /?yclid=
+Disallow: /*_openstat*
+Disallow: /*filter=
+Disallow: /*search=
+Disallow: /*order=
+
+Sitemap: https://www.lakshmi888.ru/sitemap.xml

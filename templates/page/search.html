@@ -1,0 +1,79 @@
+{% extends 'basic.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container main-container headerOffset globalPaddingBottom">
+ <div class="row">
+        <div class="breadcrumbDiv col-lg-12">
+            <ul class="breadcrumb">
+                <li><a href="/">ГЛАВНАЯ</a></li>
+                <li class="active">РЕЗУЛЬТАТ ПОИСКА ПО ЗАПРОСУ : {{ search_string }}</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <section class="main-container-wrapper clearfix" id="main-container-wrapper">
+        <div class="container main-container">
+
+            <!-- Main component call to action -->
+
+            <div class="row">
+
+
+
+                <!--left column-->
+
+            <div id="subcat_items" class="row  categoryProduct xsResponse clearfix">
+                {% for item in items %}
+                    {% include 'page/item_info.html' %}
+                {% endfor %}
+
+
+            </div>
+                <!--/.catColumnWrapper-->
+
+
+            </div>
+            <!-- /.row  -->
+        </div>
+        <!-- /main container -->
+         <nav id="items_paginator" class="shop-pagination" aria-label="Shop navigation">
+                                <ul class="pagination justify-content-end">
+                                {% if items.has_previous %}
+                                    <li class="page-item">
+                                      <a class="page-link" href="?{% if param_search %}&search={{ param_search }}{% endif %}{% if param_filter %}&filter={{ param_filter }}{% endif %}{% if param_order %}&order={{ param_order }}{% endif %}" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                        <span class="sr-only">begin</span>
+                                      </a>
+                                    </li>
+                                {% endif %}
+                                    {% for pg in items.paginator.page_range %}
+                                        {% if items.number == pg %}
+                                            <li class="page-item active"><a class="page-link" href="?{% if pg > 1 %}page={{ pg }}{% endif %}{% if param_search %}&search={{ param_search }}{% endif %}{% if param_filter %}&filter={{ param_filter }}{% endif %}{% if param_order %}&order={{ param_order }}{% endif %}">{{pg}}</a></li>
+                                        {% elif pg > items.number|add:'-6' and pg < items.number|add:'6' %}
+                                            <li class="page-item"><a class="page-link" href="?{% if pg > 1 %}page={{ pg }}{% endif %}{% if param_search %}&search={{ param_search }}{% endif %}{% if param_filter %}&filter={{ param_filter }}{% endif %}{% if param_order %}&order={{ param_order }}{% endif %}">{{pg}}</a></li>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% if items.has_next %}
+                                  <li class="page-item">
+                                    <a class="page-link" href="?page={{ items.paginator.num_pages }}{% if param_search %}&search={{ param_search }}{% endif %}{% if param_filter %}&filter={{ param_filter }}{% endif %}{% if param_order %}&order={{ param_order }}{% endif %}" aria-label="Next">
+                                      <span aria-hidden="true">&raquo;</span>
+                                      <span class="sr-only">end</span>
+                                    </a>
+                                  </li>
+                                  {% endif %}
+
+                                </ul>
+
+                            </nav>
+    </section>
+   <div>
+    {{ subcat.description|safe }}
+    </div>
+</div>
+
+{% include 'page/quick_view.html' %}
+
+{% endblock %}

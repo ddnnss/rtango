@@ -1,0 +1,63 @@
+{% load static %}
+
+<div class="modal fade" id="productSetailsModalAjax" tabindex="-1" role="dialog"
+     aria-labelledby="productSetailsModalAjaxLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <button aria-hidden="true" data-dismiss="modal" class="close" type="button"> ×</button>
+            <div class="col-lg-5 col-md-5 col-sm-5  col-xs-12">
+                <div class="main-image  col-lg-12 no-padding style3">
+                    <a class="product-largeimg-link" href="#"><img
+                            src=""
+                            class="img-responsive product-largeimg"
+                            alt="img">
+                    </a>
+                </div>
+                <div class="modal-product-thumb">
+                </div>
+            </div>
+            <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12 modal-details no-padding">
+                <div class="modal-details-inner">
+                    <h1 class="product-title"></h1>
+
+                    <h3 class="product-code"></h3>
+
+                    <div class="product-price"><span class="price-sales"></span> <span
+                            class="price-standard"></span></div>
+                    <div class="details-description">
+                        <p></p>
+                    </div>
+                    <div class="cart-actions" style="border: none;">
+
+                        <div class="addto row">
+                            <form action="{% url 'add_to_cart' %}" id="add_to_cart"  method="post"
+                                  onsubmit="add_to_cart(this);return false;">{% csrf_token %}
+
+                                <div class="col-lg-4">
+
+                                    <input class="form-control " type="number" id="items_number" min="1" max="100"  value="1" >
+                                </div>
+                                <input type="hidden" id="item_id" value="">
+                                <input type="hidden" id="item_name" value="">
+                                <input type="hidden" id="item_price" value="">
+                                <input type="hidden" id="item_image" value="">
+
+                            <div class="col-lg-4">
+                                <button class="button btn-block btn-cart cart first" title="Add to Cart"
+                                        type="submit">
+                                    В КОРЗИНУ
+                                </button>
+                            </div>
+                            </form>
+                            <div style="display: none;" id="item_not_present" class="col-lg-8"><strong>НЕТ В НАЛИЧИИ</strong>  </div>
+                            <div id="quick_view_wish_button" class="col-lg-4"><a onclick="wishlist_add();return false;" class="link-wishlist wishlist btn-block ">В ЗАКЛАДКИ</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,185 @@
+{% extends 'basic.html' %}
+{% load static %}
+
+{% block content %}
+
+    <div class="container main-container headerOffset globalPaddingBottom">
+        <div class="row">
+            <div class="breadcrumbDiv col-lg-12">
+                <ul class="breadcrumb">
+                    <li><a href="/">ГЛАВНАЯ</a></li>
+                    <li><a href="{% url 'category' item.subcategory.category.name_slug %}">{{ item.subcategory.category.name.upper }}</a></li>
+                    <li><a href="{% url 'subcategory' item.subcategory.name_slug %}">{{ item.subcategory.name.upper }}</a></li>
+
+                    <li class="active">{{ item.name.upper }}</li>
+                </ul>
+            </div>
+        </div>
+        <div class="row transitionfx">
+            <div class="col-lg-6 col-md-6 col-sm-6 productImageZoom">
+                <div class='zoom' id='zoomContent'>
+                    <a class="gall-item" title="{{ item.name }}" href="{{ item.itemimage_set.first.image }}"><img
+                            class="zoomImage1 img-responsive" data-src="{{ item.itemimage_set.first.image }}"
+                            src='{{ item.itemimage_set.first.image }}' alt='{{ item.name }}'/></a>
+                </div>
+                <div class="zoomThumb ">
+                    {% for image in item.itemimage_set.all %}
+                        <a class="zoomThumbLink">
+                            <img data-large="{{ image.image }}"
+                                 src="{{ image.image_small }}" alt="{{ image.item.name }}" title=""/></a>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-5">
+                <h1 class="product-title"> {{ item.name }}</h1>
+                <h3 class="product-code">АРТИКУЛ : {{ item.article }}</h3>
+                <div class="product-price">
+                    {% if item.discount > 0 %}
+                        <div class="price-sales" style="padding-bottom: 5px;"><span style="font-size: 20px;">{{ item.discount_value }} &#8381;</span>
+                            <span class="price-standard">{{ item.price }} &#8381;</span></div>
+                    {% else %}
+                        <div class="price-sales" style="padding-bottom: 5px;"><span style="font-size: 20px;">{{ item.price }} &#8381;</span></div>
+                    {% endif %}
+                </div>
+                <div class="details-description">
+                    <p>{{ item.description|safe }}</p>
+                </div>
+                <div class="clear"></div>
+                <div class="product-tab w100 clearfix">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#details" data-toggle="tab">ДЕТАЛИ</a></li>
+                        <li><a href="#shipping" data-toggle="tab">ДОСТАВКА</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="details">
+                            {% if item.width != 'не указано'  %}Ширина: {{ item.width }} мм.<br>{% endif %}
+                            {% if item.length != 'не указано'  %}Длина: {{ item.length }} мм.<br>{% endif %}
+                            {% if item.height != 'не указано'  %}Высота: {{ item.height }} мм.<br>{% endif %}
+                            {% if item.material != 'не указано' %}Материал: {{ item.material }}<br>{% endif %}
+                            {% if item.weight  != 'не указано' %}Вес: {{ item.weight }} гр.<br>{% endif %}
+                        </div>
+                        <div class="tab-pane" id="shipping">
+                            <table>
+                                <colgroup>
+                                    <col style="width:33%">
+                                    <col style="width:33%">
+                                </colgroup>
+                                <tbody>
+                                <tr>
+                                    <td>Самовывоз из офиса</td>
+                                    <td>бесплатно</td>
+                                </tr>
+                                <tr>
+                                    <td>Доставка до Транспортной Кампании</td>
+                                    <td>бесплатно*</td>
+                                </tr>
+                                <tr>
+                                    <td>Доставка по Москве (в пределах МКАД)</td>
+                                    <td>500 рублей</td>
+                                </tr>
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <td colspan="3"><a class=" btn btn-sm btn-primary " href="{% url 'dostavka' %}" target="_blank">Подробнее про доставку</a></td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <div class="action-control">
+                            <form action="{% url 'add_to_cart' %}"   method="post"
+                                  onsubmit="add_to_cart(this,{{ item.id }});return false;">{% csrf_token %}
+
+                                <div class="productFilter productFilterLook2">
+                                    <div class="addto row">
+                                        {% if item.is_present %}
+                                            <div class="col-lg-3 col-sm-3 col-xs-3">
+                                        {% else %}
+                                             <div class="col-lg-6 col-sm-6 col-xs-6">
+                                        {% endif %}
+                                            {% if item.is_present %}
+                                                <h3 class="incaps"><i class="fa fa fa-check-circle-o color-in"></i> В НАЛИЧИИ</h3>
+                                            {% elif item.is_reserved %}
+                                                <h3 class="incaps"><i class="fa fa fa-check-circle-o color-out"></i> В РЕЗЕРВЕ</h3>
+                                            {% elif not item.is_present %}
+                                                <h3 class="incaps"><i class="glyphicon glyphicon-lock"></i> НЕТ В НАЛИЧИИ</h3>
+                                            {% endif %}
+                                        </div>
+                                    {% if item.is_present %}
+                                        <div class="col-lg-3 col-sm-3 col-xs-3">
+                                            <div class="filterBox">
+                                                <input class="form-control" type="number" id="{{ item.id }}_items_number" min="1"  value="1" >
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-sm-3 col-xs-3">
+                                            <div class="filterBox">
+                                                <button type="submit" class="btn btn-primary" id="{{ item.id }}_submit"
+                                                        data-item_id="{{ item.id }}"
+                                                        data-item_name="{{ item.name }}"
+                                                        data-item_price="{{ item.price }}"
+                                                        data-item_image="{{ item.itemimage_set.first.image_small }}">
+                                                    <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> В КОРЗИНУ </span>
+                                                </button>
+
+                                            </div>
+                                        </div>
+
+
+                                    {% endif %}
+                                        <div class="col-lg-3 col-sm-3 col-xs-3">
+                                            {% if item.id not in wishlist_ids %}
+                                                <button  id="item_add_wishlist" class="btn btn-primary" onclick="wishlist_add({{ item.id }});return false;">
+                                                    <span class="add2cart">В ЗАКЛАДКИ</span></button>
+                                            {% else %}
+                                                <button style="background-color: #d33061 !important;"  class="btn btn-primary" disabled="disabled" onclick="return false;" >
+                                                    <span class="add2cart">В ЗАКЛАДКАХ</span></button>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div style="clear:both"></div>
+            </div>
+        </div>
+        <div class="row recommended">
+            <h1> РЕКОМЕНДОВАННЫЕ ТОВАРЫ </h1>
+            <div id="SimilarProductSlider">
+                {% for rec_item in recomended %}
+                    {% if rec_item != item %}
+                        <div class="item">
+                            <div class="product"><a href="{% url 'item_page' rec_item.name_slug %}" class="product-image"> <img
+                                    {% for image in rec_item.itemimage_set.all %}
+                                        {% if image.is_main %}
+                                            src="{{ image.image_small }}"
+                                        {% endif %}
+                                    {% endfor %}
+                                            alt="img"> </a>
+
+                                <div class="description">
+                                    <h4><a href="{% url 'item_page' rec_item.name_slug %}">{{ rec_item.name }}</a></h4>
+
+                                    {% if item.discount > 0 %}
+
+                                        <div class="price" style="padding-bottom: 5px;">
+                                         <span style="font-size: 20px;">
+                                             <span>{{ item.discount_value }} &#8381;</span>
+                                             <span class="old-price">{{ item.price }} &#8381;</span>
+                                         </span>
+                                        </div>
+                                    {% else %}
+                                        <div class="price" style="padding-bottom: 5px;"><span style="font-size: 20px;">{{ item.price }} &#8381;</span></div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        <div style="clear:both"></div>
+    </div>
+
+    <div class="gap"></div>
+{% endblock %}
