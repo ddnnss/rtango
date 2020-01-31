@@ -334,7 +334,7 @@ def index(request):
     description = 'Интернет Магазин фен шуй товаров: у нас вы можете купить фен шуй товары по выгодным ценам. Доставка во все регионы.'
     keywords = ''
     banners = Banner.objects.filter(is_active=True).order_by('order')
-
+    items_with_discount = Item.objects.filter(discount__gt=0)
     main_category = Category.objects.all()
     index_cats = main_category.filter(show_at_index=True)
     return render(request, 'page/index.html', locals())
@@ -393,10 +393,11 @@ def category(request, slug):
 
             param_filter = filter
         else:
-            items = all_items.filter(filter__name_slug=filter)
+            filterItem = Filter.objects.get(name=filter)
+            items = all_items.filter(filter=filterItem.id)
 
-            currentFilter = Filter.objects.get(name_slug=filter)
-            seoText = currentFilter.seoText
+            currentFilter = Filter.objects.get(name=filter)
+            #seoText = currentFilter.seoText
             filter_sq = items
 
             param_filter = filter

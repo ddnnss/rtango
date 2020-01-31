@@ -1,9 +1,15 @@
-   <div class="product-width col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12 mb-30">
+
                                         <div class="product-wrapper">
                                             <div class="product-img">
+                                            {% if category %}
                                                 <a href="{% url 'item_page' category.name_slug item.name_slug %}">
                                                     <img alt="{{ item.name }}" src="{{ item.images.first.image_small }}">
                                                 </a>
+                                            {% else %}
+                                                  <a href="{% url 'item_page' item.category.first.name_slug item.name_slug %}">
+                                                    <img alt="{{ item.name }}" src="{{ item.images.first.image_small }}">
+                                                </a>
+                                            {% endif %}
 
                                                 {% if item.discount > 0 %}
                                                     <span>-{{ item.discount }}%</span>
@@ -59,4 +65,3 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
