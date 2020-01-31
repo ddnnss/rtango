@@ -337,6 +337,7 @@ def index(request):
     items_with_discount = Item.objects.filter(discount__gt=0)
     main_category = Category.objects.all()
     index_cats = main_category.filter(show_at_index=True)
+    all_filters = Filter.objects.all()
     return render(request, 'page/index.html', locals())
 
 
