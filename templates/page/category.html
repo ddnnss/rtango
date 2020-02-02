@@ -22,10 +22,10 @@
                         </div>
                         <div class="shop-topbar-wrapper">
                             <div class="shop-topbar-left">
-                                <ul class="view-mode">
-                                    <li class="active"><a href="#product-grid" data-view="product-grid"><i class="fa fa-th"></i></a></li>
-                                    <li><a href="#product-list" data-view="product-list"><i class="fa fa-list-ul"></i></a></li>
-                                </ul>
+{#                                <ul class="view-mode">#}
+{#                                    <li class="active"><a href="#product-grid" data-view="product-grid"><i class="fa fa-th"></i></a></li>#}
+{#                                    <li><a href="#product-list" data-view="product-list"><i class="fa fa-list-ul"></i></a></li>#}
+{#                                </ul>#}
 {#                                <p>Showing 1 - 20 of 30 results  </p>#}
                             </div>
                             <div class="product-sorting-wrapper">
@@ -90,7 +90,7 @@
                                             <ul id="cat-{{ cat.id }}" class="panel-collapse collapse {% if cat.id == category.id %}show{% endif %}">
                                                 <li><a href="{% url 'category' cat.name_slug %}"><strong>Все предложения</strong></a></li>
                                              {% for filter in cat.filters.all %}
-                                                            <li><a href="about-us.html">{{ filter.name }}</a></li>
+                                                            <li><a href="{% url 'category' cat.name_slug%}?filter={{ filter.name }}">{{ filter.name }}</a></li>
                                                         {% endfor %}
 
                                             </ul>
@@ -113,33 +113,33 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="shop-widget mt-40 shop-sidebar-border pt-35">
-                                <h4 class="shop-sidebar-title">Фильтр 1</h4>
-                                <div class="sidebar-list-style mt-20">
-                                    <ul>
-                                        <li><input type="checkbox"><a href="#">Фильтр 1 </a></li>
-                                        <li><input type="checkbox"><a href="#">Фильтр 1 </a></li>
-                                        <li><input type="checkbox"><a href="#">Фильтр 1 </a></li>
-                                        <li><input type="checkbox"><a href="#">Фильтр 1 </a></li>
-                                        <li><input type="checkbox"><a href="#">Фильтр 1 </a></li>
-
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="shop-widget mt-40 shop-sidebar-border pt-35">
-                                <h4 class="shop-sidebar-title">Фильтр 2</h4>
-                                <div class="sidebar-list-style mt-20">
-                                    <ul>
-                                        <li><input type="checkbox"><a href="#">Фильтр 2 </a></li>
-                                        <li><input type="checkbox"><a href="#">Фильтр 2 </a></li>
-                                        <li><input type="checkbox"><a href="#">Фильтр 2 </a></li>
-                                        <li><input type="checkbox"><a href="#">Фильтр 2 </a></li>
-                                        <li><input type="checkbox"><a href="#">Фильтр 2</a></li>
-                                        <li><input type="checkbox"><a href="#">Фильтр 2  </a></li>
-                                        <li><input type="checkbox"><a href="#">Фильтр 2   </a></li>
-                                    </ul>
-                                </div>
-                            </div>
+{#                            <div class="shop-widget mt-40 shop-sidebar-border pt-35">#}
+{#                                <h4 class="shop-sidebar-title">Фильтр 1</h4>#}
+{#                                <div class="sidebar-list-style mt-20">#}
+{#                                    <ul>#}
+{#                                        <li><input type="checkbox"><a href="#">Фильтр 1 </a></li>#}
+{#                                        <li><input type="checkbox"><a href="#">Фильтр 1 </a></li>#}
+{#                                        <li><input type="checkbox"><a href="#">Фильтр 1 </a></li>#}
+{#                                        <li><input type="checkbox"><a href="#">Фильтр 1 </a></li>#}
+{#                                        <li><input type="checkbox"><a href="#">Фильтр 1 </a></li>#}
+{##}
+{#                                    </ul>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                            <div class="shop-widget mt-40 shop-sidebar-border pt-35">#}
+{#                                <h4 class="shop-sidebar-title">Фильтр 2</h4>#}
+{#                                <div class="sidebar-list-style mt-20">#}
+{#                                    <ul>#}
+{#                                        <li><input type="checkbox"><a href="#">Фильтр 2 </a></li>#}
+{#                                        <li><input type="checkbox"><a href="#">Фильтр 2 </a></li>#}
+{#                                        <li><input type="checkbox"><a href="#">Фильтр 2 </a></li>#}
+{#                                        <li><input type="checkbox"><a href="#">Фильтр 2 </a></li>#}
+{#                                        <li><input type="checkbox"><a href="#">Фильтр 2</a></li>#}
+{#                                        <li><input type="checkbox"><a href="#">Фильтр 2  </a></li>#}
+{#                                        <li><input type="checkbox"><a href="#">Фильтр 2   </a></li>#}
+{#                                    </ul>#}
+{#                                </div>#}
+{#                            </div>#}
 
                             <div class="shop-widget mt-40 shop-sidebar-border pt-35">
                                 <h4 class="shop-sidebar-title">Популярные категории</h4>

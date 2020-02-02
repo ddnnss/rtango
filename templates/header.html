@@ -8,18 +8,18 @@
                         <div class="account-curr-lang-wrap f-right">
                             <ul>
                                 <li class=""><a href="#">Магазин</a></li>
-                                   <li class=""><a href="#">О нас</a></li>
-                                   <li class=""><a href="#">Доставка</a></li>
-                                   <li class=""><a href="#">Оплата</a></li>
-                                   <li class=""><a href="#">Корпоративным клиентам</a></li>
-                                 <li class=""><a href="#">Гарантии</a></li>
-                                 <li class=""><a href="#">Контакты</a></li>
+                                <li class=""><a href="#">О нас</a></li>
+                                <li class=""><a href="#">Доставка</a></li>
+                                <li class=""><a href="#">Оплата</a></li>
+                                <li class=""><a href="#">Корпоративным клиентам</a></li>
+                                <li class=""><a href="#">Гарантии</a></li>
+                                <li class=""><a href="#">Контакты</a></li>
                             </ul>
                         </div>
                     </div>
-                     <div class="col-lg-4 col-md-4 col-12">
+                    <div class="col-lg-4 col-md-4 col-12">
                         <div class="welcome-area">
-{#                            <p>Default welcome msg! </p>#}
+                            {#                            <p>Default welcome msg! </p>#}
                         </div>
                     </div>
                 </div>
@@ -74,51 +74,55 @@
                         <div class="header-cart">
                             <a href="#">
                                 <div class="cart-icon">
+
                                     <i class="ion-bag"></i>
-                                    <span class="count-style">02</span>
+
+                                    <span class="count-style cart_total_lg">{{ count_items_in_cart }}</span>
+
                                 </div>
                                 <div class="cart-text">
                                     <span class="digit">Корзина</span>
-                                    <span>1000 <span><i class="fa fa-rub"></i></span></span>
+                                    <span class="cart-total-cost">{{ total_cart_price }} &#8381;</span>
                                 </div>
                             </a>
                             <div class="shopping-cart-content">
-                                <ul>
-                                    <li class="single-shopping-cart">
-                                        <div class="shopping-cart-img">
-                                            <a href="#"><img alt="" src="assets/img/cart/cart-1.jpg"></a>
-                                        </div>
-                                        <div class="shopping-cart-title">
-                                            <h4><a href="#">Phantom Remote </a></h4>
-                                            <h6>Qty: 02</h6>
-                                            <span>$260.00</span>
-                                        </div>
-                                        <div class="shopping-cart-delete">
-                                            <a href="#"><i class="ion ion-close"></i></a>
-                                        </div>
-                                    </li>
-                                    <li class="single-shopping-cart">
-                                        <div class="shopping-cart-img">
-                                            <a href="#"><img alt="" src="assets/img/cart/cart-2.jpg"></a>
-                                        </div>
-                                        <div class="shopping-cart-title">
-                                            <h4><a href="#">Phantom Remote</a></h4>
-                                            <h6>Qty: 02</h6>
-                                            <span>$260.00</span>
-                                        </div>
-                                        <div class="shopping-cart-delete">
-                                            <a href="#"><i class="ion ion-close"></i></a>
-                                        </div>
-                                    </li>
+                                <ul class="cart_table_lg">
+                                    {% if not count_items_in_cart > 0  %}
+
+                                        <li>Корзина пуста</li>
+                                    {% else %}
+                                        {% for item in all_items_in_cart %}
+                                            <li class="single-shopping-cart">
+                                                <div class="shopping-cart-img">
+                                                    <a href="javascript: void(0)"><img width="50" height="50" alt="" src="{{ item.item.images.first.image_small }}"></a>
+                                                </div>
+                                                <div class="shopping-cart-title">
+                                                    <h4><a href="javascript: void(0)">{{ item.item.name }} </a></h4>
+                                                    <h6>Количество {{ item.number }}</h6>
+                                                    <span>{{ item.total_price }} &#8381;</span>
+                                                </div>
+                                                <div class="shopping-cart-delete">
+                                                    <a href="javascript: void(0)" data-item_id="{{ item.item.id }}" onclick="delete_from_cart(this);return false;"><i class="ion ion-close"></i></a>
+                                                </div>
+                                            </li>
+
+                                        {% endfor %}
+                                    {% endif %}
+
                                 </ul>
-                                <div class="shopping-cart-total">
-                                    <h4>Shipping : <span>$20.00</span></h4>
-                                    <h4>Total : <span class="shop-total">$260.00</span></h4>
-                                </div>
-                                <div class="shopping-cart-btn">
-                                    <a href="cart-page.html">view cart</a>
-                                    <a href="checkout.html">checkout</a>
-                                </div>
+
+                                    <div class="cart_footer_lg">
+                                  {% if count_items_in_cart > 0  %}
+                                        <div class="shopping-cart-total ">
+                                            <h4>Всего : <span class="shop-total">{{ total_cart_price }} &#8381;</span></h4>
+                                        </div>
+                                        <div class="shopping-cart-btn">
+                                            <a href="{% url 'show_cart' %}">Корзина</a>
+                                            <a href="checkout.html">Оплатить</a></div>
+                                 {% endif %}
+                                    </div>
+
+
                             </div>
                         </div>
                     </div>

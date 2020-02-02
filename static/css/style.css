@@ -2548,8 +2548,8 @@ textarea:focus {
 /* quick view */
 #exampleModal .modal-dialog {
     margin: 8% auto;
-    max-width: 960px;
-    width: 960px;
+    max-width: 420px;
+    width: 420px;
 }
 .quickview .modal-header {
     border: medium none;

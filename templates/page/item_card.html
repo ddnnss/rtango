@@ -1,69 +1,80 @@
 
-                                        <div class="product-wrapper">
-                                            <div class="product-img">
-                                            {% if category %}
-                                                <a href="{% url 'item_page' category.name_slug item.name_slug %}">
-                                                    <img alt="{{ item.name }}" src="{{ item.images.first.image_small }}">
-                                                </a>
-                                            {% else %}
-                                                  <a href="{% url 'item_page' item.category.first.name_slug item.name_slug %}">
-                                                    <img alt="{{ item.name }}" src="{{ item.images.first.image_small }}">
-                                                </a>
-                                            {% endif %}
+<div class="product-wrapper">
+    <div class="product-img">
+        {% if category %}
+            <a href="{% url 'item_page' category.name_slug item.name_slug %}">
+                <img alt="{{ item.name }}" src="{{ item.images.first.image_small }}">
+            </a>
+        {% else %}
+            <a href="{% url 'item_page' item.category.first.name_slug item.name_slug %}">
+                <img alt="{{ item.name }}" src="{{ item.images.first.image_small }}">
+            </a>
+        {% endif %}
 
-                                                {% if item.discount > 0 %}
-                                                    <span>-{{ item.discount }}%</span>
-                                                {% endif %}
+        {% if item.discount > 0 %}
+            <span>-{{ item.discount }}%</span>
+        {% endif %}
 
-                                                <div class="product-action">
-                                                    <a class="action-wishlist" href="#" title="Wishlist">
-                                                        <i class="icon-heart"></i>
-                                                    </a>
-                                                    <a class="action-cart" href="#" title="Add To Cart">
-                                                        <i class="icon-handbag"></i>
-                                                    </a>
-                                                    <a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal" title="Quick View">
-                                                        <i class="icon-magnifier-add"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="product-content text-center">
-                                                <h4>
-                                                    <a href="product-details.html">{{ item.name }}</a>
-                                                </h4>
-                                                <div class="product-price-wrapper">
-                                                    {% if item.discount > 0 %}
-                                                     <span>{{ item.discount_value }} <i class="fa fa-rub"></i></span>
-                                                    <span class="product-price-old">{{ item.price }} <i class="fa fa-rub"></i></span>
-                                                        {% else %}
-                                                        <span>{{ item.price }} <i class="fa fa-rub"></i></span>
+        <div class="product-action">
+            {#                                                    <a class="action-wishlist" href="#" title="Wishlist">#}
+            {#                                                        <i class="icon-heart"></i>#}
+            {#                                                    </a>#}
+            <a title="В корзину" href="javasript: void(0)"
 
-                                                    {% endif %}
+               data-item_id="{{ item.id }}"
+               data-item_name="{{ item.name }}"
+               data-item_price="{{ item.price }}"
+               data-item_image="{{ item.images.first.image_small }}"
+               onclick="add_to_cart(this,1)">
+                <i class="icon-handbag"></i>
+            </a>
+            {#                                                    <a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal" title="Quick View">#}
+            {#                                                        <i class="icon-magnifier-add"></i>#}
+            {#                                                    </a>#}
+            {% if not item.is_optional %}
+            <a class="action-wishlist" href="#" data-itemid="{{ item.id }}" data-target="#exampleModal" data-toggle="modal" title="Купить в один клик">
+                <i class="fa fa-cart-plus "></i>
+            </a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="product-content text-center">
+        <h4>
+            <a href="product-details.html">{{ item.name }}</a>
+        </h4>
+        <div class="product-price-wrapper">
+            {% if item.discount > 0 %}
+                <span>{{ item.discount_value }} <i class="fa fa-rub"></i></span>
+                <span class="product-price-old">{{ item.price }} <i class="fa fa-rub"></i></span>
+            {% else %}
+                <span>{{ item.price }} <i class="fa fa-rub"></i></span>
 
-                                                </div>
-                                            </div>
-{% if indexActive %}
-                                            <div class="product-list-details">
-                                                <h4>
-                                                    <a href="product-details.html">{{ item.name }}</a>
-                                                </h4>
-                                                <div class="product-price-wrapper">
-                                                    {% if item.discount > 0 %}
-                                                     <span>{{ item.discount_value }} <i class="fa fa-rub"></i></span>
-                                                    <span class="product-price-old">{{ item.price }} <i class="fa fa-rub"></i></span>
-                                                        {% else %}
-                                                        <span>{{ item.price }} <i class="fa fa-rub"></i></span>
+            {% endif %}
 
-                                                    {% endif %}
-                                                </div>
-                                                <p>{{ item.description | truncatewords_html:2 }}</p>
-                                                <div class="shop-list-cart-wishlist">
-                                                    <a href="#" title="Wishlist"><i class="icon-heart"></i></a>
-                                                    <a href="#" title="Add To Cart"><i class="icon-handbag"></i></a>
-                                                    <a href="#" data-target="#exampleModal" data-toggle="modal" title="Quick View">
-                                                        <i class="icon-magnifier-add"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
-{% endif %}
-                                        </div>
+        </div>
+    </div>
+    {% if indexActive %}
+        <div class="product-list-details">
+            <h4>
+                <a href="product-details.html">{{ item.name }}</a>
+            </h4>
+            <div class="product-price-wrapper">
+                {% if item.discount > 0 %}
+                    <span>{{ item.discount_value }} <i class="fa fa-rub"></i></span>
+                    <span class="product-price-old">{{ item.price }} <i class="fa fa-rub"></i></span>
+                {% else %}
+                    <span>{{ item.price }} <i class="fa fa-rub"></i></span>
+
+                {% endif %}
+            </div>
+            <p>{{ item.description | truncatewords_html:2 }}</p>
+            <div class="shop-list-cart-wishlist">
+                <a href="#" title="Wishlist"><i class="icon-heart"></i></a>
+                <a href="#" title="Add To Cart"><i class="icon-handbag"></i></a>
+                <a href="#" data-target="#exampleModal" data-toggle="modal" title="Quick View">
+                    <i class="icon-magnifier-add"></i>
+                </a>
+            </div>
+        </div>
+    {% endif %}
+</div>

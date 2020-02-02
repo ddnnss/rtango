@@ -1,4 +1,5 @@
 from django.db import models
+from item.models import *
 
 class Banner(models.Model):
     order = models.IntegerField('Порядок отображения', default=1)
@@ -16,3 +17,15 @@ class Banner(models.Model):
     class Meta:
         verbose_name = "Баннер"
         verbose_name_plural = "Баннеры"
+
+class OneClick(models.Model):
+    item = models.ForeignKey(Item, blank=False, null=True, on_delete=models.CASCADE, verbose_name='Букет')
+    phone = models.CharField('Телефон', max_length=20)
+    createdAt = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return 'Покупка в 1 клик товара: %s' % self.item.name
+
+    class Meta:
+        verbose_name = "Покупка в 1 клик"
+        verbose_name_plural = "Покупки в 1 клик"

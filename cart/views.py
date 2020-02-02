@@ -14,7 +14,7 @@ def format_number(num):
         return num
 
 def show_cart(request):
-
+    additional_items = Item.objects.filter(is_optional=True)
     return render(request, 'cart/cart.html', locals())
 
 def wishlist_delete(request):
@@ -53,13 +53,21 @@ def add_to_cart(request):
         if not created:
             addtocart.number += int(item_number)
             addtocart.save(force_update=True)
+
         all_items_in_cart = Cart.objects.filter(client=request.user)
+
+        used_promo = request.user.used_promo
+        if not used_promo:
+            promo_discount_value = 0
 
     else:
         print('User is_not authenticated')
         try:
             guest = Guest.objects.get(session=s_key)
             print('Guest already created')
+            used_promo = guest.used_promo
+            if not used_promo:
+                promo_discount_value = 0
         except:
             guest = None
 
@@ -89,10 +97,20 @@ def add_to_cart(request):
         item_dict['price'] = item.current_price
         item_dict['total_price'] = item.total_price
         item_dict['number'] = item.number
-        item_dict['image'] = item.item.itemimage_set.first().image_small
+        item_dict['image'] = item.item.images.first().image_small
         return_dict['all_items'].append(item_dict)
 
+
+    total_cart_price_with_discount = total_cart_price
+    if used_promo:
+        print('with promo')
+        promo_discount_value = used_promo.promo_discount
+        total_cart_price_with_discount = format_number(
+            total_cart_price - (total_cart_price * promo_discount_value / 100))
+
     return_dict['total_cart_price'] = total_cart_price
+    return_dict['total_cart_price_with_discount'] = total_cart_price_with_discount
+    return_dict['promo_discount_value'] = promo_discount_value
 
     return JsonResponse(return_dict)
 
@@ -107,10 +125,17 @@ def delete_from_cart(request):
         Cart.objects.filter(client=request.user, item_id=item_id).delete()
         all_items_in_cart = Cart.objects.filter(client=request.user)
 
+        used_promo = request.user.used_promo
+        if not used_promo:
+            promo_discount_value = 0
+
     else:
         print('User is_not authenticated')
 
         guest = Guest.objects.get(session=s_key)
+        used_promo = guest.used_promo
+        if not used_promo:
+            promo_discount_value = 0
         Cart.objects.filter(guest=guest, item_id=item_id).delete()
         all_items_in_cart = Cart.objects.filter(guest=guest)
     count_items_in_cart = all_items_in_cart.count()
@@ -127,10 +152,19 @@ def delete_from_cart(request):
         item_dict['price'] = item.current_price
         item_dict['total_price'] = item.total_price
         item_dict['number'] = item.number
-        item_dict['image'] = item.item.itemimage_set.first().image_small
+        item_dict['image'] = item.item.images.first().image_small
         return_dict['all_items'].append(item_dict)
 
+    total_cart_price_with_discount = total_cart_price
+    if used_promo:
+        print('with promo')
+        promo_discount_value = used_promo.promo_discount
+        total_cart_price_with_discount = format_number(
+            total_cart_price - (total_cart_price * promo_discount_value / 100))
+
     return_dict['total_cart_price'] = total_cart_price
+    return_dict['total_cart_price_with_discount'] = total_cart_price_with_discount
+    return_dict['promo_discount_value'] = promo_discount_value
     return JsonResponse(return_dict)
 
 
@@ -175,15 +209,13 @@ def update_cart(request):
         item_dict = dict()
         item_dict['id'] = item.id
         item_dict['name'] = item.item.name
-        item_dict['subcategory'] = item.item.subcategory.name
-        item_dict['subcategory_slug'] = item.item.subcategory.name_slug
         item_dict['name_slug'] = item.item.name_slug
         item_dict['price'] = item.current_price
         item_dict['total_price'] = item.total_price
         item_dict['number'] = item.number
         item_dict['discount'] = item.item.discount
 
-        item_dict['image'] = item.item.itemimage_set.first().image_small
+        item_dict['image'] = item.item.images.first().image_small
         return_dict['all_items'].append(item_dict)
     total_cart_price_with_discount = total_cart_price
     if used_promo:
@@ -247,15 +279,13 @@ def delete_from_main_cart(request):
         item_dict = dict()
         item_dict['id'] = item.id
         item_dict['name'] = item.item.name
-        item_dict['subcategory'] = item.item.subcategory.name
-        item_dict['subcategory_slug'] = item.item.subcategory.name_slug
         item_dict['name_slug'] = item.item.name_slug
         item_dict['price'] = item.current_price
         item_dict['total_price'] = item.total_price
         item_dict['number'] = item.number
         item_dict['discount'] = item.item.discount
 
-        item_dict['image'] = item.item.itemimage_set.first().image_small
+        item_dict['image'] = item.item.images.first().image_small
         return_dict['all_items'].append(item_dict)
 
     return_dict['total_cart_price'] = total_cart_price
@@ -390,7 +420,7 @@ def sort_filter(request):
         item_dict['price'] = item.current_price
         item_dict['total_price'] = item.total_price
         item_dict['number'] = item.number
-        item_dict['image'] = item.item.itemimage_set.first().image_small
+        item_dict['image'] = item.item.images.first().image_small
         return_dict['all_items'].append(item_dict)
 
 

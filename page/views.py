@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import JsonResponse, HttpResponseRedirect, HttpResponse
-from .models import Banner
+from .models import *
 from item.models import *
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from customuser.forms import SignUpForm, UpdateForm
@@ -338,6 +338,7 @@ def index(request):
     main_category = Category.objects.all()
     index_cats = main_category.filter(show_at_index=True)
     all_filters = Filter.objects.all()
+    all_promotions = Promotion.objects.all()
     return render(request, 'page/index.html', locals())
 
 
@@ -345,7 +346,7 @@ def index(request):
 def category(request, slug):
     try:
         category = Category.objects.get(name_slug=slug)
-        all_items = Item.objects.filter(category=category, is_active=True, is_present=True).order_by('-created_at')
+        all_items = Item.objects.filter(category=category, is_active=True, is_present=True, is_optional=False).order_by('-created_at')
         title = category.page_title
         description = category.page_description
         keywords = category.page_keywords
@@ -445,6 +446,7 @@ def item_page(request, cat_slug, item_slug):
         category = Category.objects.get(name_slug=cat_slug)
         item.views += 1
         item.save(force_update=True)
+
         # recomended = Item.objects.filter(subcategory_id=item.subcategory_id).order_by('-views')[:12]
         # title = item.name
         # description = item.description
@@ -453,6 +455,7 @@ def item_page(request, cat_slug, item_slug):
     except:
         raise Http404
         # return render(request, '404.html', locals())
+    item_parts = ItemParts.objects.filter(item=item)
     title = ''
     description = ''
     return render(request, 'item/item.html', locals())
@@ -486,3 +489,9 @@ def customhandler404(request, exception, template_name='404.html'):
     response = render_to_response("404.html")
     response.status_code = 404
     return response
+
+
+def one_click(request):
+    print(request.POST)
+    OneClick.objects.create(item_id=request.POST.get('item-id'),phone=request.POST.get('phone'))
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

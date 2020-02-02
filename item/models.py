@@ -129,8 +129,8 @@ class Item(models.Model):
     discount = models.IntegerField('Скидка %', blank=True, default=0, db_index=True)
     page_title = models.CharField('Название страницы', max_length=255, blank=True, null=True)
     page_description = models.TextField('Описание страницы',  blank=True, null=True)
-    page_keywords = models.TextField('Описание страницы', blank=True, null=True)
-    description = models.TextField('Описание товара', blank=True, null=True)
+    page_keywords = models.TextField('Keywords', blank=True, null=True)
+    description = RichTextUploadingField('Описание товара', blank=True, null=True)
     comment = models.TextField('Комментарий', blank=True, null=True)
     length = models.CharField('Длина', max_length=15, blank=True)
     width = models.CharField('Ширина', max_length=15,  blank=True)
@@ -192,7 +192,42 @@ class Item(models.Model):
         verbose_name = "Товар"
         verbose_name_plural = "Товары"
 
+class ItemPart(models.Model):
+    name = models.CharField('Название ', max_length=255, blank=False, null=True)
+    name_lower = models.CharField(max_length=255, blank=True, null=True, db_index=True)
+    name_slug = models.CharField(max_length=255, blank=True, null=True, db_index=True)
+    image = models.ImageField('Изображение', upload_to='item/part/', blank=True)
 
+    def save(self, *args, **kwargs):
+        slug = slugify(self.name)
+        if not self.name_slug:
+            testSlug = ItemPart.objects.filter(name_slug=slug)
+            if testSlug:
+                slugRandom = '-' + ''.join(choices(string.ascii_lowercase + string.digits, k=2))
+                self.name_slug = slug + slugRandom
+            else:
+                self.name_slug = slug
+        self.name_lower = self.name.lower()
+        super(ItemPart, self).save(*args, **kwargs)
+
+    def __str__(self):
+       return f'{self.name}'
+
+    class Meta:
+        verbose_name = "Элемент букета"
+        verbose_name_plural = "Элементы букетов"
+
+class ItemParts(models.Model):
+    item = models.ForeignKey(Item, blank=False, null=True, on_delete=models.CASCADE, verbose_name='Букет')
+    item_part = models.ForeignKey(ItemPart, blank=False, null=True, on_delete=models.CASCADE, verbose_name='Состав')
+    item_part_count = models.IntegerField('Количество', default=0)
+
+    def __str__(self):
+       return f'{self.item_part.name} в составе букета {self.item.name}'
+
+    class Meta:
+        verbose_name = "Элемент букета"
+        verbose_name_plural = "Элементы букетов"
 
 class ItemImage(models.Model):
     item = models.ForeignKey(Item, blank=False, null=True, on_delete=models.CASCADE, verbose_name='Товар', related_name='images')
@@ -273,3 +308,17 @@ class PromoCode(models.Model):
 
 
 
+class Promotion(models.Model):
+    item = models.ForeignKey(Item, blank=False, null=True, on_delete=models.CASCADE, verbose_name='Букет')
+    topText = models.CharField('Заголовок', max_length=25,null=True,blank=False)
+    description = models.TextField('Описание', null=True,blank=False)
+    expiry = models.CharField('Окончание акции (в формате год/месяц/день)',max_length=25, null=True, blank=False)
+
+    def __str__(self):
+        return f'Акция до {self.expiry} для товара {self.item.name}'
+
+    class Meta:
+        verbose_name = "Акция"
+        verbose_name_plural = "Акции"
+
+#2021/09/01

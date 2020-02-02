@@ -27,9 +27,9 @@
                                 </a>
                             {% endfor %}
                         </div>
-                         {% if item.discount > 0 %}
-                                                    <span>-{{ item.discount }}%</span>
-                                                {% endif %}
+                        {% if item.discount > 0 %}
+                            <span>-{{ item.discount }}%</span>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-12">
@@ -53,10 +53,10 @@
 
                         {% if item.discount > 0 %}
                             <span>{{ item.discount_value }} <i class="fa fa-rub"></i></span>
-                        <del><span>{{ item.price }} <i class="fa fa-rub"></i></span></del>
+                            <del><span>{{ item.price }} <i class="fa fa-rub"></i></span></del>
 
                         {% else %}
-                           <span>{{ item.price }} <i class="fa fa-rub"></i></span>
+                            <span>{{ item.price }} <i class="fa fa-rub"></i></span>
 
                         {% endif %}
 
@@ -64,39 +64,95 @@
                         {#                            <div class="in-stock">#}
                         {#                                <p>Available: <span>In stock</span></p>#}
                         {#                            </div>#}
-                        <p>{{ item.description }}</p>
-{#                        <div class="pro-dec-feature">#}
-{#                            <ul>#}
-{#                                <li><input type="checkbox"> Protection Plan: <span> 2 year  $4.99</span></li>#}
-{#                                <li><input type="checkbox"> Remote Holder: <span> $9.99</span></li>#}
-{#                                <li><input type="checkbox"> Koral Alexa Voice Remote Case: <span> Red  $16.99</span></li>#}
-{#                                <li><input type="checkbox"> Amazon Basics HD Antenna: <span>25 Mile  $14.99</span></li>#}
-{#                            </ul>#}
-{#                        </div>#}
-                        <div class="quality-add-to-cart">
-                            <div class="quality">
-                                <label>Количество:</label>
-                                <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1">
-                            </div>
-                            <div class="shop-list-cart-wishlist">
-                                <a title="Add To Cart" href="#">
-                                    <i class="icon-handbag"></i>
-                                </a>
-                                <a title="Wishlist" href="#">
-                                    <i class="icon-heart"></i>
-                                </a>
+
+                        {{ item.description | truncatewords_html:2 | safe}}
+                        <div class="pro-dec-feature">
+
+                            <div id="accordion">
+                                <div class="card">
+                                    <div class="card-header" id="headingOne">
+                                        <h5 class="mb-0">
+                                            <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                Состав букета
+                                            </button>
+                                        </h5>
+                                    </div>
+
+                                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                                        <div class="card-body">
+                                            <ul>
+                                                {% for part in item_parts %}
+                                                    <li>{{ part.item_part.name }} x {{ part.item_part_count }} шт</li>
+                                                {% endfor %}
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header" id="headingTwo">
+                                        <h5 class="mb-0">
+                                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                Доставка
+                                            </button>
+                                        </h5>
+                                    </div>
+                                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                                        <div class="card-body">
+                                        Инфо о доставке
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header" id="headingThree">
+                                        <h5 class="mb-0">
+                                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                                Оплата
+                                            </button>
+                                        </h5>
+                                    </div>
+                                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                                        <div class="card-body">
+                                         Инфо об оплате
+
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-{#                        <div class="pro-dec-categories">#}
-{#                            <ul>#}
-{#                                <li class="categories-title">Categories:</li>#}
-{#                                <li><a href="#">Birthday,</a></li>#}
-{#                                <li><a href="#"> Bouquets, </a></li>#}
-{#                                <li><a href="#">Custom Orders,</a></li>#}
-{#                                <li><a href="#">Home Decor,</a></li>#}
-{#                                <li><a href="#">Weddings, </a></li>#}
-{#                            </ul>#}
-{#                        </div>#}
+                        <div class="quality-add-to-cart">
+
+                            <div class="quality">
+                                <label>Количество:</label>
+                                <input id="item_number" class="cart-plus-minus-box" type="text" name="qtybutton" value="1">
+                            </div>
+                            <div class="shop-list-cart-wishlist">
+                                <a title="Add To Cart" href="javasript: void(0)"
+
+                                   data-item_id="{{ item.id }}"
+                                   data-item_name="{{ item.name }}"
+                                   data-item_price="{{ item.price }}"
+                                   data-item_image="{{ item.images.first.image_small }}"
+                                   onclick="add_to_cart(this)">
+                                    <i class="icon-handbag"></i>
+                                </a>
+
+                                {#                                <a title="Wishlist" href="#">#}
+                                {#                                    <i class="icon-heart"></i>#}
+                                {#                                </a>#}
+                            </div>
+
+                        </div>
+                        {#                        <div class="pro-dec-categories">#}
+                        {#                            <ul>#}
+                        {#                                <li class="categories-title">Categories:</li>#}
+                        {#                                <li><a href="#">Birthday,</a></li>#}
+                        {#                                <li><a href="#"> Bouquets, </a></li>#}
+                        {#                                <li><a href="#">Custom Orders,</a></li>#}
+                        {#                                <li><a href="#">Home Decor,</a></li>#}
+                        {#                                <li><a href="#">Weddings, </a></li>#}
+                        {#                            </ul>#}
+                        {#                        </div>#}
                         <div class="pro-dec-categories">
                             <ul>
                                 <li class="categories-title">Теги: </li>
@@ -131,14 +187,7 @@
                 <div class="tab-content description-review-bottom">
                     <div id="des-details1" class="tab-pane active">
                         <div class="product-description-wrapper">
-                            <p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Typi non habent claritatem insitam est usus legentis in iis qui facit eorum claritatem. </p>
-                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. </p>
-                            <ul>
-                                <li>-  Typi non habent claritatem insitam</li>
-                                <li>-  Est usus legentis in iis qui facit eorum claritatem. </li>
-                                <li>-  Investigationes demonstraverunt lectores legere me lius quod ii legunt saepius.</li>
-                                <li>-  Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum.</li>
-                            </ul>
+                            {{ item.description | safe }}
                         </div>
                     </div>
                     <div id="des-details3" class="tab-pane">

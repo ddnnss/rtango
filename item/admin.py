@@ -8,6 +8,9 @@ class ImagesInline (admin.TabularInline):
     readonly_fields = ('image_tag', )
     extra = 0
 
+class PartsInline (admin.TabularInline):
+    model = ItemParts
+    extra = 0
 
 class ItemsInline (admin.TabularInline):
     model = Item
@@ -24,7 +27,7 @@ class FilterInline(admin.TabularInline):
 class ItemAdmin(admin.ModelAdmin):
     list_display = ['image_tag','name','article','price','discount',]
     #list_display = [field.name for field in Item._meta.fields]
-    inlines = [ImagesInline]
+    inlines = [ImagesInline,PartsInline]
     search_fields = ('name_lower', 'article')
     list_filter = ('is_active', 'is_new',)
     exclude = ['name_slug','buys','views', 'name_lower'] #не отображать на сранице редактирования
@@ -72,8 +75,9 @@ class FilterAdmin(admin.ModelAdmin):
     search_fields = ('name', 'name_slug')
 
 admin.site.register(Category,CategoryAdmin)
-# admin.site.register(SubCategory, SubcatAdmin)
+admin.site.register(ItemPart)
 admin.site.register(Filter,FilterAdmin)
 admin.site.register(Item,ItemAdmin)
 admin.site.register(ItemImage)
 admin.site.register(PromoCode)
+admin.site.register(Promotion)

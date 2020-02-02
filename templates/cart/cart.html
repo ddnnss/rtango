@@ -2,148 +2,176 @@
 {% load static %}
 
 {% block content %}
+    <div class="breadcrumb-area gray-bg">
+        <div class="container">
+            <div class="breadcrumb-content">
+                <ul>
+                    <li><a href="/">Главная</a></li>
 
-    {% if total_cart_price %}
-<div class="container main-container headerOffset">
-    <div class="row">
-        <div class="breadcrumbDiv col-lg-12">
-            <ul class="breadcrumb">
-                <li><a href="/">ГЛАВНАЯ</a></li>
-                <li class="active"> КОРЗИНА</li>
-            </ul>
-        </div>
-    </div>
-    <!--/.row-->
-
-    <div class="row">
-        <div class="col-lg-9 col-md-9 col-sm-7 col-xs-6 col-xxs-12 text-center-xs">
-            <h1 class="section-title-inner"><span><i
-                    class="glyphicon glyphicon-shopping-cart"></i> ВАШИ ПОКУПКИ </span></h1>
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-5 rightSidebar col-xs-6 col-xxs-12 text-center-xs">
-            <h4 class="caps"><a href="{{ request.META.HTTP_REFERER }}"><i class="fa fa-chevron-left"></i> ВЕРНУТЬСЯ К ПОКУПКАМ </a></h4>
-        </div>
-    </div>
-    <!--/.row-->
-
-    <div class="row">
-        <div class="col-lg-9 col-md-9 col-sm-7">
-            <div class="row userInfo">
-                <div class="col-xs-12 col-sm-12">
-                    <div id="cart_content" class="cartContent w100">
-                        <table id="cart_content_table" class="cartTable table-responsive" style="width:100%">
-                            <tbody>
-
-                            <tr class="CartProduct cartTableHeader">
-                                <td style="width:15%"> </td>
-                                <td style="width:40%">Товар</td>
-                                <td style="width:10%" class="delete">&nbsp;</td>
-                                <td class="cart_item_number">Кол-во</td>
-                                <td style="width:10%">Скидка</td>
-                                <td style="width:15%">Всего</td>
-                            </tr>
-                            {% for cart_item in all_items_in_cart %}
-                                <tr class="CartProduct">
-                                <td class="CartProductThumb">
-                                    <div><a href="#"><img src="{{ cart_item.item.itemimage_set.first.image_small }}" alt="img"></a>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="CartDescription">
-                                        <h4><a href="#">{{ cart_item.item.name }}</a></h4>
-                                        <span class="size">{{ cart_item.item.subcaterory.name }}</span>
-
-                                        <div class="price"><span>{{ cart_item.current_price}} &#8381;</span></div>
-                                    </div>
-                                </td>
-                                <td class="delete"><a onclick="delete_from_main_cart({{ cart_item.id }});return false;" title="Delete"> <i
-                                        class="glyphicon glyphicon-trash fa-2x"></i></a></td>
-                                <td><input  class="form-control"  data-item_in_cart_id="{{ cart_item.id }}" onchange="change_cart(this);return false;" type="number" min="1" value="{{ cart_item.number }}" ></td>
-                                <td>{{ cart_item.item.discount }}</td>
-                                <td class="price">{{ cart_item.total_price }} &#8381;</td>
-                            </tr>
-                            {% endfor %}
-
-
-                            </tbody>
-                        </table>
-                    </div>
-                    <!--cartContent-->
-
-                    <div class="cartFooter w100">
-                        <div class="box-footer">
-                            <div class="pull-left"><a href="{{ request.META.HTTP_REFERER }}" class="btn btn-default"> <i
-                                    class="fa fa-arrow-left"></i> &nbsp; ВЕРНУТЬСЯ К ПОКУПКАМ </a></div>
-                         <div class="pull-right">
-                                <a id="cart_continue_btn" class="btn btn-primary btn-block "
-                                 title="checkout" href="{% url 'checkout' %}"
-                                 style="margin-bottom:20px"> Оформить заказ &nbsp; <i class="fa fa-arrow-right"></i>
-                        </a>
-                           </div>
-                        </div>
-                    </div>
-                    <!--/ cartFooter -->
-
-                </div>
+                    <li class="active">Корзина </li>
+                </ul>
             </div>
-            <!--/row end-->
-
         </div>
-        <div class="col-lg-3 col-md-3 col-sm-5 rightSidebar">
-            <div class="contentBox" id="cart_sidebar">
-                <div class="w100 costDetails">
-                    <div class="table-block" id="order-detail-content"><a id="cart_continue_btn" class="btn btn-primary btn-lg btn-block "
-                                                                          title="checkout" href="{% url 'checkout' %}"
-                                                                          style="margin-bottom:20px"> Оформить заказ &nbsp; <i class="fa fa-arrow-right"></i> </a>
+    </div>
+      <!-- shopping-cart-area start -->
+    {% if count_items_in_cart > 0 %}
+        <div class="cart-main-area pt-60 pb-65">
+            <div class="container">
+                <h3 class="page-title">Ваши покупки</h3>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                        <form action="#">
+                            <div id="#cart_content" class="table-content table-responsive">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Название</th>
+                                            <th>Цена</th>
+                                            <th>Количество</th>
+                                            <th>Всего</th>
+                                            <th>Удалить</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="cart_content_table">
+                                     {% for cart_item in all_items_in_cart %}
+                                        <tr>
+                                            <td class="product-thumbnail">
+                                                <a href="#"><img width="70px" src="{{ cart_item.item.images.first.image_small }}" alt=""></a>
+                                            </td>
+                                            <td class="product-name"><a href="#">{{ cart_item.item.name }}</a></td>
+                                            <td class="product-price-cart"><span class="amount">{{ cart_item.current_price}} &#8381;</span></td>
+                                            <td class="product-quantity">
+                                                <div class="pro-dec-cart">
+                                                    <input class="cart-plus-minus-box"  data-item_in_cart_id="{{ cart_item.id }}" onchange="change_cart(this);return false;" type="number" min="1" value="{{ cart_item.number }}"  name="qtybutton">
+                                                </div>
+                                            </td>
+                                            <td class="product-subtotal">{{ cart_item.total_price }} &#8381;</td>
+                                            <td class="product-remove">
 
-                        <div class="w100 cartMiniTable">
-                            <table id="cart-summary" class="std table">
-                                <tbody>
-                                <tr>
-                                    <td style="vertical-align: middle;" width="40%">Общая стоимость :</td>
-                                    <td style="vertical-align: middle;" id="cart_subtotal_price_side" class="price">{{ total_cart_price }} &#8381;</td>
-                                </tr>
-
-                                <tr class="cart-total-price ">
-                                    <td style="vertical-align: middle;">Скидка по промо-коду :</td>
-                                    <td style="vertical-align: middle;" id="promo_value" class="price">{{ promo_discount_value }} %</td>
-                                </tr>
-
-                                <tr>
-                                    <td style="vertical-align: middle;"> ИТОГО</td>
-                                    <td style="font-size: 30px; font-weight: 600; vertical-align: middle;" class="site-color" id="cart_total_price_side">{{ total_cart_price_with_discount }} &#8381;</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">
-                                        <div id="promo_div" class="input-append couponForm">
-                                            <input class="col-lg-6" id="appendedInputButton" type="text"
-                                                   placeholder="ПРОМО-КОД">
-                                            <button class="col-lg-6 btn btn-success" onclick="use_promo();return false;" type="button">Применить!</button>
+                                                <a onclick="delete_from_main_cart({{ cart_item.id }});return false;" title="Удалить">
+                                                    <i class="fa fa-times"></i></a>
+                                           </td>
+                                        </tr>
+                                      {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="cart-shiping-update-wrapper">
+                                        <div class="cart-shiping-update">
+                                            <a href="{{ request.META.HTTP_REFERER }}">Продолжить покупки</a>
                                         </div>
-                                    </td>
-                                </tr>
-                                </tbody>
-                                <tbody>
-                                </tbody>
-                            </table>
+{#                                        <div class="cart-clear">#}
+{#                                            <button>Update Shopping Cart</button>#}
+{#                                            <a href="#">Clear Shopping Cart</a>#}
+{#                                        </div>#}
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="row">
+{#                            <div class="col-lg-4 col-md-6">#}
+{#                                <div class="cart-tax">#}
+{#                                    <div class="title-wrap">#}
+{#                                        <h4 class="cart-bottom-title section-bg-gray">Estimate Shipping And Tax</h4>#}
+{#                                    </div>#}
+{#                                    <div class="tax-wrapper">#}
+{#                                        <p>Enter your destination to get a shipping estimate.</p>#}
+{#                                        <div class="tax-select-wrapper">#}
+{#                                            <div class="tax-select">#}
+{#                                                <label>#}
+{#                                                    * Country#}
+{#                                                </label>#}
+{#                                                <select class="email s-email s-wid">#}
+{#                                                    <option>Bangladesh</option>#}
+{#                                                    <option>Albania</option>#}
+{#                                                    <option>Åland Islands</option>#}
+{#                                                    <option>Afghanistan</option>#}
+{#                                                    <option>Belgium</option>#}
+{#                                                </select>#}
+{#                                            </div>#}
+{#                                            <div class="tax-select">#}
+{#                                                <label>#}
+{#                                                    * Region / State#}
+{#                                                </label>#}
+{#                                                <select class="email s-email s-wid">#}
+{#                                                    <option>Bangladesh</option>#}
+{#                                                    <option>Albania</option>#}
+{#                                                    <option>Åland Islands</option>#}
+{#                                                    <option>Afghanistan</option>#}
+{#                                                    <option>Belgium</option>#}
+{#                                                </select>#}
+{#                                            </div>#}
+{#                                            <div class="tax-select">#}
+{#                                                <label>#}
+{#                                                    * Zip/Postal Code#}
+{#                                                </label>#}
+{#                                                <input type="text">#}
+{#                                            </div>#}
+{#                                            <button class="cart-btn-2" type="submit">Get A Quote</button>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+                            <div class="col-lg-4 col-md-6">
+                                <div class="discount-code-wrapper">
+                                    <div class="title-wrap">
+                                       <h4 class="cart-bottom-title section-bg-gray">Ввести промокод</h4>
+                                    </div>
+                                    <div class="discount-code">
+                                        <p>Введите ваш промокод и нажмите Активировать</p>
+                                        <div>
+                                            <input type="text" required="" id="appendedInputButton">
+                                            <button class="cart-btn-2" type="button" onclick="use_promo();return false;">Активировать</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-12">
+                                <div class="grand-totall">
+                                    <div class="title-wrap">
+                                        <h4 class="cart-bottom-title section-bg-gary-cart">Итого по позициям:</h4>
+                                    </div>
+                                    <h5 >Общая стоимость <span id="cart_total">{{ total_cart_price }} &#8381;</span></h5>
+
+                                       <h5>Скидка по промо-коду <span id="promo_value">{{ promo_discount_value }} %</span></h5>
+
+                                    <h4 class="grand-totall-title">Итого  <span id="cart_total_price_side">{{ total_cart_price_with_discount }} &#8381;</span></h4>
+                                    <a href="#">Оформить заказ</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- End popular -->
+        </div>
+      <div class="product-area pb-70">
+        <div class="container">
+            <div class="product-top-bar section-border mb-35">
+                <div class="section-title-wrap">
+                    <h3 class="section-title section-bg-white">ДОБАВЬТЕ К БУКЕТУ</h3>
+                </div>
+            </div>
+         <div class="product-grid product-view pb-20">
+                                <div class="row">
+                                    {% for item in additional_items %}
+                                      <div class="product-width col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12 mb-30">
+                                        {% include 'page/item_card.html' %}
+                                      </div>
+                                    {% endfor %}
+
+                                </div>
+                            </div>
 
         </div>
-        <!--/rightSidebar-->
-
     </div>
-    <!--/row-->
-</div>
-    <div style="clear:both"></div>
-
-<!-- /.main-container -->
-
-<div class="gap"></div>
     {% else %}
-         {% include 'page/empty_cart.html' %}
+        <div class="cart-main-area pt-60 pb-65">
+            <div class="container">
+                <h3 class="page-title">Корзина пуста</h3>
+            </div>
+        </div>
     {% endif %}
 {% endblock %}
