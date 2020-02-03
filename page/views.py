@@ -107,7 +107,7 @@ def new(request):
     all_items = Item.objects.filter(is_new=True, is_active=True, is_present=True).order_by('-created_at')
     not_present = Item.objects.filter(is_new=True, is_active=True, is_present=False)
     data = request.GET
-    print(request.GET)
+    
     search = data.get('search')
     filter = data.get('filter')
     order = data.get('order')
@@ -236,7 +236,7 @@ def checkout(request):
 
 
         if request.POST.get('form_type') == 'checkout_guest':
-            print(request.POST)
+
             s_key = request.session.session_key
             guest = Guest.objects.get(session=s_key)
             name = request.POST.get('name')
@@ -354,7 +354,6 @@ def category(request, slug):
         raise Http404
         # return render(request, '404.html', locals())
     data = request.GET
-    print(request.GET)
     search = data.get('search')
     filter = data.get('filter')
     order = data.get('order')
@@ -492,6 +491,5 @@ def customhandler404(request, exception, template_name='404.html'):
 
 
 def one_click(request):
-    print(request.POST)
     OneClick.objects.create(item_id=request.POST.get('item-id'),phone=request.POST.get('phone'))
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
