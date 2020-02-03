@@ -2,144 +2,101 @@
 {% load static %}
 
 {% block content %}
-    <div class="parallax-section parallax-fx parallax-image-aboutus parallaxOffset no-padding" style=" background: url({% static 'images/contacts.jpg' %}) no-repeat 50% -80px fixed;">
-    <div class="w100 ">
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <div class="parallax-content clearfix animated ">
-                        <h1 class="x2large">
-                            КОНТАКТНАЯ ИНФОРМАЦИЯ
-                        </h1>
-                        <h5 class="parallaxSubtitle">
-
-                        </h5>
-                    </div>
+  <div class="breadcrumb-area gray-bg">
+            <div class="container">
+                <div class="breadcrumb-content">
+                    <ul>
+                        <li><a href=".">Главная</a></li>
+                        <li class="active"> Контакты </li>
+                    </ul>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-<!-- /.parallax -->
-
-<div class="container main-container ">
-    <div class="row innerPage">
-        <div class="col-lg-12 col-md-12 col-sm-12">
-
-            <div class="row userInfo">
-
-                <div class="col-xs-12 col-sm-12">
-
-
-
-                    <div class="row">
-
-                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-
-                                <h3 class="block-title-5">
-                                    Адрес нашего офиса
-                                </h3>
-
-                                <p>
-                                    Москва, Электролитный проезд, 10 строение 5
-                                    <br>
-                                    Третий этаж, офис №305
-                                    <br>
-                                    <strong>
-                                        Телефон:
-                                    </strong>
-                                     +7(495) 926-33-59
-                                    <br>
-                                    <strong>
-                                     Время работы:
-                                    </strong>
-                                    <br>
-                                    ПН-ПТ: с 10:00 до 18:00,
-                                    <br>
-                                    СБ, ВС - Выходной
-
-                                </p>
-
-
-                            </div>
-
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-
-                                <h3 class="block-title-5">
-                                    Адрес нашего склада
-                                </h3>
-
-                                <p>
-                                    Москва, Электролитный проезд, 10 строение 5
-
-                                    <br>
-                                    <strong>
-                                     Время работы:
-                                    </strong>
-                                    <br>
-                                    ПН-ПТ: с 10:00 до 18:00,
-                                    <br>
-                                    СБ, ВС - Выходной
-                                </p>
-
-
-                            </div>
-
-                            <div style="clear:both"></div>
-                            <hr>
-                            <div style="clear:both"></div>
-
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                <h3 class="block-title-5">
-                                    Контактные данные
-                                </h3>
-                                <p>
-                                     По всем вопросам пишите нам на нашу рабочую почту! Вы можете связаться с нами по
-                                     дополнительному номеру с 10:00 до 20:00!
-                                     <br>
-                                    <strong>
-                                        Дополнительный телефон:
-                                    </strong>
-                                    +7(964) 647-76-76
-                                    <br>
-                                    <strong>
-                                        WhatsApp:
-                                    </strong>
-                                    +7(964) 647-76-76
-                                    <br>
-                                    <strong>
-                                        Почта:
-                                    </strong>
-                                    INFO@LAKSHMI888.RU
-                                </p>
-                            </div>
-
-                        <div style="clear:both"></div>
-                        <hr>
-                        <div style="clear:both"></div>
-                         <div class="w100 map">
-                            <iframe width="100%" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?q=%D1%8D%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BB%D0%B8%D1%82%D0%BD%D1%8B%D0%B9%20%D0%BF%D1%80%D0%BE%D0%B5%D0%B7%D0%B4%2C%20%D0%B4%D0%BE%D0%BC%2010%20%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BD%D0%B8%D0%B5%205&t=&z=15&ie=UTF8&iwloc=&output=embed">
-                            </iframe>
-                            <br>
-                            <small>
-                                <a href="https://maps.google.com/maps?f=q&amp;source=embed&amp;hl=en&amp;geocode=+&amp;q=london&amp;ie=UTF8&amp;hq=&amp;hnear=London,+United+Kingdom&amp;ll=51.511214,-0.119824&amp;spn=0.007264,0.021136&amp;t=m&amp;z=14" style="color:#0000FF;text-align:left">
-                                    View Larger Map
-                                </a>
-                            </small>
-
+        <div class="contact-us ptb-68">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="contact-page-title mb-40">
+                            <h1>
+                                Контакты
+                            </h1>
                         </div>
-
                     </div>
-                    <!--/.row-->
                 </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <ul class="contact-tab-list nav">
+                            <li><a class="active" href="#contact-address" data-toggle="tab">Наши контакты</a></li>
+                            <li><a  href="#contact-form-tab" data-toggle="tab">Мы на связи</a></li>
+                            <li><a href="#store-location" data-toggle="tab">Показать на карте</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="tab-content tab-content-contact">
+                            <div id="contact-address" class="tab-pane fade row d-flex active show">
 
 
+                                <div class="col-lg-4 col-md-4">
+                                    <div class="contact-information">
+                                        <h4>Бутик цветов Розовое танг</h4>
+                                        <p>Срезанные цветы, букеты, шарики, оформление подарков</p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4">
+                                    <div class="contact-information contact-mrg">
+                                        <h4>Телефон</h4>
+                                        <p>
+                                            <a href="tel:73512230457">+7 (351) 223-04-57</a>
+
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4">
+                                    <div class="contact-information contact-mrg">
+                                        <h4>E-Mail</h4>
+                                        <p>
+                                            <a href="mailto:r-tango@mail.ru ">r-tango@mail.ru </a>
+                                            <a href="#">www.r-tango.ru</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="contact-form-tab" class="tab-pane fade row d-flex">
+                                <div class="col">
+                                    <form id="contact-form" action="assets/mail.php" method="post">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="contact-form-style mb-20">
+                                                    <input name="name" placeholder="Ваше имя" type="text">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="contact-form-style mb-20">
+                                                    <input name="email" placeholder="Ваш телефон" type="email">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-12">
+                                                <div class="contact-form-style">
+                                                    <textarea name="message" placeholder="Ваше сообщение"></textarea>
+                                                    <button class="submit" type="submit">Отправить</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <p class="form-messege"></p>
+                                </div>
+                            </div>
+                            <div id="store-location" class="tab-pane fade row d-flex">
+                                <div class="col-12">
+                                    <div class="contact-map">
+                                        <div id="map"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <!--/.row  ||  -->
-
         </div>
-    </div>
-    <!--/row || innerPage end-->
-    <div style="clear:both"></div>
-</div>
 {% endblock %}

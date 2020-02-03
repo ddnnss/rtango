@@ -5,22 +5,25 @@
             <div class="border-bottom-1">
                 <div class="row">
                     <div class="col-lg-8 col-md-8 col-12">
-                        <div class="account-curr-lang-wrap f-right">
+                        <div class="account-curr-lang-wrap f-left">
                             <ul>
-                                <li class=""><a href="#">Магазин</a></li>
-                                <li class=""><a href="#">О нас</a></li>
+                                <li class=""><a href="{% url 'about_us' %}">О нас</a></li>
                                 <li class=""><a href="#">Доставка</a></li>
                                 <li class=""><a href="#">Оплата</a></li>
                                 <li class=""><a href="#">Корпоративным клиентам</a></li>
                                 <li class=""><a href="#">Гарантии</a></li>
-                                <li class=""><a href="#">Контакты</a></li>
+                                <li class=""><a href="{% url 'contacts' %}">Контакты</a></li>
                             </ul>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-4 col-12">
-                        <div class="welcome-area">
-                            {#                            <p>Default welcome msg! </p>#}
+                          <div class="account-curr-lang-wrap f-right">
+                            <ul>
+                                <li class=""><a href="tel:73512230457"><strong>+8 (351) 223-04-57</strong> </a></li>
+                                <li class=""><a href="mailto:r-tango@mail.ru"><strong>r-tango@mail.ru</strong> </a></li>
+                                                           </ul>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -118,7 +121,7 @@
                                         </div>
                                         <div class="shopping-cart-btn">
                                             <a href="{% url 'show_cart' %}">Корзина</a>
-                                            <a href="checkout.html">Оплатить</a></div>
+                                            <a href="{% url 'checkout' %}">Оплатить</a></div>
                                  {% endif %}
                                     </div>
 
