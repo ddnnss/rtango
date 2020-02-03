@@ -107,7 +107,7 @@ def new(request):
     all_items = Item.objects.filter(is_new=True, is_active=True, is_present=True).order_by('-created_at')
     not_present = Item.objects.filter(is_new=True, is_active=True, is_present=False)
     data = request.GET
-    
+
     search = data.get('search')
     filter = data.get('filter')
     order = data.get('order')
@@ -124,7 +124,7 @@ def new(request):
         param_search = search
 
     if filter == 'new':
-        print('Поиск по фильтру туц')
+
         if search_qs:
             items = search_qs.filter(is_new=True)
             filter_sq = items
@@ -137,7 +137,7 @@ def new(request):
         param_filter = 'new'
 
     if filter and filter != 'new':
-        print('Поиск по фильтру')
+
 
         if search_qs:
             items = search_qs.filter(filter__name_slug=filter)
@@ -372,7 +372,7 @@ def category(request, slug):
         param_search = search
 
     if filter == 'new':
-        print('Поиск по фильтру туц')
+
         if search_qs:
             items = search_qs.filter(is_new=True)
             filter_sq = items
@@ -385,7 +385,7 @@ def category(request, slug):
         param_filter = 'new'
 
     if filter and filter != 'new':
-        print('Поиск по фильтру')
+       
 
         if search_qs:
             items = search_qs.filter(filter__name_slug=filter)
