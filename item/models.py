@@ -10,6 +10,7 @@ from ckeditor_uploader.fields import RichTextUploadingField
 from django.conf import settings
 from django.utils.safestring import mark_safe
 #from laskshmi import settings
+from rtango import settings
 
 import os
 
@@ -263,12 +264,12 @@ class ItemImage(models.Model):
             image = background
         image.thumbnail((270, 300), Image.ANTIALIAS)
         small_name = 'media/items/{}/{}'.format(self.item.id, str(uuid.uuid4()) + '.jpg')
-        if settings.DEBUG:
-            os.makedirs('media/items/{}'.format(self.item.id), exist_ok=True)
-            image.save(small_name, 'JPEG', quality=75)
-        else:
-            os.makedirs('C:/inetpub/wwwroot/khimiya/media/items/{}'.format(self.item.id), exist_ok=True)
-            image.save('khimiya/' + small_name, 'JPEG', quality=75)
+        # if settings.DEBUG:
+        os.makedirs('media/items/{}'.format(self.item.id), exist_ok=True)
+        image.save(small_name, 'JPEG', quality=75)
+        # else:
+        #     os.makedirs('C:/inetpub/wwwroot/khimiya/media/items/{}'.format(self.item.id), exist_ok=True)
+        #     image.save('khimiya/' + small_name, 'JPEG', quality=75)
         self.image_small = '/' + small_name
 
         super(ItemImage, self).save(*args, **kwargs)
