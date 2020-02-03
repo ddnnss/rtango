@@ -385,7 +385,7 @@ def category(request, slug):
         param_filter = 'new'
 
     if filter and filter != 'new':
-       
+
 
         if search_qs:
             items = search_qs.filter(filter__name_slug=filter)
