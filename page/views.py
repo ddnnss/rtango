@@ -343,15 +343,21 @@ def index(request):
 
 
 
-def category(request, slug):
-    try:
-        category = Category.objects.get(name_slug=slug)
-        all_items = Item.objects.filter(category=category, is_active=True, is_present=True, is_optional=False).order_by('-created_at')
-        title = category.page_title
-        description = category.page_description
-        keywords = category.page_keywords
-    except:
-        raise Http404
+def category(request, slug, subcat_slug):
+    # try:
+    print(subcat_slug)
+
+    category = Category.objects.get(name_slug=slug)
+    all_items = Item.objects.filter(category=category, is_active=True, is_present=True, is_optional=False).order_by('-created_at')
+    if subcat_slug != 'all':
+        filterItem = Filter.objects.get(name_slug=subcat_slug)
+        all_items = all_items.filter(filter=filterItem.id)
+        param_filter = filterItem.name_slug
+    title = category.page_title
+    description = category.page_description
+    keywords = category.page_keywords
+    # except:
+    #     raise Http404
         # return render(request, '404.html', locals())
     data = request.GET
     search = data.get('search')

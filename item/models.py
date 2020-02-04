@@ -99,6 +99,10 @@ class Filter(models.Model):
     category = models.ManyToManyField(Category, blank=True, verbose_name='Для категорий', related_name='filters')
     name = models.CharField('Название фильтра', max_length=255, blank=False, null=True)
     name_slug = models.CharField(max_length=255, blank=True, null=True)
+    page_title = models.CharField('Название страницы', max_length=255, blank=True, null=True)
+    page_description = models.TextField('Описание страницы', blank=True, null=True)
+    page_keywords = models.TextField('Keywords', blank=True, null=True)
+    description = RichTextUploadingField('Описание товара', blank=True, null=True)
 
     def save(self, *args, **kwargs):
         slug = slugify(self.name)

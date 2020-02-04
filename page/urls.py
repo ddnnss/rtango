@@ -20,7 +20,8 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('category/<slug>/', views.category, name='category'),
+    # path('category/<slug>/', views.category, name='category'),
+    path('category/<slug>/<subcat_slug>', views.category, name='category'),
     path('category/<cat_slug>/<item_slug>/', views.item_page, name='item_page'),
     # path('subcategory/<subcat_slug>/', views.subcategory, name='subcategory'),
     path('one_click/', views.one_click, name='one_click'),

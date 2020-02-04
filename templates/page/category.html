@@ -88,9 +88,9 @@
                                         {% for cat in all_cat %}
                                         <li> <a {% if  category.name_slug == cat.name_slug %} style="color: #ff3d2a; font-weight: 600" {% endif %} data-toggle="collapse" data-parent="#faq" href="#cat-{{ cat.id }}">{{ cat.name }} <i class="ion-ios-arrow-down"></i></a>
                                             <ul id="cat-{{ cat.id }}" class="panel-collapse collapse {% if cat.id == category.id %}show{% endif %}">
-                                                <li><a {% if not param_filter and category.name_slug == cat.name_slug %} style="color: #ff3d2a; font-weight: 600" {% endif %} href="{% url 'category' cat.name_slug %}">Все предложения</a></li>
+                                                <li><a {% if not param_filter and category.name_slug == cat.name_slug %} style="color: #ff3d2a; font-weight: 600" {% endif %} href="{% url 'category' cat.name_slug all%}">Все предложения</a></li>
                                              {% for filter in cat.filters.all %}
-                                                            <li><a {% if param_filter == filter.name %} style="color: #ff3d2a; font-weight: 600" {% endif %} href="{% url 'category' cat.name_slug%}?filter={{ filter.name }}">{{ filter.name }}</a></li>
+                                                            <li><a {% if param_filter == filter.name_slug and category.name_slug == cat.name_slug%} style="color: #ff3d2a; font-weight: 600" {% endif %} href="{% url 'category' cat.name_slug filter.name_slug%}">{{ filter.name }}</a></li>
                                                         {% endfor %}
 
                                             </ul>

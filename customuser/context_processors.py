@@ -2,6 +2,7 @@ from item.models import Category
 from order.models import Wishlist
 import random
 def check_profile(request):
+    all = 'all'
     num1 = random.randint(0, 9)
     num2 = random.randint(0, 9)
     all_cat = Category.objects.all()
