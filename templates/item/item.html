@@ -7,7 +7,7 @@
             <div class="breadcrumb-content">
                 <ul>
                     <li><a href="/">Главная</a></li>
-                    <li><a href="{% url 'category' category.name_slug %}">{{ category.name }}</a></li>
+                    <li><a href="{% url 'category' category.name_slug all%}">{{ category.name }}</a></li>
                     <li class="active">{{ item.name }} </li>
                 </ul>
             </div>
