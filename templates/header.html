@@ -65,7 +65,7 @@
                                                     <ul>
                                                         <li class="mega-menu-title">{{ cat.name }}</li>
                                                         {% for filter in cat.filters.all %}
-                                                            <li><a href="{% url 'category' cat.name_slug%}?filter={{ filter.name }}">{{ filter.name }}</a></li>
+                                                            <li><a href="{% url 'category' cat.name_slug filter.name_slug%}">{{ filter.name }}</a></li>
                                                         {% endfor %}
                                                     </ul>
                                                 </li>
