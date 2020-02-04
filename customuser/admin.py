@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
 from django.utils.translation import ugettext_lazy as _
 
-from .models import User,Guest
+from .models import *
 
 
 @admin.register(User)
@@ -28,3 +28,4 @@ class UserAdmin(DjangoUserAdmin):
     search_fields = ('email', 'fio', 'phone')
 
 admin.site.register(Guest)
+admin.site.register(SessionTemp)

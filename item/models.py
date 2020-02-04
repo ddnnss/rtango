@@ -23,13 +23,14 @@ def format_number(num):
 
 class Category(models.Model):
     name = models.CharField('Название категории', max_length=255, blank=False, null=True)
-    name_slug = models.CharField(max_length=255, blank=True, null=True)
+    name_slug = models.CharField(max_length=255, blank=True, null=True, editable=False)
     image = models.ImageField('Изображение категории 370x150', upload_to='category_img/', blank=True)
+    page_h1 = models.CharField('Заголовок H1', max_length=255, blank=True, null=True)
     page_title = models.CharField('Название страницы', max_length=255, blank=True, null=True)
     page_description = models.CharField('Описание страницы', max_length=255, blank=True, null=True)
     page_keywords = models.TextField('Keywords', blank=True, null=True)
     short_description = models.TextField('Краткое описание для главной', blank=True,)
-    description = RichTextUploadingField('Описание категории', blank=True, null=True)
+    description = RichTextUploadingField('Текст на странице', blank=True, null=True)
     show_at_index = models.BooleanField('Показывать на главной?', default=False)
     show_at_main_menu = models.BooleanField('Показывать в главном меню отдельной категорией?', default=False)
     views = models.IntegerField(default=0)
@@ -98,11 +99,12 @@ class SubCategory(models.Model):
 class Filter(models.Model):
     category = models.ManyToManyField(Category, blank=True, verbose_name='Для категорий', related_name='filters')
     name = models.CharField('Название фильтра', max_length=255, blank=False, null=True)
-    name_slug = models.CharField(max_length=255, blank=True, null=True)
+    name_slug = models.CharField(max_length=255, blank=True, null=True, editable=False)
+    page_h1 = models.CharField('Заголовок H1', max_length=255, blank=True, null=True)
     page_title = models.CharField('Название страницы', max_length=255, blank=True, null=True)
     page_description = models.TextField('Описание страницы', blank=True, null=True)
     page_keywords = models.TextField('Keywords', blank=True, null=True)
-    description = RichTextUploadingField('Описание товара', blank=True, null=True)
+    description = RichTextUploadingField('Тескт на странице', blank=True, null=True)
 
     def save(self, *args, **kwargs):
         slug = slugify(self.name)
@@ -199,8 +201,8 @@ class Item(models.Model):
 
 class ItemPart(models.Model):
     name = models.CharField('Название ', max_length=255, blank=False, null=True)
-    name_lower = models.CharField(max_length=255, blank=True, null=True, db_index=True)
-    name_slug = models.CharField(max_length=255, blank=True, null=True, db_index=True)
+    name_lower = models.CharField(max_length=255, blank=True, null=True, db_index=True, editable=False)
+    name_slug = models.CharField(max_length=255, blank=True, null=True, db_index=True, editable=False)
     image = models.ImageField('Изображение', upload_to='item/part/', blank=True)
 
     def save(self, *args, **kwargs):
@@ -237,7 +239,7 @@ class ItemParts(models.Model):
 class ItemImage(models.Model):
     item = models.ForeignKey(Item, blank=False, null=True, on_delete=models.CASCADE, verbose_name='Товар', related_name='images')
     image = models.ImageField('Изображение товара 570x570', upload_to='item/big_img/', blank=False)
-    image_small = models.CharField(max_length=255, blank=True, default='')
+    image_small = models.CharField(max_length=255, blank=True, default='', editable=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -286,7 +288,7 @@ class PromoCode(models.Model):
     use_counts = models.IntegerField('Кол-во использований', blank=True, default=1)
     is_unlimited = models.BooleanField('Неограниченное кол-во использований', default=False)
     is_active = models.BooleanField('Активен?', default=True)
-    expiry = models.DateTimeField('Срок действия безлимитного кода', default=timezone.now())
+    expiry = models.DateTimeField('Срок действия безлимитного кода', null=True)
 
     def __str__(self):
         if self.is_unlimited:

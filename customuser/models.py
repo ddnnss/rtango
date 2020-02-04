@@ -52,6 +52,7 @@ class User(AbstractUser):
                                    verbose_name='Использованный промо-код при текущей корзине')
     profile_ok = models.BooleanField(default=False)
 
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
@@ -68,4 +69,11 @@ class Guest(models.Model):
 
     def __str__(self):
         return 'Гостевой аккаунт. EMAIL : %s' % self.email
+
+class SessionTemp(models.Model):
+    user = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
+    guest = models.ForeignKey(Guest, blank=True, null=True, on_delete=models.CASCADE)
+    delivery = models.IntegerField(default=0)
+    needPhoto = models.BooleanField(default=False)
+    card_text = models.TextField(blank=True, null=True)
 

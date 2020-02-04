@@ -40,8 +40,8 @@ def wishlist_add(request):
 
 def add_to_cart(request):
     return_dict = {}
-
-
+    promo_discount_value = 0
+    used_promo = False
     data = request.POST
     print(data)
     s_key = request.session.session_key
@@ -93,6 +93,7 @@ def add_to_cart(request):
         total_cart_price += item.total_price
         item_dict = dict()
         item_dict['id'] = item.item.id
+        item_dict['cart_id'] = item.id
         item_dict['name'] = item.item.name
         item_dict['name_slug'] = item.item.name_slug
         item_dict['price'] = item.current_price
@@ -120,7 +121,7 @@ def delete_from_cart(request):
     data = request.POST
     s_key = request.session.session_key
     item_id = int(data.get('item_id'))
-
+    used_promo = False
     if request.user.is_authenticated:
         print('User is_authenticated')
         Cart.objects.filter(client=request.user, item_id=item_id).delete()
@@ -148,6 +149,7 @@ def delete_from_cart(request):
         total_cart_price += item.total_price
         item_dict = dict()
         item_dict['id'] = item.item.id
+        item_dict['cart_id'] = item.id
         item_dict['name'] = item.item.name
         item_dict['name_slug'] = item.item.name_slug
         item_dict['price'] = item.current_price
@@ -172,7 +174,7 @@ def delete_from_cart(request):
 
 def update_cart(request):
     return_dict = {}
-
+    used_promo = False
     data = request.POST
     print(data)
     item_id = int(data.get('item_id'))

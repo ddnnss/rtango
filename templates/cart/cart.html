@@ -13,7 +13,7 @@
             </div>
         </div>
     </div>
-      <!-- shopping-cart-area start -->
+    <!-- shopping-cart-area start -->
     {% if count_items_in_cart > 0 %}
         <div class="cart-main-area pt-60 pb-65">
             <div class="container"> <div class="product-top-bar section-border mb-35">
@@ -28,17 +28,17 @@
                             <div id="#cart_content" class="table-content table-responsive">
                                 <table>
                                     <thead>
-                                        <tr>
-                                            <th></th>
-                                            <th>Название</th>
-                                            <th>Цена</th>
-                                            <th>Количество</th>
-                                            <th>Всего</th>
-                                            <th>Удалить</th>
-                                        </tr>
+                                    <tr>
+                                        <th></th>
+                                        <th>Название</th>
+                                        <th>Цена</th>
+                                        <th>Количество</th>
+                                        <th>Всего</th>
+                                        <th>Удалить</th>
+                                    </tr>
                                     </thead>
                                     <tbody id="cart_content_table">
-                                     {% for cart_item in all_items_in_cart %}
+                                    {% for cart_item in all_items_in_cart %}
                                         <tr>
                                             <td class="product-thumbnail">
                                                 <a href="#"><img width="70px" src="{{ cart_item.item.images.first.image_small }}" alt=""></a>
@@ -55,42 +55,50 @@
 
                                                 <a onclick="delete_from_main_cart({{ cart_item.id }});return false;" title="Удалить">
                                                     <i class="fa fa-times"></i></a>
-                                           </td>
+                                            </td>
                                         </tr>
-                                      {% endfor %}
+                                    {% endfor %}
                                     </tbody>
                                     <tfoot class="cart-footer">
-                                        <tr>
-                                            <td colspan="3"></td>
-                                            <td class="text-right">Итого по позициям:</td>
-                                            <td class="text-left"><span id="cart_total">{{ total_cart_price }}</span> &#8381;</td>
-                                            <td></td>
-                                        </tr>
-                                      <tr>
-                                            <td colspan="3"></td>
-                                            <td class="text-right">Доставка:</td>
-                                            <td colspan="2" >
-                                                <div class="billing-select">
+                                    <tr>
+                                        <td colspan="3">
+                                            <div class="cart-addition ">
+                                                <label><input id="need_card" onchange="toggleCardText()" type="checkbox"> Добавить открытку-бесплатно!</label>
+                                                <label><input id="need_photo" type="checkbox"> Сделать фото при получении</label>
+                                                <textarea class="not-visible" id="card_text" placeholder="Текст поздравления"></textarea>
+                                            </div>
 
-                                                            <select id="shipping" onchange="getShippingPrice()">
-                                                                {% for ship in all_shipping %}
-                                                                    <option {% if forloop.first %} selected {% endif %} value="{{ ship.id }}"
-                                                                            data-price="{{ ship.price }}">
-                                                                    {{ ship.name }} - {{ ship.price }} &#8381;
-                                                                    </option>
-                                                                {% endfor %}
-                                                            </select>
-                                                        </div>
+                                        </td>
+                                        <td class="text-right">Итого по позициям:</td>
+                                        <td class="text-left"><span id="cart_total">{{ total_cart_price }}</span> &#8381;</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3"></td>
+                                        <td style="vertical-align: baseline;" class="text-right">Доставка:</td>
+                                        <td colspan="2" >
+                                            <div class="billing-select">
 
-                                            </td>
+                                                <select id="shipping" onchange="getShippingPrice()">
+                                                    {% for ship in all_shipping %}
+                                                        <option {% if forloop.first %} selected {% endif %} value="{{ ship.id }}"
+                                                                                       data-price="{{ ship.price }}" {% if ship.isFree %} data-free="{{ ship.freePrice }}"{% endif %}>
+                                                            {{ ship.name }} - {{ ship.price }} &#8381;
+                                                        </option>
+                                                    {% endfor %}
+                                                </select>
+                                                <span style="font-size: x-small"><strong>При заказе от 3000 руб - доставка по  Челябинску бесплатная</strong> </span>
+                                            </div>
 
-                                        </tr>
-                                      <tr>
-                                            <td colspan="3"></td>
-                                            <td><h4 class="grand-totall-title text-right" style=" margin: 0">Итого  </h4></td>
-                                          <td class="text-left"><h4 style=" margin: 0" class="grand-totall-title"><span style="float: none;" id="cart_total_price_side">{{ total_cart_price_with_discount }} &#8381;</span> </h4></td>
-                                            <td></td>
-                                        </tr>
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3"></td>
+                                        <td><h4 class="grand-totall-title text-right" style=" margin: 0">Итого  </h4></td>
+                                        <td class="text-left"><h4 style=" margin: 0" class="grand-totall-title"><span style="float: none;" id="cart_total_price_side">{{ total_cart_price_with_discount }} &#8381;</span> </h4></td>
+                                        <td></td>
+                                    </tr>
                                     </tfoot>
                                 </table>
                             </div>
@@ -100,9 +108,10 @@
                                         <div class="cart-shiping-update">
                                             <a href="{{ request.META.HTTP_REFERER }}">Продолжить покупки</a>
                                         </div>
-                                        <div class="cart-clear ">
+                                        <div class="cart-clear text-center">
 
-                                            <a style="background: #ff3d2a; color: #fff" href="#">Оформить заказ</a>
+                                            <a style="background: #ff3d2a; color: #fff" href="javascript: void(0)" onclick="get_checkout()">Оформить заказ</a>
+                                            <span style="display: block; font-size: 12px">Оформляя заказ вы соглашаетесь с условиями оферты и политики конфиденциальности</span>
                                         </div>
                                     </div>
                                 </div>
@@ -110,61 +119,104 @@
                         </form>
                         <div class="row">
 
-{#                            <div class="col-lg-4 col-md-6">#}
-{#                                <div class="discount-code-wrapper">#}
-{#                                    <div class="title-wrap">#}
-{#                                       <h4 class="cart-bottom-title section-bg-gray">Ввести промокод</h4>#}
-{#                                    </div>#}
-{#                                    <div class="discount-code">#}
-{#                                        <p>Введите ваш промокод и нажмите Активировать</p>#}
-{#                                        <div>#}
-{#                                            <input type="text" required="" id="appendedInputButton">#}
-{#                                            <button class="cart-btn-2" type="button" onclick="use_promo();return false;">Активировать</button>#}
-{#                                        </div>#}
-{#                                    </div>#}
-{#                                </div>#}
-{#                            </div>#}
-{#                            <div class="col-lg-4 col-md-12">#}
-{#                                <div class="grand-totall">#}
-{#                                    <div class="title-wrap">#}
-{#                                        <h4 class="cart-bottom-title section-bg-gary-cart">Итого по позициям:</h4>#}
-{#                                    </div>#}
-{#                                    <h5 >Общая стоимость <span id="cart_total">{{ total_cart_price }} &#8381;</span></h5>#}
-{##}
-{#                                       <h5>Скидка по промо-коду <span id="promo_value">{{ promo_discount_value }} %</span></h5>#}
-{##}
-{#                                    <h4 class="grand-totall-title">Итого  <span id="cart_total_price_side">{{ total_cart_price_with_discount }} &#8381;</span></h4>#}
-{#                                    <a href="#">Оформить заказ</a>#}
-{#                                </div>#}
-{#                            </div>#}
+                            {#                            <div class="col-lg-4 col-md-6">#}
+                            {#                                <div class="discount-code-wrapper">#}
+                            {#                                    <div class="title-wrap">#}
+                            {#                                       <h4 class="cart-bottom-title section-bg-gray">Ввести промокод</h4>#}
+                            {#                                    </div>#}
+                            {#                                    <div class="discount-code">#}
+                            {#                                        <p>Введите ваш промокод и нажмите Активировать</p>#}
+                            {#                                        <div>#}
+                            {#                                            <input type="text" required="" id="appendedInputButton">#}
+                            {#                                            <button class="cart-btn-2" type="button" onclick="use_promo();return false;">Активировать</button>#}
+                            {#                                        </div>#}
+                            {#                                    </div>#}
+                            {#                                </div>#}
+                            {#                            </div>#}
+                            {#                            <div class="col-lg-4 col-md-12">#}
+                            {#                                <div class="grand-totall">#}
+                            {#                                    <div class="title-wrap">#}
+                            {#                                        <h4 class="cart-bottom-title section-bg-gary-cart">Итого по позициям:</h4>#}
+                            {#                                    </div>#}
+                            {#                                    <h5 >Общая стоимость <span id="cart_total">{{ total_cart_price }} &#8381;</span></h5>#}
+                            {##}
+                            {#                                       <h5>Скидка по промо-коду <span id="promo_value">{{ promo_discount_value }} %</span></h5>#}
+                            {##}
+                            {#                                    <h4 class="grand-totall-title">Итого  <span id="cart_total_price_side">{{ total_cart_price_with_discount }} &#8381;</span></h4>#}
+                            {#                                    <a href="#">Оформить заказ</a>#}
+                            {#                                </div>#}
+                            {#                            </div>#}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-      <div class="product-area pb-70">
-        <div class="container">
-            <div class="product-top-bar section-border mb-35">
-                <div class="section-title-wrap">
-                    <h3 class="section-title section-bg-white">Добавьте к букету</h3>
+        <div class="product-area pb-70">
+            <div class="container">
+                <div class="product-top-bar section-border mb-35">
+                    <div class="section-title-wrap">
+                        <h3 class="section-title section-bg-white">Добавьте к букету</h3>
+                    </div>
                 </div>
-            </div>
-         <div class="product-grid product-view pb-20">
-                                <div class="row">
-                                    {% for item in additional_items %}
-                                      <div class="product-width col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12 mb-30">
-                                        {% include 'page/item_card.html' %}
-                                      </div>
-                                    {% endfor %}
-
-                                </div>
+                <div class="product-grid product-view pb-20">
+                    <div class="row">
+                        {% for item in additional_items %}
+                            <div class="product-width col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12 mb-30">
+                                {% include 'page/item_card.html' %}
                             </div>
+                        {% endfor %}
 
+                    </div>
+                </div>
+
+            </div>
         </div>
-    </div>
         <script>
 
-        getShippingPrice()
+            document.addEventListener("DOMContentLoaded", function(event) {
+                getShippingPrice()
+            });
+            function get_checkout() {
+                let shipping = document.getElementById('shipping')
+                let needCard = document.getElementById('need_card')
+                let needPhoto = document.getElementById('need_photo')
+                let cardText = document.getElementById('card_text').value
+                let data = {}
+
+                let url = '/get_checkout/'
+                let csrf_token = $('#dummy_form [name="csrfmiddlewaretoken"]').val()
+                if (needCard.checked){
+                    data.cardText = cardText
+                }
+                if (needPhoto.checked){
+                    data.needPhoto = 1
+                }
+
+                data['csrfmiddlewaretoken'] = csrf_token;
+                data.delivery = shipping.options[shipping.selectedIndex].value
+
+                console.log(data);
+                $.ajax({
+                    url:url,
+                    type:'POST',
+                    data: data,
+                    cache:true,
+                    success: function (data) {
+                        console.log(data['result'])
+                        if (data['result']){
+                            window.location.href ='/checkout/'
+                        }
+
+                    }
+                })
+            }
+
+            function toggleCardText(){
+                let cardText = document.getElementById('card_text')
+
+                cardText.classList.toggle('not-visible')
+            }
+
         </script>
     {% else %}
         <div class="cart-main-area pt-60 pb-65">

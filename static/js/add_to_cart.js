@@ -84,7 +84,7 @@ function add_to_cart(el,num) {
                                             <td class="product-subtotal">${v.total_price} &#8381;</td>
                                             <td class="product-remove">
 
-                                                <a onclick="delete_from_main_cart(${v.id});return false;" title="Удалить">
+                                                <a onclick="delete_from_main_cart(${v.cart_id});return false;" title="Удалить">
                                                     <i class="fa fa-times"></i></a>
                                            </td>
                                         </tr>`

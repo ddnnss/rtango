@@ -31,6 +31,7 @@ urlpatterns = [
     path('dostavka/', views.dostavka, name='dostavka'),
     path('new/', views.new, name='new'),
     path('checkout/', views.checkout, name='checkout'),
+    path('get_checkout/', views.get_checkout, name='get_checkout'),
     path('check_email/', views.check_email, name='check_email'),
     path('order/<order_code>', views.order, name='order'),
     path('robots.txt', views.robots, name='robots'),

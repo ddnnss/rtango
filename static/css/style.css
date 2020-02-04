@@ -5468,7 +5468,25 @@ h4.section-title-about::before {
 }
 
 
+.not-visible{
+    display: none;
+}
 
+.cart-addition{
+    display: flex;
+    justify-content: space-around;
+    position: relative
+}
 
+.cart-addition label{
+ display: flex;
+    align-items: center;
+}
+.cart-addition input{
+width: auto; margin-right: 20px
+}
+.cart-addition textarea{
+position: absolute; width: 100%; height: 150px; background-color: white; top: 50px
+}
 
 

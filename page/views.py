@@ -1,12 +1,16 @@
+import json
+
 from django.shortcuts import render
 from django.http import JsonResponse, HttpResponseRedirect, HttpResponse
+from django.views.decorators.csrf import csrf_exempt
+
 from .models import *
 from item.models import *
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from customuser.forms import SignUpForm, UpdateForm
 from order.models import *
 from cart.models import Cart
-from customuser.models import User, Guest
+from customuser.models import *
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.http import Http404
@@ -183,8 +187,41 @@ def new(request):
     show_tags = False
     return render(request, 'page/new.html', locals())
 
+def get_checkout(request):
+    print(request.POST)
+    return_dict = {}
+    newSessionTemp = None
+    if request.user.is_authenticated:
+        print('New sessionTemp for reg user')
+        try:
+            SessionTemp.objects.get(user=request.user).delete()
+            newSessionTemp = SessionTemp.objects.create(user=request.user)
+            print('New sessionTemp  for reg user delete and create')
+        except:
+            newSessionTemp = SessionTemp.objects.create(user=request.user)
+            print('New sessionTemp  for reg user create')
+    else:
+        s_key = request.session.session_key
+        guest = Guest.objects.get(session=s_key)
+        print('New sessionTemp for guest user')
+        try:
+            SessionTemp.objects.get(guest=guest).delete()
+            newSessionTemp = SessionTemp.objects.create(guest=guest)
+            print('New sessionTemp  for guest user delete and create')
+        except:
+            newSessionTemp = SessionTemp.objects.create(guest=guest)
+            print('New sessionTemp  for guest user create')
 
+    newSessionTemp.delivery = int(request.POST.get('delivery'))
+    if request.POST.get('needPhoto'):
+        newSessionTemp.needPhoto = True
+    if request.POST.get('cardText'):
+        newSessionTemp.card_text = request.POST.get('cardText')
 
+    newSessionTemp.save()
+
+    return_dict['result'] = True
+    return JsonResponse(return_dict)
 
 def checkout(request):
     show_tags = True
@@ -231,8 +268,6 @@ def checkout(request):
             send_mail('Новый заказ', None, 'norply@lakshmi888.ru', ['info@lakshmi888.ru'],
                       fail_silently=False, html_message=msg_html)
             return HttpResponseRedirect('/order/{}'.format(new_order.order_code))
-
-
 
 
         if request.POST.get('form_type') == 'checkout_guest':
@@ -313,6 +348,8 @@ def checkout(request):
             return HttpResponseRedirect('/order/{}'.format(new_order.order_code))
 
 
+
+
 #-------------------------------------------------------------------------------GET request
     shipping = OrderShipping.objects.all()
     payment = OrderPayment.objects.all()
@@ -330,8 +367,8 @@ def checkout(request):
 
 def index(request):
     show_tags = True
-    title = 'Лакшми888 - Магазин Фен Шуй'
-    description = 'Интернет Магазин фен шуй товаров: у нас вы можете купить фен шуй товары по выгодным ценам. Доставка во все регионы.'
+    title = ''
+    description = ''
     keywords = ''
     banners = Banner.objects.filter(is_active=True).order_by('order')
     items_with_discount = Item.objects.filter(discount__gt=0)
@@ -349,13 +386,18 @@ def category(request, slug, subcat_slug):
 
     category = Category.objects.get(name_slug=slug)
     all_items = Item.objects.filter(category=category, is_active=True, is_present=True, is_optional=False).order_by('-created_at')
+    tag_h1 = category.page_h1
+    title = category.page_title
+    description = category.page_description
+    keywords = category.page_keywords
     if subcat_slug != 'all':
         filterItem = Filter.objects.get(name_slug=subcat_slug)
         all_items = all_items.filter(filter=filterItem.id)
         param_filter = filterItem.name_slug
-    title = category.page_title
-    description = category.page_description
-    keywords = category.page_keywords
+        tag_h1 = filterItem.page_h1
+        title = filterItem.page_title
+        description = filterItem.page_description
+        keywords = filterItem.page_keywords
     # except:
     #     raise Http404
         # return render(request, '404.html', locals())

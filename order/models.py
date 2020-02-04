@@ -39,7 +39,9 @@ class OrderPayment(models.Model):
 
 class OrderShipping(models.Model):
     name = models.CharField('Вариант доставки заказа', max_length=100, blank=False)
-    price = models.IntegerField('Стоимость доставки', blank=False,null=True)
+    price = models.IntegerField('Стоимость доставки', blank=False, null=True)
+    isFree = models.BooleanField('Бесплатная доставка при заказе от ', default=False)
+    freePrice = models.IntegerField('этой суммы заказа', default=0)
 
     def __str__(self):
         return '%s' % self.name
