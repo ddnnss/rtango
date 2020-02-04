@@ -3734,6 +3734,15 @@ h3.page-title {
     padding: 18px 63px 19px;
     text-transform: uppercase;
 }
+
+.checkout-btn{
+    background-color: #ff3d2a;
+    color: #fff;
+}
+.checkout-btn:hover {
+    background-color: #f2f2f2;
+    color: #ff3d2a;
+}
 .cart-shiping-update > a:hover,
 .cart-clear > button:hover,
 .cart-clear > a:hover {
@@ -5450,8 +5459,13 @@ h4.section-title-about::before {
     padding-right: 0;
 }
 
+.cart-footer{
+    border-top: 1px solid #a7a7a7;
+}
 
-
+.cart-footer td{
+    padding: 10px 10px !important;
+}
 
 
 

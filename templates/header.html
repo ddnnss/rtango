@@ -48,11 +48,13 @@
 
                                     {% for cat in cats_in_menu %}
                                         <li class="top-hover"><a href="{% url 'category' cat.name_slug%}">{{ cat.name }}</a>
+                                        {% if cat.filters.all %}
                                             <ul class="submenu">
                                                 {% for filter in cat.filters.all %}
                                                     <li><a href="{% url 'category' cat.name_slug%}?filter={{ filter.name }}">{{ filter.name }}</a></li>
                                                 {% endfor %}
                                             </ul>
+                                        {% endif %}
                                         </li>
                                     {% endfor %}
 

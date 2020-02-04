@@ -69,5 +69,21 @@
   $('#oneclick_id').val(itemId)
 })
 </script>
+    <script>
+           let shipping = document.getElementById('shipping')
+
+        let totalPrice = document.getElementById('cart_total_price_side')
+        let shippingPrice = 0
+
+        function getShippingPrice(){
+             let cartTotal = parseInt(document.getElementById('cart_total').innerText)
+            console.log('cartTotal',cartTotal)
+
+            shippingPrice = parseInt(shipping.options[shipping.selectedIndex].dataset.price)
+            console.log('shippingPrice',shippingPrice)
+            totalPrice.innerText = cartTotal + shippingPrice
+
+        }
+    </script>
 </body>
 </html>

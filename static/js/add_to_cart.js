@@ -95,6 +95,7 @@ function add_to_cart(el,num) {
                 $('#cart_subtotal_price_side').html(data.total_cart_price + ' &#8381;');
                 $('#cart_total_price_side').html(data.total_cart_price_with_discount + ' &#8381;');
                 $('#promo_value').html(data.promo_discount_value + ' %');
+                 getShippingPrice()
 
 
                 $.amaran({

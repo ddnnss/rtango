@@ -4,7 +4,7 @@ from cart.models import Cart
 from customuser.models import Guest
 from item.models import PromoCode,Item,SubCategory
 from datetime import datetime
-from order.models import Wishlist
+from order.models import *
 
 
 def format_number(num):
@@ -15,6 +15,7 @@ def format_number(num):
 
 def show_cart(request):
     additional_items = Item.objects.filter(is_optional=True)
+    all_shipping = OrderShipping.objects.all()
     return render(request, 'cart/cart.html', locals())
 
 def wishlist_delete(request):
