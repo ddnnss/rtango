@@ -78,7 +78,7 @@ function add_to_cart(el,num) {
                                             <td class="product-price-cart"><span class="amount">${v.price} &#8381;</span></td>
                                             <td class="product-quantity">
                                                 <div class="pro-dec-cart">
-                                                    <input class="cart-plus-minus-box"  data-item_in_cart_id="${v.id}" onchange="change_cart(this);return false;" type="number" min="1" value="${v.number}"  name="qtybutton">
+                                                    <input class="cart-plus-minus-box"  data-item_in_cart_id="${v.cart_id}" onchange="change_cart(this);return false;" type="number" min="1" value="${v.number}"  name="qtybutton">
                                                 </div>
                                             </td>
                                             <td class="product-subtotal">${v.total_price} &#8381;</td>
