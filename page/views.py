@@ -386,6 +386,8 @@ def index(request):
     title = ''
     description = ''
     keywords = ''
+    most_view_items = Item.objects.all().order_by('-views')
+    most_buys_items = Item.objects.all().order_by('-buys')
     banners = Banner.objects.filter(is_active=True).order_by('order')
     items_with_discount = Item.objects.filter(discount__gt=0)
     main_category = Category.objects.all()
@@ -400,8 +402,12 @@ def category(request, slug, subcat_slug):
     # try:
     print(subcat_slug)
 
+    popular_category = Category.objects.all().order_by('-views')
     category = Category.objects.get(name_slug=slug)
+
     all_items = Item.objects.filter(category=category, is_active=True, is_present=True, is_optional=False).order_by('-created_at')
+    category.views += 1
+    category.save()
     tag_h1 = category.page_h1
     title = category.page_title
     description = category.page_description

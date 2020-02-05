@@ -69,21 +69,37 @@
 
                                 </div>
                             </div>
+
                             <div class="pagination-total-pages">
+
                                 <div class="pagination-style">
                                     <ul>
-                                        <li><a class="prev-next prev" href="#"><i class="ion-ios-arrow-left"></i> Prev</a></li>
-                                        <li><a class="active" href="#">1</a></li>
-                                        <li><a href="#">2</a></li>
-                                        <li><a href="#">3</a></li>
-                                        <li><a href="#">...</a></li>
-                                        <li><a href="#">10</a></li>
-                                        <li><a class="prev-next next" href="#">Next<i class="ion-ios-arrow-right"></i> </a></li>
+                                           {% if items.has_previous %}
+                                    <li >
+                                      <a class="prev-next prev" href="?{% if param_search %}&search={{ param_search }}{% endif %}{% if param_filter %}&filter={{ param_filter }}{% endif %}{% if param_order %}&order={{ param_order }}{% endif %}{% if param_count %}&count={{ param_count }}{% endif %}" aria-label="Previous">
+                                       <i class="ion-ios-arrow-left"></i></a>
+                                    </li>
+                                {% endif %}
+                                    {% for pg in items.paginator.page_range %}
+                                        {% if items.number == pg %}
+                                            <li> <a class="active" href="?{% if pg > 1 %}page={{ pg }}{% endif %}{% if param_search %}&search={{ param_search }}{% endif %}{% if param_filter %}&filter={{ param_filter }}{% endif %}{% if param_order %}&order={{ param_order }}{% endif %}{% if param_count %}&count={{ param_count }}{% endif %}">{{pg}}</a></li>
+                                        {% elif pg > items.number|add:'-6' and pg < items.number|add:'6' %}
+                                            <li ><a  href="?{% if pg > 1 %}page={{ pg }}{% endif %}{% if param_search %}&search={{ param_search }}{% endif %}{% if param_filter %}&filter={{ param_filter }}{% endif %}{% if param_order %}&order={{ param_order }}{% endif %}{% if param_count %}&count={{ param_count }}{% endif %}">{{pg}}</a></li>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% if items.has_next %}
+                                  <li >
+                                    <a class="prev-next next" href="?page={{ items.paginator.num_pages }}{% if param_search %}&search={{ param_search }}{% endif %}{% if param_filter %}&filter={{ param_filter }}{% endif %}{% if param_order %}&order={{ param_order }}{% endif %}{% if param_count %}&count={{ param_count }}{% endif %}" aria-label="Next">
+                                      <i class="ion-ios-arrow-right"></i>
+                                    </a>
+                                  </li>
+                                  {% endif %}
+
                                     </ul>
                                 </div>
-                                <div class="total-pages">
-                                    <p>Showing 1 - 20 of 30 results  </p>
-                                </div>
+{#                                <div class="total-pages">#}
+{#                                    <p>Showing 1 - 20 of 30 results  </p>#}
+{#                                </div>#}
                             </div>
                         </div>
                     </div>
@@ -109,19 +125,19 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="shop-price-filter mt-40 shop-sidebar-border pt-35">
-                                <h4 class="shop-sidebar-title">Фильтр по цене</h4>
-                                <div class="price_filter mt-25">
+{#                            <div class="shop-price-filter mt-40 shop-sidebar-border pt-35">#}
+{#                                <h4 class="shop-sidebar-title">Фильтр по цене</h4>#}
+{#                                <div class="price_filter mt-25">#}
 {#                                    <span>Range:  $100.00 - 1.300.00 </span>#}
-                                    <div id="slider-range"></div>
-                                    <div class="price_slider_amount">
-                                        <div class="label-input">
-                                            <input type="text" id="amount" name="price" disabled   />
-                                        </div>
-                                        <button type="button">Показать</button>
-                                    </div>
-                                </div>
-                            </div>
+{#                                    <div id="slider-range"></div>#}
+{#                                    <div class="price_slider_amount">#}
+{#                                        <div class="label-input">#}
+{#                                            <input type="text" id="amount" name="price" disabled   />#}
+{#                                        </div>#}
+{#                                        <button type="button">Показать</button>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
 {#                            <div class="shop-widget mt-40 shop-sidebar-border pt-35">#}
 {#                                <h4 class="shop-sidebar-title">Фильтр 1</h4>#}
 {#                                <div class="sidebar-list-style mt-20">#}
@@ -154,9 +170,10 @@
                                 <h4 class="shop-sidebar-title">Популярные категории</h4>
                                 <div class="shop-tags mt-25">
                                     <ul>
-                                        <li><a href="#">Категория 1</a></li>
-                                        <li><a href="#">Категория 2</a></li>
-                                        <li><a href="#">Категория 3</a></li>
+                                        {% for cat in popular_category %}
+                                            <li><a href="{% url 'category' cat.name_slug all %}">{{cat.name}}</a></li>
+
+                                        {% endfor %}
 
                                     </ul>
                                 </div>

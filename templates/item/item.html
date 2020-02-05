@@ -82,7 +82,7 @@
                                         <div class="card-body">
                                             <ul>
                                                 {% for part in item_parts %}
-                                                    <li>{{ part.item_part.name }} x {{ part.item_part_count }} шт</li>
+                                                    <li>{{ part.item_part.name }} {% if part.item_part_count > 0 %} x {{ part.item_part_count }} шт{% endif %}</li>
                                                 {% endfor %}
 
                                             </ul>
@@ -269,44 +269,44 @@
             </div>
         </div>
     </div>
-    <div class="product-area pb-70">
-        <div class="container">
-            <div class="product-top-bar section-border mb-35">
-                <div class="section-title-wrap">
-                    <h3 class="section-title section-bg-white">Похожие товары</h3>
-                </div>
-            </div>
-            <div class="featured-product-active hot-flower owl-carousel product-nav">
-                <div class="product-wrapper">
-                    <div class="product-img">
-                        <a href="product-details.html">
-                            <img alt="" src="assets/img/product/product-5.jpg">
-                        </a>
-                        <span>-30%</span>
-                        <div class="product-action">
-                            <a class="action-wishlist" href="#" title="Wishlist">
-                                <i class="icon-heart"></i>
-                            </a>
-                            <a class="action-cart" href="#" title="Add To Cart">
-                                <i class="icon-handbag"></i>
-                            </a>
-                            <a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal" title="Quick View">
-                                <i class="icon-magnifier-add"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="product-content text-center">
-                        <h4>
-                            <a href="product-details.html">Dutchman's Breeches </a>
-                        </h4>
-                        <div class="product-price-wrapper">
-                            <span>$100.00</span>
-                            <span class="product-price-old">$120.00 </span>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
+{#    <div class="product-area pb-70">#}
+{#        <div class="container">#}
+{#            <div class="product-top-bar section-border mb-35">#}
+{#                <div class="section-title-wrap">#}
+{#                    <h3 class="section-title section-bg-white">Похожие товары</h3>#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="featured-product-active hot-flower owl-carousel product-nav">#}
+{#                <div class="product-wrapper">#}
+{#                    <div class="product-img">#}
+{#                        <a href="product-details.html">#}
+{#                            <img alt="" src="assets/img/product/product-5.jpg">#}
+{#                        </a>#}
+{#                        <span>-30%</span>#}
+{#                        <div class="product-action">#}
+{#                            <a class="action-wishlist" href="#" title="Wishlist">#}
+{#                                <i class="icon-heart"></i>#}
+{#                            </a>#}
+{#                            <a class="action-cart" href="#" title="Add To Cart">#}
+{#                                <i class="icon-handbag"></i>#}
+{#                            </a>#}
+{#                            <a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal" title="Quick View">#}
+{#                                <i class="icon-magnifier-add"></i>#}
+{#                            </a>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                    <div class="product-content text-center">#}
+{#                        <h4>#}
+{#                            <a href="product-details.html">Dutchman's Breeches </a>#}
+{#                        </h4>#}
+{#                        <div class="product-price-wrapper">#}
+{#                            <span>$100.00</span>#}
+{#                            <span class="product-price-old">$120.00 </span>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{##}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
 {% endblock %}

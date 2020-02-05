@@ -98,7 +98,7 @@
                 <div class="col-lg-12 col-md-6">
                     <div class="billing-select">
                         <label>Добавить открытку-бесплатно!</label>
-                        <textarea style="height: 150px" name="order-card" placeholder="Текст поздравления" >{{ sessionTemp.card_text }}</textarea>
+                        <textarea style="height: 150px" name="order-card" placeholder="Текст поздравления" >{% if sessionTemp.card_text %}{{ sessionTemp.card_text }}{% endif %}</textarea>
                     </div>
                 </div>
 

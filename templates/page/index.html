@@ -207,89 +207,34 @@
                         <h4>Со скидками </h4>
                     </a>
 
-                     <a  data-toggle="tab" href="#all">
-                        <h4>Все </h4>
-                    </a>
+
                 </div>
             </div>
             <div class="tab-content jump">
                 <div id="most_buy" class="tab-pane active">
                     <div class="featured-product-active owl-carousel product-nav">
-                        <div class="product-wrapper">
-                            <div class="product-img">
-                                <a href="product-details.html">
-                                    <img alt="" src="http://demo.devitems.com/phuler-v4/assets/img/product/product-1.jpg">
-                                </a>
-                                <span>-30%</span>
-                                <div class="product-action">
-                                    <a class="action-wishlist" href="#" title="Wishlist">
-                                        <i class="icon-heart"></i>
-                                    </a>
-                                    <a class="action-cart" href="#" title="Add To Cart">
-                                        <i class="icon-handbag"></i>
-                                    </a>
-                                    <a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal" title="Quick View">
-                                        <i class="icon-magnifier-add"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="product-content text-center">
-                                <h4>
-                                    <a href="product-details.html">Dutchman's Breeches </a>
-                                </h4>
-                                <div class="product-price-wrapper">
-                                    <span>$100.00</span>
-                                    <span class="product-price-old">$120.00 </span>
-                                </div>
-                            </div>
-                        </div>
-
+                       
+  {% for item in  most_buys_items  %}
+                {% include 'page/item_card.html' %}
+                {% endfor %}
                     </div>
                 </div>
                 <div id="most_view" class="tab-pane">
                     <div class="featured-product-active owl-carousel product-nav">
-
+  {% for item in  most_view_items  %}
+                {% include 'page/item_card.html' %}
+                {% endfor %}
 
                     </div>
                 </div>
                 <div id="with_discount" class="tab-pane">
                     <div class="featured-product-active owl-carousel product-nav">
-
+                {% for item in  items_with_discount  %}
+                {% include 'page/item_card.html' %}
+                {% endfor %}
                     </div>
                 </div>
-                <div id="all" class="tab-pane">
-                    <div class="featured-product-active owl-carousel product-nav">
-                        <div class="product-wrapper">
-                            <div class="product-img">
-                                <a href="product-details.html">
-                                    <img alt="" src="assets/img/product/product-8.jpg">
-                                </a>
-                                <span>-30%</span>
-                                <div class="product-action">
-                                    <a class="action-wishlist" href="#" title="Wishlist">
-                                        <i class="icon-heart"></i>
-                                    </a>
-                                    <a class="action-cart" href="#" title="Add To Cart">
-                                        <i class="icon-handbag"></i>
-                                    </a>
-                                    <a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal" title="Quick View">
-                                        <i class="icon-magnifier-add"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="product-content text-center">
-                                <h4>
-                                    <a href="product-details.html">Golden Marguerite</a>
-                                </h4>
-                                <div class="product-price-wrapper">
-                                    <span>$100.00</span>
-                                    <span class="product-price-old">$120.00 </span>
-                                </div>
-                            </div>
-                        </div>
 
-                    </div>
-                </div>
             </div>
         </div>
     </div>
