@@ -87,7 +87,7 @@
                                                         </option>
                                                     {% endfor %}
                                                 </select>
-                                                <span style="font-size: x-small"><strong>При заказе от 3000 руб - доставка по  Челябинску бесплатная</strong> </span>
+                                                <span style="font-size: x-small; color: #ff3d2a"><strong>При заказе от 3000 руб - доставка по  Челябинску бесплатная</strong> </span>
                                             </div>
 
                                         </td>
@@ -96,7 +96,7 @@
                                     <tr>
                                         <td colspan="3"></td>
                                         <td><h4 class="grand-totall-title text-right" style=" margin: 0">Итого  </h4></td>
-                                        <td class="text-left"><h4 style=" margin: 0" class="grand-totall-title"><span style="float: none;" id="cart_total_price_side">{{ total_cart_price_with_discount }} &#8381;</span> </h4></td>
+                                        <td class="text-left"><h4 style=" margin: 0" class="grand-totall-title"><span style="float: none;" id="cart_total_price_side">{{ total_cart_price_with_discount }}</span> &#8381; </h4></td>
                                         <td></td>
                                     </tr>
                                     </tfoot>
@@ -106,12 +106,12 @@
                                 <div class="col-lg-12">
                                     <div class="cart-shiping-update-wrapper">
                                         <div class="cart-shiping-update">
-                                            <a href="{{ request.META.HTTP_REFERER }}">Продолжить покупки</a>
+                                            <a style="background: #ff3d2a; color: #fff" href="{{ request.META.HTTP_REFERER }}">Продолжить покупки</a>
                                         </div>
-                                        <div class="cart-clear text-center">
+                                        <div class="cart-clear text-right">
 
                                             <a style="background: #ff3d2a; color: #fff" href="javascript: void(0)" onclick="get_checkout()">Оформить заказ</a>
-                                            <span style="display: block; font-size: 12px">Оформляя заказ вы соглашаетесь с условиями оферты и политики конфиденциальности</span>
+                                            <span style="display: block; font-size: 12px;margin-top: 10px">Оформляя заказ вы соглашаетесь с условиями оферты и политики конфиденциальности</span>
                                         </div>
                                     </div>
                                 </div>
