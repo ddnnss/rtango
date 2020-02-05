@@ -226,6 +226,7 @@ def get_checkout(request):
 def checkout(request):
     show_tags = True
     if request.POST:
+        print(request.POST)
         if request.POST.get('form_type') == 'user_info':
             client = request.user
             mail_tmp = client.is_allow_email
@@ -352,7 +353,22 @@ def checkout(request):
 
 #-------------------------------------------------------------------------------GET request
     shipping = OrderShipping.objects.all()
-    payment = OrderPayment.objects.all()
+    # payment = OrderPayment.objects.all()
+    sessionTemp = None
+    if request.user.is_authenticated:
+        try:
+            sessionTemp = SessionTemp.objects.get(user=request.user)
+        except:
+            pass
+
+    else:
+        s_key = request.session.session_key
+        guest = Guest.objects.get(session=s_key)
+        try:
+            sessionTemp = SessionTemp.objects.get(guest=guest)
+        except:
+            pass
+
 
     if request.user.is_authenticated:
         client = request.user

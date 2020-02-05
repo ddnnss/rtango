@@ -31,5 +31,5 @@ class OrdersAdmin(admin.ModelAdmin):
 admin.site.register(Order, OrdersAdmin)
 admin.site.register(OrderStatus)
 admin.site.register(OrderShipping)
-admin.site.register(OrderPayment)
+#admin.site.register(OrderPayment)
 admin.site.register(ItemsInOrder)

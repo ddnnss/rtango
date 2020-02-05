@@ -51,6 +51,12 @@ class OrderShipping(models.Model):
         verbose_name_plural = "Варианты доставки заказов"
 
 class Order(models.Model):
+    receiver_name = models.CharField('ФИО получателя', max_length=100, blank=True, null=True)
+    receiver_phone = models.CharField('Телефон получателя', max_length=100, blank=True, null=True)
+    order_date = models.CharField('Дата доставки', max_length=100, blank=True, null=True)
+    order_time = models.CharField('Время доставки', max_length=100, blank=True, null=True)
+    is_need_phono = models.BooleanField('Нужно фото при доставке', default=False)
+    card_text = models.TextField('Текст открытки',  blank=True, null=True)
     client = models.ForeignKey(User, blank=True, null=True, default=None, on_delete=models.CASCADE,
                                verbose_name='Заказ клиента')
     guest = models.ForeignKey(Guest, blank=True, null=True, default=None, on_delete=models.CASCADE,
@@ -59,15 +65,17 @@ class Order(models.Model):
                               verbose_name='Использованный промо-код')
     status = models.ForeignKey(OrderStatus, blank=True, null=True, default=None, on_delete=models.SET_NULL,
                               verbose_name='Статус заказа')
-    payment = models.ForeignKey(OrderPayment, blank=True, null=True, default=None, on_delete=models.SET_NULL,
-                               verbose_name='Оплата заказа')
+    # payment = models.ForeignKey(OrderPayment, blank=True, null=True, default=None, on_delete=models.SET_NULL,
+    #                            verbose_name='Оплата заказа')
     shipping = models.ForeignKey(OrderShipping, blank=True, null=True, default=None, on_delete=models.SET_NULL,
                                 verbose_name='Доставка заказа')
+
     total_price = models.IntegerField('Общая стоимость заказа', default=0)
     total_price_with_code = models.DecimalField('Общая стоимость заказа с учетом промо-кода', decimal_places=2,
                                                 max_digits=10, default=0)
     order_code = models.CharField('Код заказа', max_length=10, blank=True, null=True)
     is_complete = models.BooleanField('Заказ выполнен ?', default=False)
+    is_payd = models.BooleanField('Заказ оплачен ?', default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
