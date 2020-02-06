@@ -351,7 +351,7 @@ def checkout(request):
         if request.POST.get('form_type') == 'new_checkout':
             print(request.POST)
             order_code = create_password()
-
+            is_need_photo = False
             receiver_name = request.POST.get('receiver-name')
             receiver_phone = request.POST.get('receiver-phone')
             sender_name = request.POST.get('sender-name')

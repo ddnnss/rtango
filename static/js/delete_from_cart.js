@@ -43,7 +43,7 @@ function delete_from_cart(del){
                                 </div>
                                 <div class="shopping-cart-btn">
                                     <a href="/cart/">Корзина</a>
-                                    <a href="checkout.html">Оплатить</a></div>`);
+                                    <a href="/checkout/">Оплатить</a></div>`);
 
                   $('#cart_content_table').empty();
 
