@@ -113,7 +113,7 @@ def signup(request):
         n2 = int(request.POST.get('n2'))
         answer = int(request.POST.get('answer'))
         if n1 + n2 == answer:
-            print(request.POST)
+
             email = request.POST.get('email')
             name = request.POST.get('name')
             phone = request.POST.get('phone')

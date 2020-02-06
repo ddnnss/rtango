@@ -188,7 +188,7 @@ def new(request):
     return render(request, 'page/new.html', locals())
 
 def get_checkout(request):
-    print(request.POST)
+
     return_dict = {}
     newSessionTemp = None
     if request.user.is_authenticated:
@@ -349,7 +349,7 @@ def checkout(request):
             return HttpResponseRedirect('/order/{}'.format(new_order.order_code))
 
         if request.POST.get('form_type') == 'new_checkout':
-            print(request.POST)
+
             order_code = create_password()
             is_need_photo = False
             receiver_name = request.POST.get('receiver-name')
