@@ -359,6 +359,7 @@ def checkout(request):
             sender_email = request.POST.get('sender-email')
             order_date = request.POST.get('order-date')
             order_time = request.POST.get('order-time')
+            receiver_address = request.POST.get('receiver-address')
             is_need_phono = request.POST.get('order-photo')
             if is_need_phono:
                 is_need_photo = True
@@ -377,6 +378,7 @@ def checkout(request):
                                         order_time =order_time,
                                         is_need_photo = is_need_photo,
                                         card_text = card_text,
+                                         receiver_address=receiver_address,
                                          shipping_id=shipping)
             if request.user.is_authenticated:
                 all_cart_items = Cart.objects.filter(client_id=request.user.id)
@@ -409,6 +411,7 @@ def checkout(request):
     if request.user.is_authenticated:
         try:
             sessionTemp = SessionTemp.objects.get(user=request.user)
+            town = OrderShipping.objects.get(id=sessionTemp.delivery)
         except:
             pass
 
@@ -417,6 +420,7 @@ def checkout(request):
         guest = Guest.objects.get(session=s_key)
         try:
             sessionTemp = SessionTemp.objects.get(guest=guest)
+            town = OrderShipping.objects.get(id=sessionTemp.delivery)
         except:
             pass
 

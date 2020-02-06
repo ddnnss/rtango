@@ -60,6 +60,7 @@ class Order(models.Model):
     order_time = models.CharField('Время доставки', max_length=100, blank=True, null=True)
     is_need_photo = models.BooleanField('Нужно фото при доставке', default=False, null=True)
     card_text = models.TextField('Текст открытки',  blank=True, null=True)
+    receiver_address = models.TextField('Адрес доставки',  blank=True, null=True)
     client = models.ForeignKey(User, blank=True, null=True, default=None, on_delete=models.CASCADE,
                                verbose_name='Заказ клиента')
     guest = models.ForeignKey(Guest, blank=True, null=True, default=None, on_delete=models.CASCADE,
@@ -84,7 +85,7 @@ class Order(models.Model):
 
 
     def __str__(self):
-        return f'Заказ № {self.id}. Создан : {self.created_at.date}  . Сумма заказа :{self.total_price}'
+        return f'Заказ № {self.id}. Создан : {self.created_at.strftime("%d-%m-%Y")}  . Сумма заказа :{self.total_price}'
         # if self.client:
         #     if self.promo_code:
         #         return 'Заказ № %s. Создан : %s  . Клиент: %s . Сумма заказа : %s' % (

@@ -2,114 +2,118 @@
 {% load static %}
 
 {% block content %}
-    {#    {% if total_cart_price %}#}
-    {#        {% if request.user.is_authenticated %}#}
-    {#            {% include 'page/checkout_members.html' %}#}
-    {#        {% else %}#}
-    {#            {% include 'page/checkout_guest.html' %}#}
-    {#        {% endif %}#}
-    {#    {% else %}#}
-    {#         {% include 'page/empty_cart.html' %}#}
-    {#    {% endif %}#}
+    {% if total_cart_price %}
+        {% if request.user.is_authenticated %}
+            <div class="breadcrumb-area gray-bg">
+                <div class="container">
+                    <div class="breadcrumb-content">
+                        <ul>
+                            <li><a href="/">Главная</a></li>
+                            <li><a href="{% url 'show_cart' %}">Корзина</a></li>
+                            <li class="active"> Оплата </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- checkout-area start -->
+            <div class="checkout-area pb-45 pt-65">
+                <div class="container">
+                    <form action="{% url 'checkout' %}" method="post">{% csrf_token %}
+                        <h4 class="mb-20">Отправитель</h4>
+                        <div class="row">
+                            <div class="col-lg-4 col-md-6">
+                                <div class="billing-info">
+                                    <label>Ф.И.О.</label>
+                                    <input name="sender-name" type="text" required>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6">
+                                <div class="billing-info">
+                                    <label>Ваш телефон</label>
+                                    <input name="sender-phone" type="text" required>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6">
+                                <div class="billing-info">
+                                    <label>Ваш E-Mail</label>
+                                    <input name="sender-email" type="email">
+                                </div>
+                            </div>
+                        </div>
+                        <h4 class="mb-20">Получатель</h4>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6">
+                                <div class="billing-info">
+                                    <label>Ф.И.О.</label>
+                                    <input name="receiver-name" type="text" required>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6">
+                                <div class="billing-info">
+                                    <label>Телефон</label>
+                                    <input name="receiver-phone" type="text" required>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-md-6">
+                                <div class="billing-info">
+                                    <label>Адрес доставки</label>
+                                    <textarea name="receiver-address" required >{% if town %}{{ town }}, {% endif %}</textarea>
+                                </div>
+                            </div>
 
-    <div class="breadcrumb-area gray-bg">
-        <div class="container">
-            <div class="breadcrumb-content">
-                <ul>
-                    <li><a href="/">Главная</a></li>
-                    <li><a href="{% url 'show_cart' %}">Корзина</a></li>
-                    <li class="active"> Оплата </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <!-- checkout-area start -->
-    <div class="checkout-area pb-45 pt-65">
-        <div class="container">
-            <form action="{% url 'checkout' %}" method="post">{% csrf_token %}
-            <h4 class="mb-20">Отправитель</h4>
-            <div class="row">
-                <div class="col-lg-4 col-md-6">
-                    <div class="billing-info">
-                        <label>Ф.И.О.</label>
-                        <input name="sender-name" type="text" required>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="billing-info">
-                        <label>Ваш телефон</label>
-                        <input name="sender-phone" type="text" required>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="billing-info">
-                        <label>Ваш E-Mail</label>
-                        <input name="sender-email" type="email">
-                    </div>
-                </div>
-            </div>
-            <h4 class="mb-20">Получатель</h4>
-            <div class="row">
-                <div class="col-lg-6 col-md-6">
-                    <div class="billing-info">
-                        <label>Ф.И.О.</label>
-                        <input name="receiver-name" type="text" required>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-6">
-                    <div class="billing-info">
-                        <label>Телефон</label>
-                        <input name="receiver-phone" type="text" required>
-                    </div>
-                </div>
+                        </div>
+                        <h4 class="mb-20">Дата доставки</h4>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6">
+                                <div class="billing-info">
+                                    <input name="order-date" required type="text" class="datepicker form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <h4 class="mb-20">Время доставки</h4>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6">
+                                <div class="billing-select">
+                                    <select required name="order-time" class="email s-email s-wid">
+                                        <option selected value="8:00-11:00">8:00-11:00</option>
+                                        <option value="11:00-14:00">11:00-14:00</option>
+                                        <option value="14:00-17:00">14:00-17:00</option>
+                                        <option value="17:00-20:00">17:00-20:00</option>
+                                    </select>
+                                </div>
+                            </div>
 
-            </div>
-            <h4 class="mb-20">Дата доставки</h4>
-            <div class="row">
-                <div class="col-lg-6 col-md-6">
-                    <div class="billing-info">
-                        <input name="order-date" required type="text" class="datepicker form-control">
-                    </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6">
+                                <label style="display: flex; align-items: center">Сделать фото при получении
+                                    <input {% if sessionTemp.needPhoto %} checked {% endif %}style="width: auto; margin-left: 20px" name="order-photo"  type="checkbox" >
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12 col-md-6">
+                                <div class="billing-select">
+                                    <label>Добавить открытку-бесплатно!</label>
+                                    <textarea style="height: 150px" name="order-card" placeholder="Текст поздравления" >{% if sessionTemp.card_text %}{{ sessionTemp.card_text }}{% endif %}</textarea>
+                                </div>
+                            </div>
+
+                        </div>
+                        <input type="hidden" name="form_type" value="new_checkout">
+                        <input type="hidden" name="shipping" value="{{ sessionTemp.delivery }}">
+                        <button type="submit">Оплата</button>
+                    </form>
+
                 </div>
             </div>
-            <h4 class="mb-20">Время доставки</h4>
-            <div class="row">
-                <div class="col-lg-6 col-md-6">
-                    <div class="billing-select">
-                        <select required name="order-time" class="email s-email s-wid">
-                            <option selected value="8:00-11:00">8:00-11:00</option>
-                            <option value="11:00-14:00">11:00-14:00</option>
-                            <option value="14:00-17:00">14:00-17:00</option>
-                            <option value="17:00-20:00">17:00-20:00</option>
-                        </select>
-                    </div>
-                </div>
+        {% endif %}
+    {% else %}
+        {% include 'page/empty_cart.html' %}
+    {% endif %}
 
-            </div>
-            <div class="row">
-                <div class="col-lg-6 col-md-6">
-                    <label style="display: flex; align-items: center">Сделать фото при получении
-                        <input {% if sessionTemp.needPhoto %} checked {% endif %}style="width: auto; margin-left: 20px" name="order-photo"  type="checkbox" >
-                    </label>
-                </div>
-            </div>
 
-            <div class="row">
-                <div class="col-lg-12 col-md-6">
-                    <div class="billing-select">
-                        <label>Добавить открытку-бесплатно!</label>
-                        <textarea style="height: 150px" name="order-card" placeholder="Текст поздравления" >{% if sessionTemp.card_text %}{{ sessionTemp.card_text }}{% endif %}</textarea>
-                    </div>
-                </div>
-
-            </div>
-                <input type="hidden" name="form_type" value="new_checkout">
-                <input type="hidden" name="shipping" value="{{ sessionTemp.delivery }}">
-            <button type="submit">Оплата</button>
-        </form>
-
-        </div>
-    </div>
 
 
 
