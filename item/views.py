@@ -33,20 +33,17 @@ def quick_view(request):
 def feed(request):
     # Create the HttpResponse object with the appropriate CSV header.
     response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="somefilename.csv"'
+    response['Content-Disposition'] = 'attachment; filename="fb_feed.csv"'
 
     writer = csv.writer(response)
-    writer.writerow(['id','title','description','rich_text_description','availability','condition','price','link',
-                     'image_link','brand','additional_image_link','age_group','color','gender','item_group_id',
-                     'google_product_category','product_type','sale_price','sale_price_effective_date','size',
-                     'offer_price','offer_price_effective_date','visibility','inventory'])
+    writer.writerow(['id','availability','condition','description','image_link','link','title','price',
+                     'brand'])
     all_items = Item.objects.all()
     for item in all_items:
         writer.writerow(
-            ['id', 'title', 'description', 'rich_text_description', 'availability', 'condition', 'price', 'link',
-             'image_link', 'brand', 'additional_image_link', 'age_group', 'color', 'gender', 'item_group_id',
-             'google_product_category', 'product_type', 'sale_price', 'sale_price_effective_date', 'size',
-             'offer_price', 'offer_price_effective_date', 'visibility', 'inventory'])
+            [item.id,'in stock','new',item.description,item.images.first().image.url,
+             f'/category/{item.category.first().name_slug}/{item.name_slug}/',item.name,f'{item.price} RUB',
+                     item.name])
 
 
 
