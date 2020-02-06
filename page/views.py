@@ -226,7 +226,7 @@ def get_checkout(request):
 def checkout(request):
     show_tags = True
     if request.POST:
-        print(request.POST)
+
         if request.POST.get('form_type') == 'user_info':
             client = request.user
             mail_tmp = client.is_allow_email
@@ -348,6 +348,57 @@ def checkout(request):
             print('Email sent')
             return HttpResponseRedirect('/order/{}'.format(new_order.order_code))
 
+        if request.POST.get('form_type') == 'new_checkout':
+            print(request.POST)
+            order_code = create_password()
+
+            receiver_name = request.POST.get('receiver-name')
+            receiver_phone = request.POST.get('receiver-phone')
+            sender_name = request.POST.get('sender-name')
+            sender_phone = request.POST.get('sender-phone')
+            sender_email = request.POST.get('sender-email')
+            order_date = request.POST.get('order-date')
+            order_time = request.POST.get('order-time')
+            is_need_phono = request.POST.get('order-photo')
+            if is_need_phono:
+                is_need_photo = True
+            card_text = request.POST.get('order-card')
+
+
+            shipping = request.POST.get('shipping')
+
+            order = Order.objects.create(order_code=order_code,
+                                         receiver_name=receiver_name,
+                                        receiver_phone=receiver_phone,
+                                        sender_name =sender_name,
+                                        sender_phone =sender_phone,
+                                        sender_email =sender_email,
+                                        order_date =order_date,
+                                        order_time =order_time,
+                                        is_need_photo = is_need_photo,
+                                        card_text = card_text,
+                                         shipping_id=shipping)
+            if request.user.is_authenticated:
+                all_cart_items = Cart.objects.filter(client_id=request.user.id)
+            else:
+                s_key = request.session.session_key
+                guest = Guest.objects.get(session=s_key)
+                all_cart_items = Cart.objects.filter(guest=guest)
+            for item in all_cart_items:
+                ItemsInOrder.objects.create(order_id=order.id, item_id=item.item.id, number=item.number,
+                                            current_price=item.item.price)
+                item.item.buys = item.item.buys + 1
+                item.item.save()
+            all_cart_items.delete()
+            # request.user.used_promo = None
+            # request.user.save()
+            new_order = Order.objects.get(id=order.id)
+            # msg_html = render_to_string('email/new_order.html', {'order': new_order})
+            # send_mail('Заказ успешно размещен', None, 'info@lakshmi888.ru', [request.user.email],
+            #           fail_silently=False, html_message=msg_html)
+            # send_mail('Новый заказ', None, 'norply@lakshmi888.ru', ['info@lakshmi888.ru'],
+            #           fail_silently=False, html_message=msg_html)
+            return HttpResponseRedirect('/order/{}'.format(new_order.order_code))
 
 
 
@@ -525,6 +576,8 @@ def item_page(request, cat_slug, item_slug):
         raise Http404
         # return render(request, '404.html', locals())
     item_parts = ItemParts.objects.filter(item=item)
+    all_shipping = OrderShipping.objects.all().order_by('-id')
+    all_filters = item.filter.all()
     title = ''
     description = ''
     return render(request, 'item/item.html', locals())
@@ -561,5 +614,8 @@ def customhandler404(request, exception, template_name='404.html'):
 
 
 def one_click(request):
-    OneClick.objects.create(item_id=request.POST.get('item-id'),phone=request.POST.get('phone'))
+    if request.POST.get('form_type') == 'oneclick':
+        OneClick.objects.create(item_id=request.POST.get('item-id'),phone=request.POST.get('phone'))
+    if request.POST.get('form_type') == 'callback':
+        Callback.objects.create(name=request.POST.get('name'), phone=request.POST.get('phone'))
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

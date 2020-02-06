@@ -1,4 +1,5 @@
 function add_to_cart(el,num) {
+     fbq('track', 'AddToCart');
     let item_number = 0
     if (num){
          item_number = num

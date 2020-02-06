@@ -177,6 +177,7 @@
                 getShippingPrice()
             });
             function get_checkout() {
+                 fbq('track', 'InitiateCheckout');
                 let shipping = document.getElementById('shipping')
                 let needCard = document.getElementById('need_card')
                 let needPhoto = document.getElementById('need_photo')

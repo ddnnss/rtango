@@ -53,9 +53,12 @@ class OrderShipping(models.Model):
 class Order(models.Model):
     receiver_name = models.CharField('ФИО получателя', max_length=100, blank=True, null=True)
     receiver_phone = models.CharField('Телефон получателя', max_length=100, blank=True, null=True)
+    sender_name = models.CharField('ФИО отправителя', max_length=100, blank=True, null=True)
+    sender_phone = models.CharField('Телефон отправителя', max_length=100, blank=True, null=True)
+    sender_email = models.CharField('Email отправителя', max_length=100, blank=True, null=True)
     order_date = models.CharField('Дата доставки', max_length=100, blank=True, null=True)
     order_time = models.CharField('Время доставки', max_length=100, blank=True, null=True)
-    is_need_phono = models.BooleanField('Нужно фото при доставке', default=False)
+    is_need_photo = models.BooleanField('Нужно фото при доставке', default=False, null=True)
     card_text = models.TextField('Текст открытки',  blank=True, null=True)
     client = models.ForeignKey(User, blank=True, null=True, default=None, on_delete=models.CASCADE,
                                verbose_name='Заказ клиента')
@@ -81,20 +84,21 @@ class Order(models.Model):
 
 
     def __str__(self):
-        if self.client:
-            if self.promo_code:
-                return 'Заказ № %s. Создан : %s  . Клиент: %s . Сумма заказа : %s' % (
-                self.id, self.created_at.strftime('%d-%m-%Y'), self.client.email, self.total_price_with_code)
-            else:
-                return 'Заказ № %s. Создан : %s  . Клиент: %s . Сумма заказа : %s' % (
-                self.id, self.created_at.strftime('%d-%m-%Y'), self.client.email, self.total_price)
-        if self.guest:
-            if self.promo_code:
-                return 'Заказ № %s. Создан : %s  . Гость: %s . Сумма заказа : %s' % (
-                self.id, self.created_at.strftime('%d-%m-%Y'), self.guest.email, self.total_price_with_code)
-            else:
-                return 'Заказ № %s. Создан : %s  . Гость: %s . Сумма заказа : %s' % (
-                self.id, self.created_at.strftime('%d-%m-%Y'), self.guest.email, self.total_price)
+        return f'Заказ № {self.id}. Создан : {self.created_at.date}  . Сумма заказа :{self.total_price}'
+        # if self.client:
+        #     if self.promo_code:
+        #         return 'Заказ № %s. Создан : %s  . Клиент: %s . Сумма заказа : %s' % (
+        #         self.id, self.created_at.strftime('%d-%m-%Y'), self.client.email, self.total_price_with_code)
+        #     else:
+        #         return 'Заказ № %s. Создан : %s  . Клиент: %s . Сумма заказа : %s' % (
+        #         self.id, self.created_at.strftime('%d-%m-%Y'), self.client.email, self.total_price)
+        # if self.guest:
+        #     if self.promo_code:
+        #         return 'Заказ № %s. Создан : %s  . Гость: %s . Сумма заказа : %s' % (
+        #         self.id, self.created_at.strftime('%d-%m-%Y'), self.guest.email, self.total_price_with_code)
+        #     else:
+        #         return 'Заказ № %s. Создан : %s  . Гость: %s . Сумма заказа : %s' % (
+        #         self.id, self.created_at.strftime('%d-%m-%Y'), self.guest.email, self.total_price)
 
 
     class Meta:
@@ -149,11 +153,7 @@ class ItemsInOrder(models.Model):
         verbose_name_plural = "Товары в заказе"
 
     def getfirstimage(self):
-        url = None
-        for img in self.item.itemimage_set.all():
-            if img.is_main:
-                url = img.image_small
-        return url
+        return self.item.images.first().image_small
 
     def image_tag(self):
         # used in the admin site model as a "thumbnail"

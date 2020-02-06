@@ -2,6 +2,9 @@
 {% load static %}
 
 {% block content %}
+    <script>
+  fbq('track', 'ViewContent');
+</script>
     <div class="breadcrumb-area gray-bg">
         <div class="container">
             <div class="breadcrumb-content">
@@ -18,10 +21,10 @@
             <div class="row">
                 <div class="col-lg-6 col-md-12">
                     <div class="product-details-img">
-                      <div id="gallery" class="mt-20 product-dec-slider owl-carousel">
+                      <div id="gallery" class="mb-20 product-dec-slider owl-carousel">
                             {% for image in item.images.all %}
                                 <a data-image="{{ image.image.url }}" data-zoom-image="{{ image.image.url }}">
-                                    <img width="90" height="90" src="{{ image.image_small }}" alt="">
+                                    <img width="70" height="90" src="{{ image.image_small }}" alt="">
                                 </a>
                             {% endfor %}
                         </div>
@@ -29,7 +32,7 @@
 
 
                         {% if item.discount > 0 %}
-                            <span>-{{ item.discount }}%</span>
+                            <span style="top: 140px">-{{ item.discount }}%</span>
                         {% endif %}
                     </div>
                 </div>
@@ -68,58 +71,35 @@
 
 
                         <div class="pro-dec-feature">
+                        <div class="shop-widget">
 
-                            <div id="accordion">
-                                <div class="card">
-                                    <div class="card-header" id="headingOne">
-                                        <h5 class="mb-0">
-                                            <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                Состав букета
-                                            </button>
-                                        </h5>
-                                    </div>
-
-                                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-                                        <div class="card-body">
-                                            <ul>
+                                <div class="shop-catigory">
+                                    <ul id="faq">
+                                        <li> <a data-toggle="collapse" data-parent="#faq" href="#shop-catigory-1" aria-expanded="false" class="collapsed">Состав букета<i class="ion-ios-arrow-down"></i></a>
+                                            <ul id="shop-catigory-1" class="panel-collapse collapse" style="">
                                                 {% for part in item_parts %}
-                                                    <li>{{ part.item_part.name }} {% if part.item_part_count > 0 %} x {{ part.item_part_count }} шт{% endif %}</li>
+                                                    <li> {{ part.item_part.name }} {% if part.item_part_count > 0 %} x {{ part.item_part_count }} шт{% endif %}</li>
                                                 {% endfor %}
+                                            </ul>
+                                        </li>
+                                        <li> <a data-toggle="collapse" data-parent="#faq" href="#shop-catigory-2" class="collapsed" aria-expanded="false">Доставка<i class="ion-ios-arrow-down"></i></a>
+                                            <ul id="shop-catigory-2" class="panel-collapse collapse" style="">
+                                                {% for ship in all_shipping %}
+                                                    <li>{{ ship.name }} - {{ ship.price }} &#8381; {% if ship.isFree %}| <strong>Бесплатная доставка от {{ ship.freePrice }} &#8381;</strong>{% endif %}</li>
+                                                {% endfor %}
+                                            </ul>
+                                        </li>
+                                        <li> <a data-toggle="collapse" data-parent="#faq" href="#shop-catigory-3" class="collapsed" aria-expanded="false">Оплата <i class="ion-ios-arrow-down"></i></a>
+                                            <ul id="shop-catigory-3" class="panel-collapse collapse">
 
                                             </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card">
-                                    <div class="card-header" id="headingTwo">
-                                        <h5 class="mb-0">
-                                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                                Доставка
-                                            </button>
-                                        </h5>
-                                    </div>
-                                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-                                        <div class="card-body">
-                                        Инфо о доставке
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card">
-                                    <div class="card-header" id="headingThree">
-                                        <h5 class="mb-0">
-                                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                                Оплата
-                                            </button>
-                                        </h5>
-                                    </div>
-                                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
-                                        <div class="card-body">
-                                         Инфо об оплате
+                                        </li>
 
-                                        </div>
-                                    </div>
+                                    </ul>
                                 </div>
                             </div>
+
+
                         </div>
                         <div class="quality-add-to-cart">
 
@@ -156,12 +136,13 @@
                         {#                        </div>#}
                         <div class="pro-dec-categories">
                             <ul>
-                                <li class="categories-title">Теги: </li>
-                                <li><a href="#"> Букет,</a></li>
-                                <li><a href="#"> Розы, </a></li>
-                                <li><a href="#"> тег,</a></li>
-                                <li><a href="#"> тег,</a></li>
-                                <li><a href="#"> тег </a></li>
+                                <li class="categories-title">А также это букет подойдет  : </li>
+                                {% for filter in all_filters %}
+                                    <li>
+                                        <a href="{%  url 'category' category.name_slug filter.name_slug %}"> {{ filter.name }}</a>
+                                        {% if not forloop.last %},{% endif %}
+                                    </li>
+                               {% endfor %}
                             </ul>
                         </div>
                         <div class="pro-dec-social">

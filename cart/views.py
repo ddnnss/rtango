@@ -15,7 +15,7 @@ def format_number(num):
 
 def show_cart(request):
     additional_items = Item.objects.filter(is_optional=True)
-    all_shipping = OrderShipping.objects.all()
+    all_shipping = OrderShipping.objects.all().order_by('-id')
     return render(request, 'cart/cart.html', locals())
 
 def wishlist_delete(request):

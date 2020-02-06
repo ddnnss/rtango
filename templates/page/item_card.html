@@ -32,7 +32,7 @@
             {#                                                        <i class="icon-magnifier-add"></i>#}
             {#                                                    </a>#}
             {% if not item.is_optional %}
-            <a class="action-wishlist" href="#" data-itemid="{{ item.id }}" data-target="#exampleModal" data-toggle="modal" title="Купить в один клик">
+            <a class="action-wishlist" href="#" data-itemid="{{ item.id }}" data-item_image="{{ item.images.first.image_small }}" data-target="#exampleModal" data-toggle="modal" title="Купить в один клик">
                 <i class="fa fa-cart-plus "></i>
             </a>
             {% endif %}

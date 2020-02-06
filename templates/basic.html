@@ -21,88 +21,104 @@
     <link href="{% static 'css/chosen.min.css'%}" rel="stylesheet">
     <link href="{% static 'css/font-awesome.min.css'%}" rel="stylesheet">
     <link href="{% static 'css/simple-line-icons.css'%}" rel="stylesheet">
-<link href="{% static 'css/ionicons.min.css'%}" rel="stylesheet">
-<link href="{% static 'css/meanmenu.min.css'%}" rel="stylesheet">
+    <link href="{% static 'css/ionicons.min.css'%}" rel="stylesheet">
+    <link href="{% static 'css/meanmenu.min.css'%}" rel="stylesheet">
     <link href="{% static 'css/bootstrap-datepicker.css'%}" rel="stylesheet">
     <link href="{% static 'css/style.css'%}" rel="stylesheet">
-<link href="{% static 'css/responsive.css'%}" rel="stylesheet">
-<link href="{% static 'css/ '%}" rel="stylesheet">
- <script src="{% static 'js/vendor/modernizr-2.8.3.min.js'%}"></script>
+    <link href="{% static 'css/responsive.css'%}" rel="stylesheet">
 
-
-
+    <script src="{% static 'js/vendor/modernizr-2.8.3.min.js'%}"></script>
+    <!-- Facebook Pixel Code -->
+    <script>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+            n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t,s)}(window, document,'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '780113182414609');
+        fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+                   src="https://www.facebook.com/tr?id=780113182414609&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Facebook Pixel Code -->
 </head>
 <body>
-    <form id="dummy_form">{% csrf_token %}</form>
-    {% include 'header.html' %}
-    {% block content %}
-    {% endblock %}
-    {% include 'footer.html' %}
-      <script src="{% static 'js/vendor/jquery-1.12.0.min.js'%}"></script>
-        <script src="{% static 'js/popper.js'%}"></script>
-        <script src="{% static 'js/bootstrap.min.js'%}"></script>
-     <script src="{% static 'js/bootstrap-datepicker.js'%}"></script>
-        <script src="{% static 'js/imagesloaded.pkgd.min.js'%}"></script>
-        <script src="{% static 'js/isotope.pkgd.min.js'%}"></script>
-        <script src="{% static 'js/ajax-mail.js'%}"></script>
-        <script src="{% static 'js/owl.carousel.min.js'%}"></script>
-        <script src="{% static 'js/plugins.js'%}"></script>
-        <script src="{% static 'js/main.js'%}"></script>
+<form id="dummy_form">{% csrf_token %}</form>
+{% include 'header.html' %}
+{% block content %}
+{% endblock %}
+{% include 'footer.html' %}
+<script src="{% static 'js/vendor/jquery-1.12.0.min.js'%}"></script>
+<script src="{% static 'js/popper.js'%}"></script>
+<script src="{% static 'js/bootstrap.min.js'%}"></script>
+<script src="{% static 'js/bootstrap-datepicker.js'%}"></script>
+<script src="{% static 'js/imagesloaded.pkgd.min.js'%}"></script>
+<script src="{% static 'js/isotope.pkgd.min.js'%}"></script>
+<script src="{% static 'js/ajax-mail.js'%}"></script>
+<script src="{% static 'js/owl.carousel.min.js'%}"></script>
+<script src="{% static 'js/plugins.js'%}"></script>
+<script src="{% static 'js/main.js'%}"></script>
 
-    {% block extrajs %}
-    {% endblock %}
+{% block extrajs %}
+{% endblock %}
 
-    <script src="{% static 'js/quick_view.js'%}"></script>
-    <script src="{% static 'js/jquery.amaran.min.js'%}"></script>
-    <script src="{% static 'js/jquery.showLoading.min.js'%}"></script>
+<script src="{% static 'js/quick_view.js'%}"></script>
+<script src="{% static 'js/jquery.amaran.min.js'%}"></script>
+<script src="{% static 'js/jquery.showLoading.min.js'%}"></script>
 {#    <script src="{% static 'js/custom.js'%}"></script>#}
-    <script src="{% static 'js/add_to_cart.js'%}"></script>
-    <script src="{% static 'js/delete_from_cart.js'%}"></script>
-    <script src="{% static 'js/delete_from_main_cart.js'%}"></script>
-    <script src="{% static 'js/promo.js'%}"></script>
-    <script src="{% static 'js/cart.js'%}"></script>
+<script src="{% static 'js/add_to_cart.js'%}"></script>
+<script src="{% static 'js/delete_from_cart.js'%}"></script>
+<script src="{% static 'js/delete_from_main_cart.js'%}"></script>
+<script src="{% static 'js/promo.js'%}"></script>
+<script src="{% static 'js/cart.js'%}"></script>
 {#    <script src="{% static 'js/sort.js'%}"></script>#}
-    <script src="{% static 'js/login.js'%}"></script>
-    <script src="{% static 'js/wishlist.js'%}"></script>
+<script src="{% static 'js/login.js'%}"></script>
+<script src="{% static 'js/wishlist.js'%}"></script>
 
 <script>
     $('#exampleModal').on('show.bs.modal', function (event) {
-  let itemId = $(event.relatedTarget).data('itemid')
-  $('#oneclick_id').val(itemId)
-})
+        let itemId = $(event.relatedTarget).data('itemid')
+        let itemImage = $(event.relatedTarget).data('item_image')
+        $('#oneclick_id').val(itemId)
+        $('#image_thumb').attr("src",itemImage);
+    })
 </script>
-    <script>
-        let shipping = document.getElementById('shipping')
-        let totalPrice = document.getElementById('cart_total_price_side')
-        let shippingPrice = 0
-        let cartTotal = null
+<script>
+    let shipping = document.getElementById('shipping')
+    let totalPrice = document.getElementById('cart_total_price_side')
+    let shippingPrice = 0
+    let cartTotal = null
 
-        function getShippingPrice(){
-               try {
-                    cartTotal = parseInt(document.getElementById('cart_total').innerText)
-               }
-                catch (e) {
-                   return
-                }
-            let freeStart = parseInt(shipping.options[shipping.selectedIndex].dataset.free)
-            console.log('freeStart',freeStart)
-            shippingPrice = parseInt(shipping.options[shipping.selectedIndex].dataset.price)
-            console.log('shippingPrice',shippingPrice)
-            if (freeStart && cartTotal >= freeStart){
-                   totalPrice.innerText= cartTotal
-            }
-            else {
-              totalPrice.innerText = cartTotal + shippingPrice
-            }
-
-
+    function getShippingPrice(){
+        try {
+            cartTotal = parseInt(document.getElementById('cart_total').innerText)
         }
-    </script>
+        catch (e) {
+            return
+        }
+        let freeStart = parseInt(shipping.options[shipping.selectedIndex].dataset.free)
+        console.log('freeStart',freeStart)
+        shippingPrice = parseInt(shipping.options[shipping.selectedIndex].dataset.price)
+        console.log('shippingPrice',shippingPrice)
+        if (freeStart && cartTotal >= freeStart){
+            totalPrice.innerText= cartTotal
+        }
+        else {
+            totalPrice.innerText = cartTotal + shippingPrice
+        }
+
+
+    }
+</script>
 <script type="text/javascript">
-	 $('.datepicker').datepicker({
-    	 weekStart:1,
-    	 color: '#ff3d2a'
-	 });
-	</script>
+    $('.datepicker').datepicker({
+        weekStart:1,
+        color: '#ff3d2a'
+    });
+</script>
 </body>
 </html>
