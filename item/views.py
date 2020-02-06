@@ -36,14 +36,27 @@ def feed(request):
     response['Content-Disposition'] = 'attachment; filename="fb_feed.csv"'
 
     writer = csv.writer(response)
-    writer.writerow(['id','availability','condition','description','image_link','link','title','price',
+    writer.writerow(['id',
+                     'availability',
+                     'condition',
+                     'description',
+                     'image_link',
+                     'link',
+                     'title',
+                     'price',
                      'brand'])
     all_items = Item.objects.all()
     for item in all_items:
         writer.writerow(
-            [item.id,'in stock','new',f'http://46.229.214.96/{item.description,item.images.first().image.url}',
-             f'http://46.229.214.96/category/{item.category.first().name_slug}/{item.name_slug}/',item.name,f'{item.price} RUB',
-                     item.name])
+            [item.id,
+             'in stock',
+             'new',
+             item.description,
+             f'http://46.229.214.96/{item.images.first().image.url}',
+             f'http://46.229.214.96/category/{item.category.first().name_slug}/{item.name_slug}/',
+             item.name,
+             f'{item.price} RUB',
+             item.name])
 
 
 
