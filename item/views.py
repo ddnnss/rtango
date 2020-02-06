@@ -3,6 +3,8 @@ from django.http import JsonResponse, Http404
 from item.models import Item,ItemImage
 from cart.models import Cart
 from customuser.models import User, Guest
+import csv
+from django.http import HttpResponse
 
 def quick_view(request):
     return_dict = {}
@@ -28,5 +30,25 @@ def quick_view(request):
     return JsonResponse(return_dict)
 
 
+def feed(request):
+    # Create the HttpResponse object with the appropriate CSV header.
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="somefilename.csv"'
 
+    writer = csv.writer(response)
+    writer.writerow(['id','title','description','rich_text_description','availability','condition','price','link',
+                     'image_link','brand','additional_image_link','age_group','color','gender','item_group_id',
+                     'google_product_category','product_type','sale_price','sale_price_effective_date','size',
+                     'offer_price','offer_price_effective_date','visibility','inventory'])
+    all_items = Item.objects.all()
+    for item in all_items:
+        writer.writerow(
+            ['id', 'title', 'description', 'rich_text_description', 'availability', 'condition', 'price', 'link',
+             'image_link', 'brand', 'additional_image_link', 'age_group', 'color', 'gender', 'item_group_id',
+             'google_product_category', 'product_type', 'sale_price', 'sale_price_effective_date', 'size',
+             'offer_price', 'offer_price_effective_date', 'visibility', 'inventory'])
+
+
+
+    return response
 

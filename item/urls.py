@@ -21,7 +21,7 @@ from . import views
 
 urlpatterns = [
     path('quick_view/', views.quick_view, name='quick_view'),
-    path("feed/", LatestPostsFeed(), name="post_feed"),
+    path("feed/", views.feed, name="post_feed"),
     # path('<item_slug>/', views.item_page, name='item_page'),
 
 

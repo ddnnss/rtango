@@ -4,9 +4,9 @@ from .models import Item
 from django.urls import reverse
 
 class LatestPostsFeed(Feed):
-    title = "My blog"
-    link = ""
-    description = "New posts of my blog."
+    title = "Розовое Танго"
+    link = "http://r-tango.ru"
+    description = "Бутик цветов"
 
     def items(self):
         return Item.objects.all()
