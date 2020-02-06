@@ -41,7 +41,7 @@ def feed(request):
     all_items = Item.objects.all()
     for item in all_items:
         writer.writerow(
-            [item.id,'in stock','new',item.description,item.images.first().image.url,
+            [item.id,'in stock','new',f'http://46.229.214.96/item.description,item.images.first().image.url',
              f'http://46.229.214.96/category/{item.category.first().name_slug}/{item.name_slug}/',item.name,f'{item.price} RUB',
                      item.name])
 
