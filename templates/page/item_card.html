@@ -39,7 +39,7 @@
 {#                    <i class="fa fa-cart-plus "></i>#}
 {#                </a>#}
 {#            {% endif %}#}
-            <a class="item-parts">Состав букета:
+            <a class="item-parts">Состав :
                 {% for part in item.itemparts_set.all %}
                 {{ part.item_part.name }} {% if part.item_part_count > 0 %}x {{ part.item_part_count }} шт{% endif %}
             {% endfor %}

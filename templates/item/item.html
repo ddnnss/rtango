@@ -75,24 +75,24 @@
 
                                 <div class="shop-catigory">
                                     <ul id="faq">
-                                        <li> <a data-toggle="collapse" data-parent="#faq" href="#shop-catigory-1" aria-expanded="false" class="collapsed"><strong>Состав букета</strong> <i class="ion-ios-arrow-down"></i></a>
+                                        <li> <a data-toggle="collapse" data-parent="#faq" href="#shop-catigory-1" aria-expanded="false" class="collapsed"><i style="float: none; margin-right: 10px;" class="fa fa-list"></i> <strong>Состав букета</strong> <i class="ion-ios-arrow-down"></i></a>
                                             <ul id="shop-catigory-1" class="panel-collapse show" style="">
                                                 {% for part in item_parts %}
                                                     <li> {{ part.item_part.name }} {% if part.item_part_count > 0 %} x {{ part.item_part_count }} шт{% endif %}</li>
                                                 {% endfor %}
                                             </ul>
                                         </li>
-                                        <li> <a data-toggle="collapse" data-parent="#faq" href="#shop-catigory-2" class="collapsed" aria-expanded="false"><strong>Доставка</strong><i class="ion-ios-arrow-down"></i></a>
+                                        <li> <a data-toggle="collapse" data-parent="#faq" href="#shop-catigory-2" class="collapsed" aria-expanded="false"><i style="float: none; margin-right: 10px;" class="fa fa-truck"></i> <strong>Доставка</strong><i class="ion-ios-arrow-down"></i></a>
                                             <ul id="shop-catigory-2" class="panel-collapse collapse" style="">
 
-                                                <li><p>Стоимость доставки по Челябинску 300 ₽. Бесплатная доставка при заказе от 3000 ₽.</p>
+                                                <li><p>Стоимость доставки по Челябинску 300 ₽.<br> Бесплатная доставка при заказе от 3000 ₽.</p>
                                                     <p>Стоимость доставки по пригороду уточняйте у специалистов.</p>
                                                     <p>Часы работы доствки: с 9:00 до 21:00</p>
                                                 </li>
 
                                             </ul>
                                         </li>
-                                        <li> <a data-toggle="collapse" data-parent="#faq" href="#shop-catigory-3" class="collapsed" aria-expanded="false"><strong>Оплата</strong> <i class="ion-ios-arrow-down"></i></a>
+                                        <li> <a data-toggle="collapse" data-parent="#faq" href="#shop-catigory-3" class="collapsed" aria-expanded="false"><i style="float: none; margin-right: 10px;" class="fa fa-money"></i> <strong>Оплата</strong> <i class="ion-ios-arrow-down"></i></a>
                                             <ul id="shop-catigory-3" class="panel-collapse collapse">
                                                 <table class="payments-list-table" style="width:99%; margin-top: 10px">
                                                     <tbody><tr>
@@ -154,7 +154,7 @@
 
 
                                         </li>
-                                        <li> <a data-toggle="collapse" data-parent="#faq" href="#shop-catigory-4" class="collapsed" aria-expanded="false"><strong>Описание</strong> <i class="ion-ios-arrow-down"></i></a>
+                                        <li> <a data-toggle="collapse" data-parent="#faq" href="#shop-catigory-4" class="collapsed" aria-expanded="false"><i style="float: none; margin-right: 10px;" class="fa fa-list-alt"></i> <strong>Описание</strong> <i class="ion-ios-arrow-down"></i></a>
                                             <ul id="shop-catigory-4" class="panel-collapse collapse">
                                                 <li>{{ item.description | safe }}</li>
 
@@ -167,60 +167,18 @@
 
 
                         </div>
-                        <div class="quality-add-to-cart">
+                      <div style="display: flex; align-items: center;  flex-wrap: wrap; margin-bottom: 20px" class="">
+            <a style=" display: inline-block; margin: 0 auto; flex-grow: 1; flex-basis: 40%; text-align: center; margin-right: 20px;    margin-bottom: 20px;" class="in-cart-btn"  href="javasript: void(0)"
 
-                            <div class="quality">
-                                <label>Количество:</label>
-                                <input id="item_number" class="cart-plus-minus-box" type="text" name="qtybutton" value="1">
-                            </div>
-                            <div class="shop-list-cart-wishlist">
-                                <a title="Добавить в корзину" href="javasript: void(0)"
+                         data-item_id="{{ item.id }}"
+                         data-item_name="{{ item.name }}"
+                         data-item_price="{{ item.price }}"
+                         data-item_image="{{ item.images.first.image_small }}"
+                         onclick="add_to_cart(this,1)">В корзину</a>
+            <a style="display: inline-block;margin: 0 auto;    flex-basis: 40%;
+    margin-bottom: 20px;" class="one-click-btn" href="#" data-itemid="{{ item.id }}" data-item_image="{{ item.images.first.image_small }}" data-target="#exampleModal" data-toggle="modal">Купить в 1 клик</a>
+        </div>
 
-                                   data-item_id="{{ item.id }}"
-                                   data-item_name="{{ item.name }}"
-                                   data-item_price="{{ item.price }}"
-                                   data-item_image="{{ item.images.first.image_small }}"
-                                   onclick="add_to_cart(this)">
-                                    <i class="icon-handbag"></i>
-                                </a>
-
-
-                                {#                                <a title="Wishlist" href="#">#}
-                                {#                                    <i class="icon-heart"></i>#}
-                                {#                                </a>#}
-                            </div>
-
-
-                        </div>
-                        {#                        <div class="pro-dec-categories">#}
-                        {#                            <ul>#}
-                        {#                                <li class="categories-title">Categories:</li>#}
-                        {#                                <li><a href="#">Birthday,</a></li>#}
-                        {#                                <li><a href="#"> Bouquets, </a></li>#}
-                        {#                                <li><a href="#">Custom Orders,</a></li>#}
-                        {#                                <li><a href="#">Home Decor,</a></li>#}
-                        {#                                <li><a href="#">Weddings, </a></li>#}
-                        {#                            </ul>#}
-                        {#                        </div>#}
-                        {#                        <div class="pro-dec-categories">#}
-                        {#                            <ul>#}
-                        {#                                <li class="categories-title">А также это букет подойдет  : </li>#}
-                        {#                                {% for filter in all_filters %}#}
-                        {#                                    <li>#}
-                        {#                                        <a href="{%  url 'category' category.name_slug filter.name_slug %}"> {{ filter.name }}</a>#}
-                        {#                                        {% if not forloop.last %},{% endif %}#}
-                        {#                                    </li>#}
-                        {#                               {% endfor %}#}
-                        {#                            </ul>#}
-                        {#                        </div>#}
-                        {#                        <div class="pro-dec-social">#}
-                        {#                            <ul>#}
-                        {#                                <li><a class="tweet" href="#"><i class="ion-social-twitter"></i> Tweet</a></li>#}
-                        {#                                <li><a class="share" href="#"><i class="ion-social-facebook"></i> Share</a></li>#}
-                        {#                                <li><a class="google" href="#"><i class="ion-social-googleplus-outline"></i> Google+</a></li>#}
-                        {#                                <li><a class="pinterest" href="#"><i class="ion-social-pinterest"></i> Pinterest</a></li>#}
-                        {#                            </ul>#}
-                        {#                        </div>#}
                     </div>
                 </div>
             </div>
