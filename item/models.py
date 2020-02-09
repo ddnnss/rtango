@@ -137,7 +137,7 @@ class Item(models.Model):
     page_title = models.CharField('Название страницы', max_length=255, blank=True, null=True)
     page_description = models.TextField('Описание страницы',  blank=True, null=True)
     page_keywords = models.TextField('Keywords', blank=True, null=True)
-    page_text = models.TextField('СЕО Текст на странице', blank=True, null=True)
+    page_text = RichTextUploadingField('СЕО Текст на странице', blank=True, null=True)
     description = RichTextUploadingField('Описание товара', blank=True, null=True)
     length = models.CharField('Длина', max_length=15, blank=True, editable=False)
     width = models.CharField('Ширина', max_length=15,  blank=True)

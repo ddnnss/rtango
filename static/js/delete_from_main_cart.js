@@ -46,8 +46,7 @@ function delete_from_main_cart(i_id) {
                                     <h4>Всего : <span class="shop-total">${data.total_cart_price} &#8381;</span></h4>
                                 </div>
                                 <div class="shopping-cart-btn">
-                                    <a href="/cart/">Корзина</a>
-                                    <a href="/checkout/">Оплатить</a></div>`);
+                                    <a href="/cart/">Корзина</a></div>`);
                 $('#cart_content_table').empty();
 
 

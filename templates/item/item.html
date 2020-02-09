@@ -3,8 +3,8 @@
 
 {% block content %}
     <script>
-  fbq('track', 'ViewContent');
-</script>
+        fbq('track', 'ViewContent');
+    </script>
     <div class="breadcrumb-area gray-bg">
         <div class="container">
             <div class="breadcrumb-content">
@@ -21,7 +21,7 @@
             <div class="row">
                 <div class="col-lg-6 col-md-12">
                     <div class="product-details-img">
-                      <div id="gallery" class="mb-20 product-dec-slider owl-carousel">
+                        <div id="gallery" class="mb-20 product-dec-slider owl-carousel">
                             {% for image in item.images.all %}
                                 <a data-image="{{ image.image.url }}" data-zoom-image="{{ image.image.url }}">
                                     <img width="70" height="90" src="{{ image.image_small }}" alt="">
@@ -39,18 +39,18 @@
                 <div class="col-lg-6 col-md-12">
                     <div class="product-details-content">
                         <h1>{{ item.name }}</h1>
-                        <div class="rating-review">
-                            <div class="pro-dec-rating">
-                                <i class="ion-android-star-outline theme-star"></i>
-                                <i class="ion-android-star-outline theme-star"></i>
-                                <i class="ion-android-star-outline theme-star"></i>
-                                <i class="ion-android-star-outline theme-star"></i>
-                                <i class="ion-android-star-outline"></i>
-                            </div>
-                            <div class="pro-dec-review">
+                        <div  class="rating-review">
+{#                            <div class="pro-dec-rating">#}
+{#                                <i class="ion-android-star-outline theme-star"></i>#}
+{#                                <i class="ion-android-star-outline theme-star"></i>#}
+{#                                <i class="ion-android-star-outline theme-star"></i>#}
+{#                                <i class="ion-android-star-outline theme-star"></i>#}
+{#                                <i class="ion-android-star-outline"></i>#}
+{#                            </div>#}
+                            <div style="margin-left: 0" class="pro-dec-review">
                                 <ul>
-                                    <li>{{ item.views }} Просмотров </li>
-                                    <li>{{ item.views }} Отзывов </li>
+                                    <li>Просмотров - {{ item.views }}  </li>
+                                    <li>Покупок - {{ item.buys }}  </li>
                                 </ul>
                             </div>
                         </div>
@@ -71,26 +71,92 @@
 
 
                         <div class="pro-dec-feature">
-                        <div class="shop-widget">
+                            <div class="shop-widget">
 
                                 <div class="shop-catigory">
                                     <ul id="faq">
-                                        <li> <a data-toggle="collapse" data-parent="#faq" href="#shop-catigory-1" aria-expanded="false" class="collapsed">Состав букета<i class="ion-ios-arrow-down"></i></a>
-                                            <ul id="shop-catigory-1" class="panel-collapse collapse" style="">
+                                        <li> <a data-toggle="collapse" data-parent="#faq" href="#shop-catigory-1" aria-expanded="false" class="collapsed"><strong>Состав букета</strong> <i class="ion-ios-arrow-down"></i></a>
+                                            <ul id="shop-catigory-1" class="panel-collapse show" style="">
                                                 {% for part in item_parts %}
                                                     <li> {{ part.item_part.name }} {% if part.item_part_count > 0 %} x {{ part.item_part_count }} шт{% endif %}</li>
                                                 {% endfor %}
                                             </ul>
                                         </li>
-                                        <li> <a data-toggle="collapse" data-parent="#faq" href="#shop-catigory-2" class="collapsed" aria-expanded="false">Доставка<i class="ion-ios-arrow-down"></i></a>
+                                        <li> <a data-toggle="collapse" data-parent="#faq" href="#shop-catigory-2" class="collapsed" aria-expanded="false"><strong>Доставка</strong><i class="ion-ios-arrow-down"></i></a>
                                             <ul id="shop-catigory-2" class="panel-collapse collapse" style="">
-                                                {% for ship in all_shipping %}
-                                                    <li>{{ ship.name }} - {{ ship.price }} &#8381; {% if ship.isFree %}| <strong>Бесплатная доставка от {{ ship.freePrice }} &#8381;</strong>{% endif %}</li>
-                                                {% endfor %}
+
+                                                <li><p>Стоимость доставки по Челябинску 300 ₽. Бесплатная доставка при заказе от 3000 ₽.</p>
+                                                    <p>Стоимость доставки по пригороду уточняйте у специалистов.</p>
+                                                    <p>Часы работы доствки: с 9:00 до 21:00</p>
+                                                </li>
+
                                             </ul>
                                         </li>
-                                        <li> <a data-toggle="collapse" data-parent="#faq" href="#shop-catigory-3" class="collapsed" aria-expanded="false">Оплата <i class="ion-ios-arrow-down"></i></a>
+                                        <li> <a data-toggle="collapse" data-parent="#faq" href="#shop-catigory-3" class="collapsed" aria-expanded="false"><strong>Оплата</strong> <i class="ion-ios-arrow-down"></i></a>
                                             <ul id="shop-catigory-3" class="panel-collapse collapse">
+                                                <table class="payments-list-table" style="width:99%; margin-top: 10px">
+                                                    <tbody><tr>
+                                                        <td cellspacing="10">
+                                                            <a style="color:#737373;" target="_blank" href="/oplata#payonlinecard" title="">Карты Visa или MasterCard</a>
+                                                        </td>
+                                                        <td>
+                                                            <a style="color:#737373;" target="_blank" href="/oplata#SberbankOnline" title="Оплата через Сбербанк онлайн">Сбербанк онлайн</a>
+                                                        </td>
+                                                    </tr><tr>
+                                                    </tr><tr class="tr_border"><td><div class="border-left"></div></td><td><div class="border-right"></div></td></tr><tr>
+                                                    </tr><tr>
+                                                        <td cellspacing="10">
+                                                            <a style="color:#737373;" target="_blank" href="/oplata#paypal" title="Оплата через систему PayPal">PayPal</a>
+                                                        </td>
+                                                        <td>
+                                                            <a style="color:#737373;" target="_blank" href="/oplata#AlfaclickRUB" title="Payment via Alfa-Click system">Alfa-Click</a>
+
+                                                        </td>
+                                                    </tr><tr>
+                                                    </tr><tr class="tr_border"><td><div class="border-left"></div></td><td><div class="border-right"></div></td></tr><tr>
+                                                    </tr><tr>
+                                                        <td cellspacing="10">
+                                                            <a style="color:#737373;" target="_blank" href="/oplata#QiwiWalletRUB" title="Оплата через систему Qiwi">Терминалы Qiwi</a>
+                                                        </td>
+                                                        <td>
+                                                            <a style="color:#737373;" target="_blank" href="/oplata#SberbankRUB" title="Оплата через банк">Оплата через банк</a>
+                                                        </td>
+                                                    </tr><tr>
+                                                    </tr><tr class="tr_border"><td><div class="border-left"></div></td><td><div class="border-right"></div></td></tr><tr>
+                                                    </tr><tr>
+                                                        <td>
+                                                            <a style="color:#737373;" target="_blank" href="/oplata#MobileRetails" title="Оплата наличными в Евросети или Связном">Оплата наличными в Евросети или Связном</a>
+                                                        </td>
+                                                        <td>
+                                                            <a style="color:#737373;" target="_blank" href="/oplata#mobimoney" title="Оплата за счет баланса телефона">Оплата за счет баланса телефона</a>
+                                                        </td>
+                                                    </tr><tr>
+                                                    </tr><tr class="tr_border"><td><div class="border-left"></div></td><td><div class="border-right"></div></td></tr><tr>
+                                                    </tr><tr>
+                                                        <td>
+                                                            <a style="color:#737373;" target="_blank" href="/oplata#YandexMoneyRUB" title="Оплата через систему Яндекс.Деньги">Яндекс.Деньги</a>
+                                                        </td>
+                                                        <td>
+                                                            <a style="color:#737373;" target="_blank" href="/oplata#WebmoneyRUB" title="Оплата через систему WebMoney">WebMoney</a>
+                                                        </td>
+                                                    </tr><tr>
+                                                    </tr><tr class="tr_border"><td><div class="border-left"></div></td><td><div class="border-right"></div></td></tr><tr>
+                                                    </tr><tr>
+                                                        <td>
+                                                            <a style="color:#737373;" target="_blank" href="/oplata#bill" title="Оплата с расчетного счета">Оплата на Р/С</a>
+                                                        </td>
+                                                        <td>
+                                                            <a style="color:#737373;" target="_blank" href="/oplata#Courier" title="Оплата курьеру при получении заказа">Оплата курьеру</a>
+                                                        </td>
+                                                    </tr><tr>
+                                                    </tr></tbody></table>
+                                            </ul>
+
+
+                                        </li>
+                                        <li> <a data-toggle="collapse" data-parent="#faq" href="#shop-catigory-4" class="collapsed" aria-expanded="false"><strong>Описание</strong> <i class="ion-ios-arrow-down"></i></a>
+                                            <ul id="shop-catigory-4" class="panel-collapse collapse">
+                                                <li>{{ item.description | safe }}</li>
 
                                             </ul>
                                         </li>
@@ -118,10 +184,12 @@
                                     <i class="icon-handbag"></i>
                                 </a>
 
+
                                 {#                                <a title="Wishlist" href="#">#}
                                 {#                                    <i class="icon-heart"></i>#}
                                 {#                                </a>#}
                             </div>
+
 
                         </div>
                         {#                        <div class="pro-dec-categories">#}
@@ -134,25 +202,25 @@
                         {#                                <li><a href="#">Weddings, </a></li>#}
                         {#                            </ul>#}
                         {#                        </div>#}
-                        <div class="pro-dec-categories">
-                            <ul>
-                                <li class="categories-title">А также это букет подойдет  : </li>
-                                {% for filter in all_filters %}
-                                    <li>
-                                        <a href="{%  url 'category' category.name_slug filter.name_slug %}"> {{ filter.name }}</a>
-                                        {% if not forloop.last %},{% endif %}
-                                    </li>
-                               {% endfor %}
-                            </ul>
-                        </div>
-                        <div class="pro-dec-social">
-                            <ul>
-                                <li><a class="tweet" href="#"><i class="ion-social-twitter"></i> Tweet</a></li>
-                                <li><a class="share" href="#"><i class="ion-social-facebook"></i> Share</a></li>
-                                <li><a class="google" href="#"><i class="ion-social-googleplus-outline"></i> Google+</a></li>
-                                <li><a class="pinterest" href="#"><i class="ion-social-pinterest"></i> Pinterest</a></li>
-                            </ul>
-                        </div>
+                        {#                        <div class="pro-dec-categories">#}
+                        {#                            <ul>#}
+                        {#                                <li class="categories-title">А также это букет подойдет  : </li>#}
+                        {#                                {% for filter in all_filters %}#}
+                        {#                                    <li>#}
+                        {#                                        <a href="{%  url 'category' category.name_slug filter.name_slug %}"> {{ filter.name }}</a>#}
+                        {#                                        {% if not forloop.last %},{% endif %}#}
+                        {#                                    </li>#}
+                        {#                               {% endfor %}#}
+                        {#                            </ul>#}
+                        {#                        </div>#}
+                        {#                        <div class="pro-dec-social">#}
+                        {#                            <ul>#}
+                        {#                                <li><a class="tweet" href="#"><i class="ion-social-twitter"></i> Tweet</a></li>#}
+                        {#                                <li><a class="share" href="#"><i class="ion-social-facebook"></i> Share</a></li>#}
+                        {#                                <li><a class="google" href="#"><i class="ion-social-googleplus-outline"></i> Google+</a></li>#}
+                        {#                                <li><a class="pinterest" href="#"><i class="ion-social-pinterest"></i> Pinterest</a></li>#}
+                        {#                            </ul>#}
+                        {#                        </div>#}
                     </div>
                 </div>
             </div>
@@ -169,77 +237,66 @@
                 <div class="tab-content description-review-bottom">
                     <div id="des-details1" class="tab-pane active">
                         <div class="product-description-wrapper">
-                            {{ item.description | safe }}
+                            {{ item.page_text | safe }}
                         </div>
                     </div>
                     <div id="des-details3" class="tab-pane">
                         <div class="rattings-wrapper">
-                            <div class="sin-rattings">
-                                <div class="star-author-all">
-                                    <div class="ratting-star f-left">
-                                        <i class="ion-star theme-color"></i>
-                                        <i class="ion-star theme-color"></i>
-                                        <i class="ion-star theme-color"></i>
-                                        <i class="ion-star theme-color"></i>
-                                        <i class="ion-star theme-color"></i>
-                                        <span>(5)</span>
-                                    </div>
-                                    <div class="ratting-author f-right">
-                                        <h3>tayeb rayed</h3>
-                                        <span>12:24</span>
-                                        <span>9 March 2018</span>
-                                    </div>
-                                </div>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Utenim ad minim veniam, quis nost rud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Utenim ad minim veniam, quis nost.</p>
-                            </div>
-                            <div class="sin-rattings">
-                                <div class="star-author-all">
-                                    <div class="ratting-star f-left">
-                                        <i class="ion-star theme-color"></i>
-                                        <i class="ion-star theme-color"></i>
-                                        <i class="ion-star theme-color"></i>
-                                        <i class="ion-star theme-color"></i>
-                                        <i class="ion-star theme-color"></i>
-                                        <span>(5)</span>
-                                    </div>
-                                    <div class="ratting-author f-right">
-                                        <h3>farhana shuvo</h3>
-                                        <span>12:24</span>
-                                        <span>9 March 2018</span>
-                                    </div>
-                                </div>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Utenim ad minim veniam, quis nost rud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Utenim ad minim veniam, quis nost.</p>
-                            </div>
-                        </div>
-                        <div class="ratting-form-wrapper">
-                            <h3>Add your Comments :</h3>
-                            <div class="ratting-form">
-                                <form action="#">
-                                    <div class="star-box">
-                                        <h2>Rating:</h2>
-                                        <div class="ratting-star">
-                                            <i class="ion-star theme-color"></i>
-                                            <i class="ion-star theme-color"></i>
-                                            <i class="ion-star theme-color"></i>
-                                            <i class="ion-star theme-color"></i>
-                                            <i class="ion-star"></i>
+                            {% if not all_reviews %}
+                                <p>Отзывов пока нет</p>
+                            {% endif %}
+                            {% for review in all_reviews %}
+                                <div class="sin-rattings">
+                                    <div class="star-author-all">
+                                        {#                                    <div class="ratting-star f-left">#}
+                                        {#                                        <i class="ion-star theme-color"></i>#}
+                                        {#                                        <i class="ion-star theme-color"></i>#}
+                                        {#                                        <i class="ion-star theme-color"></i>#}
+                                        {#                                        <i class="ion-star theme-color"></i>#}
+                                        {#                                        <i class="ion-star theme-color"></i>#}
+                                        {#                                        <span>(5)</span>#}
+                                        {#                                    </div>#}
+                                        <div class="ratting-author f-right">
+                                            <h3>{{ review.name }}</h3>
+
+                                            <span>{{ review.createdAt | date }}</span>
                                         </div>
                                     </div>
+                                    <p>{{ review.text }}</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="ratting-form-wrapper">
+                            <h3>Добавьте ваш отзыв :</h3>
+                            <div class="ratting-form">
+                                <form action="" method="post">{% csrf_token %}
+                                    {#                                    <div class="star-box">#}
+                                    {#                                        <h2>Rating:</h2>#}
+                                    {#                                        <div class="ratting-star">#}
+                                    {#                                            <i class="ion-star theme-color"></i>#}
+                                    {#                                            <i class="ion-star theme-color"></i>#}
+                                    {#                                            <i class="ion-star theme-color"></i>#}
+                                    {#                                            <i class="ion-star theme-color"></i>#}
+                                    {#                                            <i class="ion-star"></i>#}
+                                    {#                                        </div>#}
+                                    {#                                    </div>#}
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="rating-form-style mb-20">
-                                                <input placeholder="Name" type="text">
+                                                <input required name="name" placeholder="Ваше ФИО" type="text">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="rating-form-style mb-20">
-                                                <input placeholder="Email" type="text">
+                                                <input placeholder="Ваш Email" name="email" type="email">
                                             </div>
                                         </div>
+                                        <input type="hidden" name="id" value="{{ item.id }}">
+                                        <input style="display: none" type="checkbox" name="agree" >
                                         <div class="col-md-12">
                                             <div class="rating-form-style form-submit">
-                                                <textarea name="message" placeholder="Message"></textarea>
-                                                <input type="submit" value="add review">
+                                                <textarea required name="text" placeholder="Ваш отзыв"></textarea>
+                                                <input type="submit" value="Отправить">
                                             </div>
                                         </div>
                                     </div>
@@ -251,44 +308,44 @@
             </div>
         </div>
     </div>
-{#    <div class="product-area pb-70">#}
-{#        <div class="container">#}
-{#            <div class="product-top-bar section-border mb-35">#}
-{#                <div class="section-title-wrap">#}
-{#                    <h3 class="section-title section-bg-white">Похожие товары</h3>#}
-{#                </div>#}
-{#            </div>#}
-{#            <div class="featured-product-active hot-flower owl-carousel product-nav">#}
-{#                <div class="product-wrapper">#}
-{#                    <div class="product-img">#}
-{#                        <a href="product-details.html">#}
-{#                            <img alt="" src="assets/img/product/product-5.jpg">#}
-{#                        </a>#}
-{#                        <span>-30%</span>#}
-{#                        <div class="product-action">#}
-{#                            <a class="action-wishlist" href="#" title="Wishlist">#}
-{#                                <i class="icon-heart"></i>#}
-{#                            </a>#}
-{#                            <a class="action-cart" href="#" title="Add To Cart">#}
-{#                                <i class="icon-handbag"></i>#}
-{#                            </a>#}
-{#                            <a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal" title="Quick View">#}
-{#                                <i class="icon-magnifier-add"></i>#}
-{#                            </a>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                    <div class="product-content text-center">#}
-{#                        <h4>#}
-{#                            <a href="product-details.html">Dutchman's Breeches </a>#}
-{#                        </h4>#}
-{#                        <div class="product-price-wrapper">#}
-{#                            <span>$100.00</span>#}
-{#                            <span class="product-price-old">$120.00 </span>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                </div>#}
-{##}
-{#            </div>#}
-{#        </div>#}
-{#    </div>#}
+    {#    <div class="product-area pb-70">#}
+    {#        <div class="container">#}
+    {#            <div class="product-top-bar section-border mb-35">#}
+    {#                <div class="section-title-wrap">#}
+    {#                    <h3 class="section-title section-bg-white">Похожие товары</h3>#}
+    {#                </div>#}
+    {#            </div>#}
+    {#            <div class="featured-product-active hot-flower owl-carousel product-nav">#}
+    {#                <div class="product-wrapper">#}
+    {#                    <div class="product-img">#}
+    {#                        <a href="product-details.html">#}
+    {#                            <img alt="" src="assets/img/product/product-5.jpg">#}
+    {#                        </a>#}
+    {#                        <span>-30%</span>#}
+    {#                        <div class="product-action">#}
+    {#                            <a class="action-wishlist" href="#" title="Wishlist">#}
+    {#                                <i class="icon-heart"></i>#}
+    {#                            </a>#}
+    {#                            <a class="action-cart" href="#" title="Add To Cart">#}
+    {#                                <i class="icon-handbag"></i>#}
+    {#                            </a>#}
+    {#                            <a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal" title="Quick View">#}
+    {#                                <i class="icon-magnifier-add"></i>#}
+    {#                            </a>#}
+    {#                        </div>#}
+    {#                    </div>#}
+    {#                    <div class="product-content text-center">#}
+    {#                        <h4>#}
+    {#                            <a href="product-details.html">Dutchman's Breeches </a>#}
+    {#                        </h4>#}
+    {#                        <div class="product-price-wrapper">#}
+    {#                            <span>$100.00</span>#}
+    {#                            <span class="product-price-old">$120.00 </span>#}
+    {#                        </div>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {##}
+    {#            </div>#}
+    {#        </div>#}
+    {#    </div>#}
 {% endblock %}

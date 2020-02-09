@@ -46,6 +46,20 @@
     /></noscript>
     <!-- End Facebook Pixel Code -->
     <style>
+        .search-form{
+            display: flex;
+        }
+        .search-form button{
+            background: none;
+            flex-basis: 20%;
+            cursor: pointer;
+            border: 1px solid #ebebeb;
+
+        }
+        .search-form button:hover{
+            background: #ff3d2a !important;
+            color: #ffffff;
+        }
         .item-size{
                 right: 10px !important;
                 left: unset !important;
@@ -87,6 +101,10 @@
             border-radius: 5px;
             transition: all .1s linear;
             box-shadow: 0 0 90px -40px #000 !important;
+        }
+
+        .no-hover:hover{
+            box-shadow: none !important;
         }
     </style>
 </head>

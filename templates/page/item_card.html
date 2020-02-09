@@ -1,5 +1,5 @@
 
-<div class="product-wrapper">
+<div class="product-wrapper {% if not category %}no-hover{% endif %}">
     <div class="product-img">
         {% if category %}
             <a href="{% url 'item_page' category.name_slug item.name_slug %}">

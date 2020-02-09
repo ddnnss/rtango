@@ -550,7 +550,7 @@ def category(request, slug, subcat_slug):
         items_paginator = Paginator(items, int(count))
         param_count = count
     else:
-        items_paginator = Paginator(items, 12)
+        items_paginator = Paginator(items, 9)
 
 
     try:
@@ -565,25 +565,36 @@ def category(request, slug, subcat_slug):
 
 
 def item_page(request, cat_slug, item_slug):
-    try:
-        item = Item.objects.get(name_slug=item_slug)
-        category = Category.objects.get(name_slug=cat_slug)
-        item.views += 1
-        item.save(force_update=True)
+    if request.POST:
+        if not request.POST.get('agree'):
+            Review.objects.create(item_id=request.POST.get('id'),
+                                  name=request.POST.get('name'),
+                                  email=request.POST.get('email'),
+                                  text=request.POST.get('text'))
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        else:
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    else:
+        try:
+            item = Item.objects.get(name_slug=item_slug)
+            category = Category.objects.get(name_slug=cat_slug)
+            item.views += 1
+            item.save(force_update=True)
 
-        # recomended = Item.objects.filter(subcategory_id=item.subcategory_id).order_by('-views')[:12]
-        # title = item.name
-        # description = item.description
+            # recomended = Item.objects.filter(subcategory_id=item.subcategory_id).order_by('-views')[:12]
+            # title = item.name
+            # description = item.description
 
-    # print(recomended)
-    except:
-        raise Http404
-        # return render(request, '404.html', locals())
-    item_parts = ItemParts.objects.filter(item=item)
-    all_shipping = OrderShipping.objects.all().order_by('-id')
-    all_filters = item.filter.all()
-    title = ''
-    description = ''
+        # print(recomended)
+        except:
+            raise Http404
+            # return render(request, '404.html', locals())
+        item_parts = ItemParts.objects.filter(item=item)
+        all_shipping = OrderShipping.objects.all().order_by('-id')
+        all_filters = item.filter.all()
+        all_reviews = Review.objects.filter(item=item,isPublished=True)
+        title = ''
+        description = ''
     return render(request, 'item/item.html', locals())
 
 
@@ -598,15 +609,7 @@ def search(request):
         return render(request, '404.html', locals())
     if not items:
         items = Item.objects.filter(name_lower__contains=search_string.lower()[:-1], is_active=True)
-    if not items:
-        items = Item.objects.filter(article__contains=search_string)
-    items_paginator = Paginator(items, 12)
-    try:
-        items = items_paginator.get_page(page)
-    except PageNotAnInteger:
-        items = items_paginator.page(1)
-    except EmptyPage:
-        items = items_paginator.page(items_paginator.num_pages)
+
 
     return render(request, 'page/search.html', locals())
 

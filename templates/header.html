@@ -19,7 +19,25 @@
                           <div class="account-curr-lang-wrap f-right">
                             <ul>
                                 <li class=""><a href="tel:73512230457"><strong>+7 (351) 223-04-57</strong> </a></li>
-                                <li class=""><a href="mailto:r-tango@mail.ru"><strong>r-tango@mail.ru</strong> </a></li>
+                                <li class="">
+                                    <div style="padding: 0 !important;" class="header-cart">
+                            <a style="display: flex" href="#">
+                                <div class="cart-text">
+                                    <span class="digit"><strong>Поиск</strong></span>
+                                </div>
+                            </a>
+                            <div style="padding: 10px !important;" class="shopping-cart-content">
+                                <form class="search-form" action="{% url 'search' %}">
+                                   <input required type="text" name="search" placeholder="Поиск по сайту">
+                                    <button type="submit"> <i class="fa fa-search"></i></button>
+                                </form>
+
+
+
+
+
+                            </div>
+                        </div></li>
                                 <li> <a style="background: red;
     padding: 0px 10px;
     color: #fff;
@@ -127,7 +145,7 @@
                                         </div>
                                         <div class="shopping-cart-btn">
                                             <a href="{% url 'show_cart' %}">Корзина</a>
-                                            <a href="{% url 'checkout' %}">Оплатить</a></div>
+                                          </div>
                                  {% endif %}
                                     </div>
 

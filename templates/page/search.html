@@ -3,77 +3,123 @@
 
 {% block content %}
 
-<div class="container main-container headerOffset globalPaddingBottom">
- <div class="row">
-        <div class="breadcrumbDiv col-lg-12">
-            <ul class="breadcrumb">
-                <li><a href="/">ГЛАВНАЯ</a></li>
-                <li class="active">РЕЗУЛЬТАТ ПОИСКА ПО ЗАПРОСУ : {{ search_string }}</li>
-            </ul>
+  <div class="breadcrumb-area gray-bg">
+            <div class="container">
+                <div class="breadcrumb-content">
+                    <ul>
+                        <li><a href="/">Главная</a></li>
+                        <li class="active">Результаты поиска</li>
+                    </ul>
+                </div>
+            </div>
         </div>
-
+    <div class="container pt-75">
+     <div class="product-top-bar section-border mb-35">
+                <div class="section-title-wrap">
+                    <h1 class="section-title section-bg-white">Результаты поиска по запросу {{ search_string }}</h1>
+                </div>
+            </div>
     </div>
 
-    <section class="main-container-wrapper clearfix" id="main-container-wrapper">
-        <div class="container main-container">
-
-            <!-- Main component call to action -->
-
-            <div class="row">
+        <div class="shop-page-area  pb-75">
+            <div class="container">
 
 
+{#                        <div class="banner-area pb-30">#}
+{#                            <a href="product-details.html"><img alt="" src="assets/img/banner/banner-49.jpg"></a>#}
+{#                        </div>#}
 
-                <!--left column-->
-
-            <div id="subcat_items" class="row  categoryProduct xsResponse clearfix">
-                {% for item in items %}
-                    {% include 'page/item_info.html' %}
-                {% endfor %}
-
-
-            </div>
-                <!--/.catColumnWrapper-->
-
-
-            </div>
-            <!-- /.row  -->
-        </div>
-        <!-- /main container -->
-         <nav id="items_paginator" class="shop-pagination" aria-label="Shop navigation">
-                                <ul class="pagination justify-content-end">
-                                {% if items.has_previous %}
-                                    <li class="page-item">
-                                      <a class="page-link" href="?{% if param_search %}&search={{ param_search }}{% endif %}{% if param_filter %}&filter={{ param_filter }}{% endif %}{% if param_order %}&order={{ param_order }}{% endif %}" aria-label="Previous">
-                                        <span aria-hidden="true">&laquo;</span>
-                                        <span class="sr-only">begin</span>
-                                      </a>
-                                    </li>
-                                {% endif %}
-                                    {% for pg in items.paginator.page_range %}
-                                        {% if items.number == pg %}
-                                            <li class="page-item active"><a class="page-link" href="?{% if pg > 1 %}page={{ pg }}{% endif %}{% if param_search %}&search={{ param_search }}{% endif %}{% if param_filter %}&filter={{ param_filter }}{% endif %}{% if param_order %}&order={{ param_order }}{% endif %}">{{pg}}</a></li>
-                                        {% elif pg > items.number|add:'-6' and pg < items.number|add:'6' %}
-                                            <li class="page-item"><a class="page-link" href="?{% if pg > 1 %}page={{ pg }}{% endif %}{% if param_search %}&search={{ param_search }}{% endif %}{% if param_filter %}&filter={{ param_filter }}{% endif %}{% if param_order %}&order={{ param_order }}{% endif %}">{{pg}}</a></li>
-                                        {% endif %}
+                        <div class="grid-list-product-wrapper">
+                            <div class="product-grid product-view pb-20">
+                                <div class="row">
+                                    {% for item in items %}
+                                      <div class="product-width col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12 mb-30">
+                                        {% include 'page/item_card.html' %}
+                                      </div>
                                     {% endfor %}
-                                {% if items.has_next %}
-                                  <li class="page-item">
-                                    <a class="page-link" href="?page={{ items.paginator.num_pages }}{% if param_search %}&search={{ param_search }}{% endif %}{% if param_filter %}&filter={{ param_filter }}{% endif %}{% if param_order %}&order={{ param_order }}{% endif %}" aria-label="Next">
-                                      <span aria-hidden="true">&raquo;</span>
-                                      <span class="sr-only">end</span>
-                                    </a>
-                                  </li>
-                                  {% endif %}
 
-                                </ul>
+                                </div>
+                            </div>
 
-                            </nav>
-    </section>
-   <div>
-    {{ subcat.description|safe }}
-    </div>
-</div>
 
-{% include 'page/quick_view.html' %}
+                        </div>
+
+
+                </div>
+            </div>
+        </div>
+
+ <script>
+        var last_filter = '';
+        var last_order = '';
+        var last_search = '';
+        let countSelect = document.getElementById('per_page')
+        let orderSelect = document.getElementById('per_order')
+        let subcategorySelect = document.getElementById('subcategory')
+        let townSelect = document.getElementById('town')
+
+
+        function setGetParam(key,value) {
+            if (history.pushState) {
+                var params = new URLSearchParams(window.location.search);
+                params.set(key, value);
+                var newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + params.toString();
+
+                window.history.pushState({path:newUrl},'',newUrl);
+            }
+        }
+
+        function removeParam(parameter)
+        {
+            var url=document.location.href;
+            var urlparts= url.split('?');
+
+            if (urlparts.length>=2)
+            {
+                var urlBase=urlparts.shift();
+                var queryString=urlparts.join("?");
+
+                var prefix = encodeURIComponent(parameter)+'=';
+                var pars = queryString.split(/[&;]/g);
+                for (var i= pars.length; i-->0;)
+                    if (pars[i].lastIndexOf(prefix, 0)!==-1)
+                        pars.splice(i, 1);
+                url = urlBase+'?'+pars.join('&');
+                window.history.pushState('',document.title,url); // added this line to push the new url directly to url bar .
+
+            }
+            return url;
+        }
+
+        function per_page() {
+            var count = countSelect.options[countSelect.selectedIndex].value
+            console.log(count);
+
+            setGetParam('count',count);
+            var url =location.href.split('?')[1];
+
+            window.location.href = '?'+url;
+        }
+        function per_order() {
+            var order = orderSelect.options[orderSelect.selectedIndex].value
+            console.log(order);
+
+            setGetParam('order',order);
+            var url =location.href.split('?')[1];
+
+            window.location.href = '?'+url;
+        }
+
+        function clearForm() {
+            let form = document.getElementById('filters_form')
+            form.reset()
+            subcategorySelect.selectedIndex = 0
+            townSelect.selectedIndex = 0
+            form.submit()
+
+        }
+
+    </script>
+
 
 {% endblock %}
