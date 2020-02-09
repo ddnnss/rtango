@@ -42,3 +42,18 @@ class Callback(models.Model):
     class Meta:
         verbose_name = "Заказ обратного звонка"
         verbose_name_plural = "Заказы обратного звонка"
+
+class Review(models.Model):
+    item = models.ForeignKey(Item, blank=False, null=True, on_delete=models.CASCADE, verbose_name='Букет')
+    name = models.CharField('ФИО', blank=False,null=True, max_length=50)
+    email = models.CharField('EMail', blank=True, null=True, max_length=20)
+    text = models.TextField('Отзыв', blank=False, null=True)
+    createdAt = models.DateTimeField(auto_now_add=True)
+    isPublished = models.BooleanField('Отображается ?', default=False)
+
+    def __str__(self):
+        return 'Отзыв о товаре: %s' % self.item.name
+
+    class Meta:
+        verbose_name = "Отзыв о товаре"
+        verbose_name_plural = "Отзывы о товарах"

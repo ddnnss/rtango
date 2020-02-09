@@ -45,6 +45,50 @@
                    src="https://www.facebook.com/tr?id=780113182414609&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Facebook Pixel Code -->
+    <style>
+        .item-size{
+                right: 10px !important;
+                left: unset !important;
+                font-size: 13px !important;
+        }
+        .item-parts{
+            width: 100% !important;
+            font-size: 12px !important;
+            background: #ff3d2a!important;
+            color: #ffffff!important;
+            line-height: 16px !important;
+            margin: 0 !important;
+            height: fit-content !important;
+        }
+        .one-click-btn{
+            font-size: 13px;
+            color: #ff3d2a;
+        }
+        .in-cart-btn{
+            position: relative;
+            border: 2px solid #ff3d2a;
+            box-sizing: border-box;
+            padding: 10px;
+            display: block;
+            color: #ff3d2a;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+        .in-cart-btn:hover{
+            background: #ff3d2a;
+            color: #ffffff;
+        }
+        .product-wrapper{
+            padding-bottom: 20px !important;
+        }
+        .product-wrapper:hover{
+
+            z-index: 999;
+            border-radius: 5px;
+            transition: all .1s linear;
+            box-shadow: 0 0 90px -40px #000 !important;
+        }
+    </style>
 </head>
 <body>
 <form id="dummy_form">{% csrf_token %}</form>

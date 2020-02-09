@@ -14,35 +14,43 @@
         {% if item.discount > 0 %}
             <span>-{{ item.discount }}%</span>
         {% endif %}
+    {% if item.width and item.height %}
+        <span class="item-size">&#8596; {{ item.width }}см &#8597; {{ item.height }}см</span>
+    {% endif %}
 
         <div class="product-action">
             {#                                                    <a class="action-wishlist" href="#" title="Wishlist">#}
             {#                                                        <i class="icon-heart"></i>#}
             {#                                                    </a>#}
-            <a title="В корзину" href="javasript: void(0)"
-
-               data-item_id="{{ item.id }}"
-               data-item_name="{{ item.name }}"
-               data-item_price="{{ item.price }}"
-               data-item_image="{{ item.images.first.image_small }}"
-               onclick="add_to_cart(this,1)">
-                <i class="icon-handbag"></i>
-            </a>
+{#            <a title="В корзину" href="javasript: void(0)"#}
+{##}
+{#               data-item_id="{{ item.id }}"#}
+{#               data-item_name="{{ item.name }}"#}
+{#               data-item_price="{{ item.price }}"#}
+{#               data-item_image="{{ item.images.first.image_small }}"#}
+{#               onclick="add_to_cart(this,1)">#}
+{#                <i class="icon-handbag"></i>#}
+{#            </a>#}
             {#                                                    <a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal" title="Quick View">#}
             {#                                                        <i class="icon-magnifier-add"></i>#}
             {#                                                    </a>#}
-            {% if not item.is_optional %}
-            <a class="action-wishlist" href="#" data-itemid="{{ item.id }}" data-item_image="{{ item.images.first.image_small }}" data-target="#exampleModal" data-toggle="modal" title="Купить в один клик">
-                <i class="fa fa-cart-plus "></i>
+{#            {% if not item.is_optional %}#}
+{#                <a class="action-wishlist" href="#" data-itemid="{{ item.id }}" data-item_image="{{ item.images.first.image_small }}" data-target="#exampleModal" data-toggle="modal" title="Купить в один клик">#}
+{#                    <i class="fa fa-cart-plus "></i>#}
+{#                </a>#}
+{#            {% endif %}#}
+            <a class="item-parts">Состав букета:
+                {% for part in item.itemparts_set.all %}
+                {{ part.item_part.name }} {% if part.item_part_count > 0 %}x {{ part.item_part_count }} шт{% endif %}
+            {% endfor %}
             </a>
-            {% endif %}
         </div>
     </div>
     <div class="product-content text-center">
         <h4>
             <a href="product-details.html">{{ item.name }}</a>
         </h4>
-        <div class="product-price-wrapper">
+        <div class="product-price-wrapper mb-10">
             {% if item.discount > 0 %}
                 <span>{{ item.discount_value }} <i class="fa fa-rub"></i></span>
                 <span class="product-price-old">{{ item.price }} <i class="fa fa-rub"></i></span>
@@ -51,6 +59,16 @@
 
             {% endif %}
 
+        </div>
+        <div class="">
+            <a class="in-cart-btn"  href="javasript: void(0)"
+
+                         data-item_id="{{ item.id }}"
+                         data-item_name="{{ item.name }}"
+                         data-item_price="{{ item.price }}"
+                         data-item_image="{{ item.images.first.image_small }}"
+                         onclick="add_to_cart(this,1)">В корзину</a>
+            <a class="one-click-btn" href="#" data-itemid="{{ item.id }}" data-item_image="{{ item.images.first.image_small }}" data-target="#exampleModal" data-toggle="modal">Купить в 1 клик</a>
         </div>
     </div>
     {% if indexActive %}
@@ -75,6 +93,7 @@
                     <i class="icon-magnifier-add"></i>
                 </a>
             </div>
+
         </div>
     {% endif %}
 </div>
