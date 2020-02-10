@@ -52,8 +52,8 @@ def feed(request):
              'in stock',
              'new',
              item.description,
-             f'http://46.229.214.96/{item.images.first().image.url}',
-             f'http://46.229.214.96/category/{item.category.first().name_slug}/{item.name_slug}/',
+             f'https://r-tango.ru//{item.images.first().image.url}',
+             f'https://r-tango.ru//category/{item.category.first().name_slug}/{item.name_slug}/',
              item.name,
              f'{item.price} RUB',
              item.name])
