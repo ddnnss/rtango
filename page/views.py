@@ -460,7 +460,7 @@ def category(request, slug, subcat_slug):
     popular_category = Category.objects.all().order_by('-views')
     category = Category.objects.get(name_slug=slug)
 
-    all_items = Item.objects.filter(category=category, is_active=True, is_present=True, is_optional=False).order_by('-created_at')
+    all_items = Item.objects.filter(category=category, is_active=True, is_present=True).order_by('-created_at')
     category.views += 1
     category.save()
     tag_h1 = category.page_h1
