@@ -8,7 +8,7 @@
                         <div class="account-curr-lang-wrap f-left">
                             <ul>
                                 <li class=""><a href="{% url 'about_us' %}">О нас</a></li>
-                                <li class=""><a href="#">Доставка</a></li>
+                                <li class=""><a href="{% url 'delivery' %}">Доставка</a></li>
                                 <li class=""><a href="{% url 'payment' %}">Оплата</a></li>
                                 <li class=""><a href="{% url 'contacts' %}">Контакты</a></li>
                             </ul>
@@ -164,11 +164,10 @@
                 <div class="mobile-menu">
                     <nav id="mobile-menu-active">
                         <ul class="menu-overflow">
-                            <li class=""><a href="{% url 'about_us' %}">О нас</a></li>
-                            <li class=""><a href="#">Доставка</a></li>
-                            <li class=""><a href="#">Оплата</a></li>
-                            <li class=""><a href="#">Корпоративным клиентам</a></li>
-                            <li class=""><a href="{% url 'contacts' %}">Контакты</a></li>
+                             <li class=""><a href="{% url 'about_us' %}">О нас</a></li>
+                                <li class=""><a href="{% url 'delivery' %}">Доставка</a></li>
+                                <li class=""><a href="{% url 'payment' %}">Оплата</a></li>
+                                <li class=""><a href="{% url 'contacts' %}">Контакты</a></li>
 
                             {% for cat in cats_in_menu %}
                                 <li class="top-hover"><a href="{% url 'category' cat.name_slug all%}">{{ cat.name }}</a>

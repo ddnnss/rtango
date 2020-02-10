@@ -36,6 +36,7 @@ urlpatterns = [
     path('robots.txt', views.robots, name='robots'),
     path('sitemap.xml', views.sitemap, name='sitemap'),
     path('payment/', views.payment, name='payment'),
+    path('delivery/', views.delivery, name='delivery'),
     # path('login/', views.login, name='login'),
     # path('logout/', views.logout_page, name='logout'),
     # path('profile/<nickname_req>', views.profile, name='profile'),

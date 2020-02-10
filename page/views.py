@@ -95,6 +95,8 @@ def sitemap(request):
 def payment(request):
     return render(request, 'page/pay.html', locals())
 
+def delivery(request):
+    return render(request, 'page/delivery.html', locals())
 
 def contacts(request):
     show_tags = True

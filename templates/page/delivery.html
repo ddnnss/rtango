@@ -1,0 +1,78 @@
+{% extends 'basic.html' %}
+{% load static %}
+
+{% block content %}
+
+    <div class="breadcrumb-area gray-bg">
+        <div class="container">
+            <div class="breadcrumb-content">
+                <ul>
+                    <li><a href="/">Главная</a></li>
+                    <li class="active">Доставка</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+        <div class="container pt-75">
+
+            <h1>Информация о доставке</h1>
+
+            <div class="delivery-info">
+                <div class="delivery-item">
+                    <img src="{% static 'images/free.png' %}" alt="">
+                    <div class="delivery-item-info">
+                        <h4>Бесплатная доставка</h4>
+                        <p>При заказе на сумму от 3000 рублей - доставка по Челябинску в Подарок!</p>
+                    </div>
+                </div>
+                 <div class="delivery-item">
+                    <img src="{% static 'images/gift.png' %}" alt="">
+                    <div class="delivery-item-info">
+                        <h4>Доставка-сюрприз</h4>
+                        <p>По условиям доставки-сюрприз мы не сообщаем получателю о букете до самого момента вручения.</p>
+                    </div>
+                </div>
+                 <div class="delivery-item">
+                    <img src="{% static 'images/express.png' %}" alt="">
+                    <div class="delivery-item-info">
+                        <h4>Экспресс доставка</h4>
+                        <p>Быстрая доставка по городу за 48 минут</p>
+                    </div>
+                </div>
+                 <div class="delivery-item">
+                    <img src="{% static 'images/sms.png' %}" alt="">
+                    <div class="delivery-item-info">
+                        <h4>SMS Информирование</h4>
+                        <p>Мгновенно информируем о доставке: Viber, WhatsApp</p>
+                    </div>
+                </div>
+                 <div class="delivery-item">
+                    <img src="{% static 'images/foto.png' %}" alt="">
+                    <div class="delivery-item-info">
+                        <h4>Отчет о доставке</h4>
+                        <p>По Вашему пожеланию предоставляем фото или видео отчет о доставке</p>
+                    </div>
+                </div>
+                 <div class="delivery-item">
+                    <img src="{% static 'images/fast.png' %}" alt="">
+                    <div class="delivery-item-info">
+                        <h4>Часы работы</h4>
+                        <p>Доставка работает для Вас с 09.00 до 21.00</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div style="clear:both"></div>
+
+    <!-- /.main-container -->
+
+    <div class="gap"></div>
+
+
+
+
+
+{% endblock %}
