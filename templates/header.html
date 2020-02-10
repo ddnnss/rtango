@@ -9,35 +9,40 @@
                             <ul>
                                 <li class=""><a href="{% url 'about_us' %}">О нас</a></li>
                                 <li class=""><a href="#">Доставка</a></li>
-                                <li class=""><a href="#">Оплата</a></li>
-                                <li class=""><a href="#">Корпоративным клиентам</a></li>
+                                <li class=""><a href="{% url 'payment' %}">Оплата</a></li>
                                 <li class=""><a href="{% url 'contacts' %}">Контакты</a></li>
                             </ul>
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-12">
-                          <div class="account-curr-lang-wrap f-right">
+                        <div class="account-curr-lang-wrap f-right">
                             <ul>
                                 <li class=""><a href="tel:73512230457"><strong>+7 (351) 223-04-57</strong> </a></li>
                                 <li class="">
                                     <div style="padding: 0 !important;" class="header-cart">
-                            <a style="display: flex" href="#">
-                                <div class="cart-text">
-                                    <span class="digit"><strong>Поиск</strong></span>
-                                </div>
-                            </a>
-                            <div style="padding: 10px !important;" class="shopping-cart-content">
-                                <form class="search-form" action="{% url 'search' %}">
-                                   <input required type="text" name="search" placeholder="Поиск по сайту">
-                                    <button type="submit"> <i class="fa fa-search"></i></button>
-                                </form>
+                                        <a style="display: flex" href="#">
+                                            <div class="cart-text">
+                                                <span class="digit"><strong>Поиск</strong></span>
+                                            </div>
+                                        </a>
+                                        <div style="padding: 10px !important;" class="shopping-cart-content">
+                                            <form class="search-form" action="{% url 'search' %}">
+                                                <input required type="text" name="search" placeholder="Поиск по сайту">
+                                                <button type="submit"> <i class="fa fa-search"></i></button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li style="width: 50px">
+
+                                   <a class="facebook" href="#"><i
+                                           style="font-size: 20px; position: absolute;top: 2px; left: -10px;" class="icon-social-vkontakte"></i></a>
+                                        <a class="instagram" href="#"><i
+                                                style="font-size: 20px; position: absolute; top: -14px; left: 30px;" class="ion-social-instagram-outline"></i></a>
 
 
 
-
-
-                            </div>
-                        </div></li>
+                                </li>
                                 <li> <a style="background: red;
     padding: 0px 10px;
     color: #fff;
@@ -70,13 +75,13 @@
 
                                     {% for cat in cats_in_menu %}
                                         <li class="top-hover"><a href="{% url 'category' cat.name_slug all%}">{{ cat.name }}</a>
-                                        {% if cat.filters.all %}
-                                            <ul class="submenu">
-                                                {% for filter in cat.filters.all %}
-                                                    <li><a href="{% url 'category' cat.name_slug filter.name_slug%} ">{{ filter.name }}</a></li>
-                                                {% endfor %}
-                                            </ul>
-                                        {% endif %}
+                                            {% if cat.filters.all %}
+                                                <ul class="submenu">
+                                                    {% for filter in cat.filters.all %}
+                                                        <li><a href="{% url 'category' cat.name_slug filter.name_slug%} ">{{ filter.name }}</a></li>
+                                                    {% endfor %}
+                                                </ul>
+                                            {% endif %}
                                         </li>
                                     {% endfor %}
 
@@ -138,16 +143,16 @@
 
                                 </ul>
 
-                                    <div class="cart_footer_lg">
-                                  {% if count_items_in_cart > 0  %}
+                                <div class="cart_footer_lg">
+                                    {% if count_items_in_cart > 0  %}
                                         <div class="shopping-cart-total ">
                                             <h4>Всего : <span class="shop-total">{{ total_cart_price }} &#8381;</span></h4>
                                         </div>
                                         <div class="shopping-cart-btn">
                                             <a style="   background: #ff3d2a !important;            color: #ffffff;" href="{% url 'show_cart' %}">Корзина</a>
-                                          </div>
-                                 {% endif %}
-                                    </div>
+                                        </div>
+                                    {% endif %}
+                                </div>
 
 
                             </div>
@@ -159,38 +164,38 @@
                 <div class="mobile-menu">
                     <nav id="mobile-menu-active">
                         <ul class="menu-overflow">
-                           <li class=""><a href="{% url 'about_us' %}">О нас</a></li>
-                                <li class=""><a href="#">Доставка</a></li>
-                                <li class=""><a href="#">Оплата</a></li>
-                                <li class=""><a href="#">Корпоративным клиентам</a></li>
-                                <li class=""><a href="{% url 'contacts' %}">Контакты</a></li>
+                            <li class=""><a href="{% url 'about_us' %}">О нас</a></li>
+                            <li class=""><a href="#">Доставка</a></li>
+                            <li class=""><a href="#">Оплата</a></li>
+                            <li class=""><a href="#">Корпоративным клиентам</a></li>
+                            <li class=""><a href="{% url 'contacts' %}">Контакты</a></li>
 
-                                    {% for cat in cats_in_menu %}
-                                        <li class="top-hover"><a href="{% url 'category' cat.name_slug all%}">{{ cat.name }}</a>
-                                        {% if cat.filters.all %}
-                                            <ul class="submenu">
-                                                {% for filter in cat.filters.all %}
-                                                    <li><a href="{% url 'category' cat.name_slug filter.name_slug%} ">{{ filter.name }}</a></li>
-                                                {% endfor %}
-                                            </ul>
-                                        {% endif %}
-                                        </li>
-                                    {% endfor %}
-
-                                    <li class="mega-menu-position top-hover"><a href="#">подборки</a>
-                                        <ul class="mega-menu">
-                                            {% for cat in cats_not_in_menu %}
-                                                <li>
-                                                    <ul>
-                                                        <li class="mega-menu-title">{{ cat.name }}</li>
-                                                        {% for filter in cat.filters.all %}
-                                                            <li><a href="{% url 'category' cat.name_slug filter.name_slug%}">{{ filter.name }}</a></li>
-                                                        {% endfor %}
-                                                    </ul>
-                                                </li>
+                            {% for cat in cats_in_menu %}
+                                <li class="top-hover"><a href="{% url 'category' cat.name_slug all%}">{{ cat.name }}</a>
+                                    {% if cat.filters.all %}
+                                        <ul class="submenu">
+                                            {% for filter in cat.filters.all %}
+                                                <li><a href="{% url 'category' cat.name_slug filter.name_slug%} ">{{ filter.name }}</a></li>
                                             {% endfor %}
                                         </ul>
-                                    </li>
+                                    {% endif %}
+                                </li>
+                            {% endfor %}
+
+                            <li class="mega-menu-position top-hover"><a href="#">подборки</a>
+                                <ul class="mega-menu">
+                                    {% for cat in cats_not_in_menu %}
+                                        <li>
+                                            <ul>
+                                                <li class="mega-menu-title">{{ cat.name }}</li>
+                                                {% for filter in cat.filters.all %}
+                                                    <li><a href="{% url 'category' cat.name_slug filter.name_slug%}">{{ filter.name }}</a></li>
+                                                {% endfor %}
+                                            </ul>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
                         </ul>
                     </nav>
                 </div>

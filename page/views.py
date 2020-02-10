@@ -20,7 +20,7 @@ from django.http import Http404
 def create_password():
     from random import choices
     import string
-    password = ''.join(choices(string.ascii_uppercase + string.ascii_lowercase + string.digits, k=8))
+    password = ''.join(choices(string.digits, k=8))
     return password
 
 def is_email(string):
@@ -92,7 +92,8 @@ def robots(request):
 def sitemap(request):
     return render(request, 'page/sitemap.xml', content_type = "application/xhtml+xml")
 
-
+def payment(request):
+    return render(request, 'page/pay.html', locals())
 
 
 def contacts(request):

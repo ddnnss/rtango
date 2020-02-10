@@ -16,7 +16,7 @@
     <div class="container pt-75">
      <div class="product-top-bar section-border mb-35">
                 <div class="section-title-wrap">
-                    <h1 class="section-title section-bg-white">{{ tag_h1 }}</h1>
+                    <h1 class="section-title section-bg-white">{% if tag_h1 %}{{ tag_h1 }}{% else %}{{ category.name }}{% endif %}</h1>
                 </div>
             </div>
     </div>
@@ -26,8 +26,12 @@
 
                 <div class="row flex-row-reverse">
                     <div class="col-lg-9">
-                        <div class="banner-area pb-30">
-                            <a href="#"><img alt="" src="{% static 'img/banner/banner-49.jpg' %}"></a>
+                        <div class="banner-area pb-30"
+                             style="background: url({% static 'img/banner/banner-49.jpg' %});
+                                     height: 200px;
+                                     padding: 50px 30px;">
+                            <h3 class="mb-20">Меняем старые цветы на новые</h3>
+                            <a style="max-width: 200px;text-align: center" class="in-cart-btn" href="#" data-target="#callbackModal" data-toggle="modal">Подробнее</a>
                         </div>
                         <div class="shop-topbar-wrapper">
                             <div class="shop-topbar-left">
