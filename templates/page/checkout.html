@@ -3,7 +3,6 @@
 
 {% block content %}
     {% if total_cart_price %}
-        {% if request.user.is_authenticated %}
             <div class="breadcrumb-area gray-bg">
                 <div class="container">
                     <div class="breadcrumb-content">
@@ -108,7 +107,6 @@
 
                 </div>
             </div>
-        {% endif %}
     {% else %}
         {% include 'page/empty_cart.html' %}
     {% endif %}
