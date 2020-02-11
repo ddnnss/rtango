@@ -272,7 +272,7 @@ class ItemImage(models.Model):
         small_name = 'media/items/{}/{}'.format(self.item.id, str(uuid.uuid4()) + '.jpg')
         # if settings.DEBUG:
         os.makedirs('media/items/{}'.format(self.item.id), exist_ok=True)
-        image.save(small_name, 'JPEG', quality=75)
+        image.save(small_name, 'JPEG', quality=100)
         # else:
         #     os.makedirs('C:/inetpub/wwwroot/khimiya/media/items/{}'.format(self.item.id), exist_ok=True)
         #     image.save('khimiya/' + small_name, 'JPEG', quality=75)
