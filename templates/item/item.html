@@ -23,9 +23,9 @@
                     <div class="product-details-img">
                      <div id="gallery" class="mb-20 product-dec-slider-mobile owl-carousel">
                             {% for image in item.images.all %}
-                                <a data-image="{{ image.image.url }}" data-zoom-image="{{ image.image.url }}">
+
                                     <img  src="{{ image.image_small }}" alt="">
-                                </a>
+
                             {% endfor %}
                         </div>
                         <div id="gallery" class="mb-20 product-dec-slider owl-carousel">
