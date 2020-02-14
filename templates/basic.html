@@ -47,7 +47,23 @@
     /></noscript>
     <!-- End Facebook Pixel Code -->
     <meta name="yandex-verification" content="219062b2c35dfea3" />
+    <style>
+        .product-dec-slider-mobile{
+            display: none;
+        }
 
+        @media (max-width: 768px) {
+            .product-dec-slider-mobile{
+                display: block;
+            }
+            .product-dec-slider{
+                display: none;
+            }
+            .zoompro{
+                display: none;
+            }
+        }
+    </style>
 </head>
 <body>
 <form id="dummy_form">{% csrf_token %}</form>
@@ -121,6 +137,19 @@
     $('.datepicker').datepicker({
         weekStart:1,
         color: '#ff3d2a'
+    });
+
+
+      $('.product-dec-slider-mobile').slick({
+        infinite: true,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        centerMode: true,
+        variableWidth: true,
+        arrows:false,
+          autoplay:true,
+          autoplaySpeed:1000,
+          pauseOnHover:true
     });
 </script>
 </body>
