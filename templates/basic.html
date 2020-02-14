@@ -51,6 +51,10 @@
         .product-dec-slider-mobile{
             display: none;
         }
+        .item-discount{
+                top:140px !important;
+
+            }
 
         @media (max-width: 768px) {
             .product-dec-slider-mobile{
@@ -64,6 +68,9 @@
     visibility: hidden;
     position: absolute;
     top: -10000px;
+            }
+            .item-discount{
+                top:10px !important;
             }
         }
     </style>
@@ -146,8 +153,10 @@
       $('.product-dec-slider-mobile').slick({
         infinite: true,
         slidesToShow: 1,
-        slidesToScroll: 1,
+
         centerMode: true,
+          centerPadding: '40px',
+          mobileFirst:true,
         variableWidth: true,
         arrows:false,
           autoplay:true,

@@ -24,7 +24,7 @@
                      <div id="gallery" class="mb-20 product-dec-slider-mobile owl-carousel">
                             {% for image in item.images.all %}
 
-                                    <img  src="{{ image.image_small }}" alt="">
+                                    <img style="margin: 0 10px" src="{{ image.image_small }}" alt="">
 
                             {% endfor %}
                         </div>
@@ -39,7 +39,7 @@
 
 
                         {% if item.discount > 0 %}
-                            <span style="top: 140px">-{{ item.discount }}%</span>
+                            <span class="item-discount" >-{{ item.discount }}%</span>
                         {% endif %}
                     </div>
                 </div>
