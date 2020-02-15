@@ -14,6 +14,7 @@ from customuser.models import *
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.http import Http404
+import settings
 
 
 
@@ -398,11 +399,12 @@ def checkout(request):
             # request.user.used_promo = None
             # request.user.save()
             new_order = Order.objects.get(id=order.id)
-            # msg_html = render_to_string('email/new_order.html', {'order': new_order})
-            # send_mail('Заказ успешно размещен', None, 'info@lakshmi888.ru', [request.user.email],
-            #           fail_silently=False, html_message=msg_html)
-            # send_mail('Новый заказ', None, 'norply@lakshmi888.ru', ['info@lakshmi888.ru'],
-            #           fail_silently=False, html_message=msg_html)
+            msg_html = render_to_string('email/new_order.html', {'order': new_order})
+            if sender_email:
+                send_mail('Заказ успешно размещен', None, 'info@r-tango.ru', [sender_email],
+                          fail_silently=False, html_message=msg_html)
+            send_mail('Новый заказ', None, 'norply@r-tango.ru', [settings.SEND_TO],
+                      fail_silently=False, html_message=msg_html)
             return HttpResponseRedirect('/order/{}'.format(new_order.order_code))
 
 

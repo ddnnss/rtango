@@ -40,29 +40,23 @@
 </table>
 <table style="border-collapse: collapse; width: 850px; font-size: 20px;" >
   <tr>
-    <td style="padding: 3px; border: 1px solid #999; text-align: center; background: #f5f5f5;"><strong>Данные заказчика</strong></td>
+    <td style="padding: 3px; border: 1px solid #999; text-align: center; background: #f5f5f5;"><strong>Данные заказа</strong></td>
   </tr>
   <tr>
     <td style="padding: 3px; border: 1px solid #999; ">
-      {% if order.client %}
-          <strong>Имя </strong>: {{ order.client.name }}<br>
-          <strong>Фамилия </strong> : {{ order.client.family }} <br>
-          <strong>Телефон </strong>: {{ order.client.phone }} <br>
-          <strong>E-Mail </strong>: {{ order.client.email }}<br>
-          <strong>Страна </strong>: {{ order.client.country }} <br>
-          <strong>Город </strong>: {{ order.client.city }}<br>
-          <strong>Индекс </strong>: {{ order.client.post_code }}<br>
-          <strong>Адрес </strong>: {{ order.client.address }}<br>
-     {% else %}
-        <strong>Имя </strong>: {{ order.guest.name }}<br>
-          <strong>Фамилия </strong> : {{ order.guest.family }} <br>
-          <strong>Телефон </strong>: {{ order.guest.phone }} <br>
-          <strong>E-Mail </strong>: {{ order.guest.email }}<br>
-          <strong>Страна </strong>: {{ order.guest.country }} <br>
-          <strong>Город </strong>: {{ order.guest.city }}<br>
-          <strong>Индекс </strong>: {{ order.guest.post_code }}<br>
-          <strong>Адрес </strong>: {{ order.guest.address }}<br>
-     {% endif %}
+
+        <strong>ФИО получателя </strong>: {{ order.receiver_name }}<br>
+          <strong>Телефон получателя </strong> : {{ order.receiver_phone }} <br>
+          <strong>ФИО отправителя </strong>: {{ order.sender_name }} <br>
+          <strong>Телефон отправителя </strong>: {{ order.sender_phone }}<br>
+          <strong>Email отправителя </strong>: {{ order.sender_email }} <br>
+          <strong>Дата доставки </strong>: {{ order.order_date }}<br>
+          <strong>Время доставки </strong>: {{ order.order_time }}<br>
+          <strong>Нужно фото при доставке </strong>: {% if order.is_need_photo %}ДА{% else %}НЕТ{% endif %}<br>
+        <strong>Текст открытки</strong>: {{ order.card_text }}<br>
+        <strong>Адрес доставки</strong>: {{ order.receiver_address }}<br>
+
+
     </td>
   </tr>
 </table>
@@ -72,9 +66,9 @@
 <table style="border-collapse: collapse; width: 850px;" >
   <thead>
   <tr>
-    <th style="padding: 3px; border: 1px solid #999; text-align: center; background: #f5f5f5; "></th>
+
     <th style="padding: 3px; border: 1px solid #999; text-align: center; background: #f5f5f5;">Название</th>
-    <th style="padding: 3px; border: 1px solid #999; text-align: center; background: #f5f5f5;">Артикул</th>
+
     <th style="padding: 3px; border: 1px solid #999; text-align: center; background: #f5f5f5; ">Количество</th>
     <th style="padding: 3px; border: 1px solid #999; text-align: center; background: #f5f5f5;">Цена</th>
     <th style="padding: 3px; border: 1px solid #999; text-align: center; background: #f5f5f5;">Итог</th>
@@ -87,15 +81,8 @@
   {% for item in order.itemsinorder_set.all %}
     <tr>
 
-      <td style="padding: 3px; border: 1px solid #999; text-align: center; "><img style="width:100px;"
-      {% for image in item.item.itemimage_set.all %}
-                                                            {% if image.is_main %}
-                                                               src="http://www.lakshmi888.ru/{{ image.image_small }}"
-                                                            {% endif %}
-                                                        {% endfor %}>
-      </td>
+
       <td style="padding: 3px; border: 1px solid #999; text-align: center; ">{{ item.item.name }}</td>
-      <td style="padding: 3px; border: 1px solid #999; text-align: center; ">{{ item.item.article }}</td>
       <td style="padding: 3px; border: 1px solid #999; text-align: center; ">{{ item.number }} ед.</td>
       <td style="padding: 3px; border: 1px solid #999; text-align: center; ">{{ item.current_price }} &#8381;</td>
       <td style="padding: 3px; border: 1px solid #999; text-align: center; background: #f5f5f5;">{{ item.total_price }} &#8381;</td>
@@ -105,8 +92,7 @@
 
 
     <tr>
-      <td></td>
-        <td></td>
+
         <td></td>
       <td></td>
       <td></td>
