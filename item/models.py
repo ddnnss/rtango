@@ -189,11 +189,15 @@ class Item(models.Model):
             dis_val = self.price - (self.price * self.discount / 100)
         else:
             dis_val = 0
-        return (format_number(dis_val))
+        return (round(dis_val))
 
 
     def __str__(self):
-       return 'id:%s %s ' % (self.id, self.name)
+        if self.discount >0 :
+            return '{} : {} - скидка {}'.format(self.id, self.name,self.discount)
+        else:
+            return '{} : {}'.format(self.id, self.name)
+
 
     class Meta:
         verbose_name = "Товар"
