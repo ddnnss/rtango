@@ -80,6 +80,7 @@ class Order(models.Model):
     order_code = models.CharField('Код заказа', max_length=10, blank=True, null=True)
     is_complete = models.BooleanField('Заказ выполнен ?', default=False)
     is_payd = models.BooleanField('Заказ оплачен ?', default=False)
+    sber_orderId = models.CharField(max_length=255, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

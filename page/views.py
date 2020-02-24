@@ -3,7 +3,7 @@ import json
 from django.shortcuts import render
 from django.http import JsonResponse, HttpResponseRedirect, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
-
+import requests
 from .models import *
 from item.models import *
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -69,6 +69,19 @@ def order(request, order_code):
         order=None
 
     if order:
+        if request.user.is_authenticated:
+            all_cart_items = Cart.objects.filter(client_id=request.user.id)
+        else:
+            s_key = request.session.session_key
+            guest = Guest.objects.get(session=s_key)
+            all_cart_items = Cart.objects.filter(guest=guest)
+        if all_cart_items:
+            for item in all_cart_items:
+                ItemsInOrder.objects.create(order_id=order.id, item_id=item.item.id, number=item.number,
+                                            current_price=item.item.price)
+                item.item.buys = item.item.buys + 1
+                item.item.save()
+            all_cart_items.delete()
         return render(request, 'page/order_complete.html', locals())
     else:
         raise Http404
@@ -353,9 +366,10 @@ def checkout(request):
             return HttpResponseRedirect('/order/{}'.format(new_order.order_code))
 
         if request.POST.get('form_type') == 'new_checkout':
-
+            print(request.POST)
             order_code = create_password()
             is_need_photo = False
+            payment = request.POST.get('payment')
             receiver_name = request.POST.get('receiver-name')
             receiver_phone = request.POST.get('receiver-phone')
             sender_name = request.POST.get('sender-name')
@@ -364,13 +378,14 @@ def checkout(request):
             order_date = request.POST.get('order-date')
             order_time = request.POST.get('order-time')
             receiver_address = request.POST.get('receiver-address')
-            is_need_phono = request.POST.get('order-photo')
-            if is_need_phono:
+            is_need_photo = request.POST.get('order-photo')
+            if is_need_photo:
                 is_need_photo = True
             card_text = request.POST.get('order-card')
 
 
             shipping = request.POST.get('shipping')
+
 
             order = Order.objects.create(order_code=order_code,
                                          receiver_name=receiver_name,
@@ -384,28 +399,70 @@ def checkout(request):
                                         card_text = card_text,
                                          receiver_address=receiver_address,
                                          shipping_id=shipping)
-            if request.user.is_authenticated:
-                all_cart_items = Cart.objects.filter(client_id=request.user.id)
-            else:
-                s_key = request.session.session_key
-                guest = Guest.objects.get(session=s_key)
-                all_cart_items = Cart.objects.filter(guest=guest)
-            for item in all_cart_items:
-                ItemsInOrder.objects.create(order_id=order.id, item_id=item.item.id, number=item.number,
-                                            current_price=item.item.price)
-                item.item.buys = item.item.buys + 1
-                item.item.save()
-            all_cart_items.delete()
+
             # request.user.used_promo = None
             # request.user.save()
             new_order = Order.objects.get(id=order.id)
+            shipping_town = OrderShipping.objects.get(id=shipping)
+            shipping_price = shipping_town.price
+            if shipping_town.isFree:
+                if new_order.total_price >= shipping_town.freePrice:
+                    shipping_price = 0
+            # if request.user.is_authenticated:
+            #     all_cart_items = Cart.objects.filter(client_id=request.user.id)
+            # else:
+            #     s_key = request.session.session_key
+            #     guest = Guest.objects.get(session=s_key)
+            #     all_cart_items = Cart.objects.filter(guest=guest)
+            # for item in all_cart_items:
+            #     ItemsInOrder.objects.create(order_id=order.id, item_id=item.item.id, number=item.number,
+            #                                 current_price=item.item.price)
+            #     item.item.buys = item.item.buys + 1
+            #     item.item.save()
+            # all_cart_items.delete()
             msg_html = render_to_string('email/new_order.html', {'order': new_order})
             if sender_email:
                 send_mail('Заказ успешно размещен', None, 'info@r-tango.ru', [sender_email],
                           fail_silently=False, html_message=msg_html)
             send_mail('Новый заказ', None, 'norply@r-tango.ru', [settings.SEND_TO],
                       fail_silently=False, html_message=msg_html)
-            return HttpResponseRedirect('/order/{}'.format(new_order.order_code))
+            if payment == 'nal':
+
+                return HttpResponseRedirect('/order/{}'.format(new_order.order_code))
+            elif payment =='sber':
+                print('sber payment')
+                response = requests.get('https://3dsec.sberbank.ru/payment/rest/register.do?'
+                                        'amount={}00&'
+                                        'currency=643&'
+                                        'language=ru&'
+                                        'orderNumber={}&'
+                                        'description=Оплата заказа {}. Стоимость доствки {}&'
+                                        'password={}&'
+                                        'userName={}&'
+                                        'returnUrl={}&'
+                                        'failUrl={}&'
+                                        'pageView=DESKTOP&sessionTimeoutSecs=1200'.format(new_order.total_price + shipping_price,
+                                                                                          shipping_price,
+                                                                                          new_order.order_code,
+                                                                                          new_order.order_code,
+                                                                                          settings.SBER_PASSWORD,
+                                                                                          settings.SBER_LOGIN,
+                                                                                          settings.SBER_SUCCESS_URL,
+                                                                                          settings.SBER_FAIL_URL), )
+                response_data = json.loads(response.content)
+
+
+                try:
+                    orderId = response_data['orderId']
+                    print('orderId',orderId)
+                    new_order.sber_orderId = orderId
+                    new_order.save()
+                    print('formUrl',response_data['formUrl'])
+                    return HttpResponseRedirect(response_data['formUrl'])
+                except:
+                    print('error')
+
+
 
 
 
@@ -631,3 +688,15 @@ def one_click(request):
     if request.POST.get('form_type') == 'callback':
         Callback.objects.create(name=request.POST.get('name'), phone=request.POST.get('phone'))
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+
+def sber_success(request):
+    sber_orderId = request.GET.get('orderId')
+    order = Order.objects.get(sber_orderId=sber_orderId)
+    order.is_payd = True
+    order.save()
+    return HttpResponseRedirect('/order/{}'.format(order.order_code))
+
+def sber_fail(request):
+    pass
