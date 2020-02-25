@@ -38,8 +38,9 @@
                                  <li class=""><a href="{% url 'about_us' %}">О нас</a></li>
                                 <li class=""><a href="{% url 'delivery' %}">Доставка</a></li>
                                 <li class=""><a href="{% url 'payment' %}">Оплата</a></li>
-                                <li class=""><a href="#">Корпоративным клиентам</a></li>
                                 <li class=""><a href="{% url 'contacts' %}">Контакты</a></li>
+                                        <li class=""><a href="{% url 'about_us' %}#user_agreement">Пользовательское соглашение</a></li>
+                                        <li class=""><a href="{% url 'about_us' %}#user_agreement">Политика конфиденциальности</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -56,6 +57,7 @@
                                         <form action="{% url 'one_click' %}" method="post" >
                                             {% csrf_token %}   <div id="mc_embed_signup_scroll" class="mc-form">
                                                 <input type="text" value="" name="phone" class="email" placeholder="Пожалуйста, введите ваш телефон." required>
+                                            <p style="color: #a4a4a4; font-size: x-small;">Нажимая кнопку "Жду звонка", вы соглашаетесь с правилами <a href="{% url 'about_us' %}#user_agreement">Политики конфиденциальности</a></p>
                                                <input type="hidden"  name="form_type" value="callback">
                                               <input type="hidden"  name="name" value="callback">
                                                 <div class="clear-2"><input type="submit" value="Жду звонка" name="subscribe" class="button"></div>
@@ -107,7 +109,7 @@
                                                 <input type="hidden"  name="form_type" value="oneclick">
                                                 <div  class="clear-2">
                                                     <input type="submit" value="Отправить" name="subscribe" class="button">
-                                                    <p style="color: #a4a4a4; font-size: x-small;">Нажимая кнопку "Отправить", вы соглашаетесь с правилами Политики конфиденциальности</p>
+                                                    <p style="color: #a4a4a4; font-size: x-small;">Нажимая кнопку "Отправить", вы соглашаетесь с правилами <a href="{% url 'about_us' %}#user_agreement">Политики конфиденциальности</a></p>
                                                 </div>
                                             </div>
                                         </form>
