@@ -47,9 +47,9 @@
         </div>
     </div>
     <div class="product-content text-center">
-        <h4>
-            <a href="product-details.html">{{ item.name }}</a>
-        </h4>
+        <p>
+            <a href="{% url 'item_page' item.category.first.name_slug item.name_slug %}"><b>{{ item.name }}</b></a>
+        </p>
         <div class="product-price-wrapper mb-10">
             {% if item.discount > 0 %}
                 <span>{{ item.discount_value }} <i class="fa fa-rub"></i></span>
@@ -73,9 +73,9 @@
     </div>
     {% if indexActive %}
         <div class="product-list-details">
-            <h4>
+            <p>
                 <a href="product-details.html">{{ item.name }}</a>
-            </h4>
+            </p>
             <div class="product-price-wrapper">
                 {% if item.discount > 0 %}
                     <span>{{ item.discount_value }} <i class="fa fa-rub"></i></span>

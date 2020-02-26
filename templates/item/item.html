@@ -24,18 +24,18 @@
                      <div id="gallery" class="mb-20 product-dec-slider-mobile owl-carousel">
                             {% for image in item.images.all %}
 
-                                    <img style="margin: 0 10px" src="{{ image.image_small }}" alt="">
+                                    <img style="margin: 0 10px" src="{{ image.image_small }}" alt="{{ item.name }}">
 
                             {% endfor %}
                         </div>
                         <div id="gallery" class="mb-20 product-dec-slider owl-carousel">
                             {% for image in item.images.all %}
                                 <a data-image="{{ image.image.url }}" data-zoom-image="{{ image.image.url }}">
-                                    <img width="70" height="90" src="{{ image.image_small }}" alt="">
+                                    <img width="70" height="90" src="{{ image.image_small }}" alt="{{ item.name }}">
                                 </a>
                             {% endfor %}
                         </div>
-                        <img class="zoompro" src="{{ item.images.first.image.url }}" data-zoom-image="{{ item.images.first.image.url }}" alt="zoom"/>
+                        <img class="zoompro" src="{{ item.images.first.image.url }}" data-zoom-image="{{ item.images.first.image.url }}" alt="{{ item.name }}"/>
 
 
                         {% if item.discount > 0 %}

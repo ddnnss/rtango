@@ -13,7 +13,7 @@
                                 <h3 class="animated">{{ banner.text_top }}</h3>
                             {% endif %}
                             {% if banner.text_middle %}
-                                <h1 class="animated">{{ banner.text_middle }}</h1>
+                                <h3 style="margin-bottom: 20px" class="animated">{{ banner.text_middle }}</h3>
                             {% endif %}
                             {% if banner.text_bottom %}
                                 <h5 class="animated">{{ banner.text_bottom }}</h5>
@@ -36,7 +36,7 @@
                         <div class="col-lg-4 col-md-4">
                         <div class="single-banner img-zoom mb-30">
                             <a href="#">
-                                <img src="{{ cat.image.url }}" alt="">
+                                <img src="{{ cat.image.url }}" alt="{{ cat.name }}">
                             </a>
                             <div class="banner-content">
                                 <h4>{{ cat.name }}</h4>
@@ -127,7 +127,7 @@
                     <div class="testimonial-active owl-carousel">
                         <div class="single-testimonial text-center">
                             <div class="testimonial-img">
-                                <img alt="" src="{% static 'img/icon-img/testi.png' %}">
+                                <img alt="Розовое Танго бутик цветов" src="{% static 'img/icon-img/testi.png' %}">
                             </div>
                             <p>Мы – мастерская флористики и декора, готовая своими букетами и композициями сделать ваши
 дни ярче и интереснее. Самые важные моменты и мероприятия вашей жизни станут
@@ -164,7 +164,7 @@
                             </div>
                             <div style="display: flex; align-items: center" class="col-lg-6 col-xl-7 col-md-6">
                                 <div class="deals-content text-center deal-mrg">
-                                    <img alt="" src="assets/img/icon-img/deals-2.png">
+                                    <img alt="Розовое Танго бутик цветов" src="assets/img/icon-img/deals-2.png">
                                     <h2>{{ promo.topText }} <span>{{ promo.item.discount }} % скидка</span></h2>
                                     <p>{{ promo.description }}</p>
                                     <div class="timer timer-style">
@@ -241,11 +241,12 @@
 
     <div class="new-year-offer-area pb-75">
         <div class="container">
-            <div class="new-year-offer-wrap pt-70 pb-75 bg-img" style="background-image:url({% static 'img/banner/banner-4.jpg' %});">
+            <div class="new-year-offer-wrap pt-70 pb-75 bg-img" style="background-image:url({{ banners.first.image.url }});">
                 <div class="new-year-offer-content text-center">
-                    <h4>К 14 февряля</h4>
-                    <h3>Супер букеты по супер ценам</h3>
-                    <a href="/category/14-fevralya/all">Подробнее</a>
+                    <h4>{{ banners.first.text_top }}</h4>
+                    <h3>{{ banners.first.text_middle }}</h3>
+                     <a  href="{{ banners.first.url }}">{{ banners.first.text_button }}</a>
+
                 </div>
             </div>
         </div>

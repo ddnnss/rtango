@@ -683,9 +683,21 @@ def customhandler404(request, exception, template_name='404.html'):
 
 def one_click(request):
     if request.POST.get('form_type') == 'oneclick':
+        item = Item.objects.get(id=request.POST.get('item-id'))
+        msg_html = render_to_string('email/oneclick.html', {'item': item,
+                                                             'phone': request.POST.get('phone')})
+
         OneClick.objects.create(item_id=request.POST.get('item-id'),phone=request.POST.get('phone'))
+        send_mail('Заказ в 1клик', None, 'norply@r-tango.ru', [settings.SEND_TO],
+                  fail_silently=False, html_message=msg_html)
+
     if request.POST.get('form_type') == 'callback':
+        msg_html = render_to_string('email/callback.html',{'name': request.POST.get('name'),
+                                                           'phone': request.POST.get('phone')})
+
         Callback.objects.create(name=request.POST.get('name'), phone=request.POST.get('phone'))
+        send_mail('Заказ обратного звонка', None, 'norply@r-tango.ru', [settings.SEND_TO],
+                  fail_silently=False, html_message=msg_html)
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
