@@ -366,7 +366,6 @@ def checkout(request):
             return HttpResponseRedirect('/order/{}'.format(new_order.order_code))
 
         if request.POST.get('form_type') == 'new_checkout':
-            print(request.POST)
             order_code = create_password()
             is_need_photo = False
             payment = request.POST.get('payment')
