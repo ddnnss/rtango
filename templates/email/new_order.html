@@ -66,8 +66,9 @@
                                     <strong>Email отправителя </strong>: {{ order.sender_email }} <br>
 
                                     <strong>Нужно фото при доставке </strong>: {% if order.is_need_photo %}ДА{% else %}НЕТ{% endif %}<br>
-                                    <strong>Текст открытки</strong>: {{ order.card_text }}<br>
-
+                                {% if order.card_text %}
+                                    <strong>Текст открытки</strong>: <p style="max-width: 840px;word-break: break-all;">{{ order.card_text }}</p><br>
+                                {% endif %}
 
 
                                 </td>
