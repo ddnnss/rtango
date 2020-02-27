@@ -725,6 +725,7 @@
     #exampleModal .modal-dialog {
         max-width: 100%;
         width: 100%;
+        margin-top: 50% !important;
     }
     .modal-body {
         padding: 30px 20px;

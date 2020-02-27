@@ -2489,8 +2489,8 @@ textarea:focus {
     background: transparent none repeat scroll 0 0;
     border-color: #bbb;
     border-image: none;
-    border-style: none none solid;
-    border-width: medium medium 1px;
+    border: none;
+    border-bottom: 1px solid #ff3d2a;
     box-shadow: none;
     color: #242424;
     font-size: 13px;
@@ -2498,6 +2498,7 @@ textarea:focus {
     padding-left: 0;
     width: 100%;
 }
+
 .clear-2 {
     margin: 39px 0 0;
 }
@@ -2520,11 +2521,11 @@ textarea:focus {
     background-color: #333;
 }
 .subscribe-form form input::-moz-placeholder {
-    color: #242424 !important;
+    color: #a4a4a4 !important;
     opacity: 1;
 }
 .subscribe-form form input::-webkit-input-placeholder {
-    color: #242424 !important;
+    color: #a4a4a4 !important;
     opacity: 1;
 }
 .copyright > p {
@@ -5611,3 +5612,28 @@ position: absolute; width: 100%; height: 150px; background-color: white; top: 50
             }
         }
 
+.product-dec-slider-mobile{
+            display: none;
+        }
+        .item-discount{
+                top:140px !important;
+
+            }
+
+        @media (max-width: 768px) {
+            .product-dec-slider-mobile{
+                display: block;
+            }
+            .product-dec-slider{
+                display: none;
+            }
+            .zoompro{
+                pointer-events: none;
+    visibility: hidden;
+    position: absolute;
+    top: -10000px;
+            }
+            .item-discount{
+                top:10px !important;
+            }
+        }

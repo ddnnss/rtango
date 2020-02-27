@@ -76,12 +76,10 @@ def order(request, order_code):
             guest = Guest.objects.get(session=s_key)
             all_cart_items = Cart.objects.filter(guest=guest)
         if all_cart_items:
-            for item in all_cart_items:
-                ItemsInOrder.objects.create(order_id=order.id, item_id=item.item.id, number=item.number,
-                                            current_price=item.item.price)
-                item.item.buys = item.item.buys + 1
-                item.item.save()
             all_cart_items.delete()
+            msg_html = render_to_string('email/new_order.html', {'order': order})
+            send_mail('Новый заказ', None, 'norply@r-tango.ru', [settings.SEND_TO],
+                      fail_silently=False, html_message=msg_html)
         return render(request, 'page/order_complete.html', locals())
     else:
         raise Http404
@@ -369,6 +367,10 @@ def checkout(request):
             order_code = create_password()
             is_need_photo = False
             payment = request.POST.get('payment')
+            if payment == 'nal':
+                payment_type = 'Наличные'
+            elif payment == 'sber':
+                payment_type = 'Сбербанк'
             receiver_name = request.POST.get('receiver-name')
             receiver_phone = request.POST.get('receiver-phone')
             sender_name = request.POST.get('sender-name')
@@ -397,34 +399,37 @@ def checkout(request):
                                         is_need_photo = is_need_photo,
                                         card_text = card_text,
                                          receiver_address=receiver_address,
-                                         shipping_id=shipping)
+                                         shipping_id=shipping,
+                                         payment=payment_type)
 
             # request.user.used_promo = None
             # request.user.save()
-            new_order = Order.objects.get(id=order.id)
+
+
             shipping_town = OrderShipping.objects.get(id=shipping)
             shipping_price = shipping_town.price
+
+            if request.user.is_authenticated:
+                all_cart_items = Cart.objects.filter(client_id=request.user.id)
+            else:
+                s_key = request.session.session_key
+                guest = Guest.objects.get(session=s_key)
+                all_cart_items = Cart.objects.filter(guest=guest)
+            for item in all_cart_items:
+                ItemsInOrder.objects.create(order_id=order.id, item_id=item.item.id, number=item.number,
+                                            current_price=item.item.price)
+                item.item.buys = item.item.buys + 1
+                item.item.save()
+            new_order = Order.objects.get(id=order.id)
             if shipping_town.isFree:
                 if new_order.total_price >= shipping_town.freePrice:
                     shipping_price = 0
-            # if request.user.is_authenticated:
-            #     all_cart_items = Cart.objects.filter(client_id=request.user.id)
-            # else:
-            #     s_key = request.session.session_key
-            #     guest = Guest.objects.get(session=s_key)
-            #     all_cart_items = Cart.objects.filter(guest=guest)
-            # for item in all_cart_items:
-            #     ItemsInOrder.objects.create(order_id=order.id, item_id=item.item.id, number=item.number,
-            #                                 current_price=item.item.price)
-            #     item.item.buys = item.item.buys + 1
-            #     item.item.save()
-            # all_cart_items.delete()
             msg_html = render_to_string('email/new_order.html', {'order': new_order})
             if sender_email:
                 send_mail('Заказ успешно размещен', None, 'info@r-tango.ru', [sender_email],
                           fail_silently=False, html_message=msg_html)
-            send_mail('Новый заказ', None, 'norply@r-tango.ru', [settings.SEND_TO],
-                      fail_silently=False, html_message=msg_html)
+            # send_mail('Новый заказ', None, 'norply@r-tango.ru', [settings.SEND_TO],
+            #           fail_silently=False, html_message=msg_html)
             if payment == 'nal':
 
                 return HttpResponseRedirect('/order/{}'.format(new_order.order_code))
@@ -441,9 +446,9 @@ def checkout(request):
                                         'returnUrl={}&'
                                         'failUrl={}&'
                                         'pageView=DESKTOP&sessionTimeoutSecs=1200'.format(new_order.total_price + shipping_price,
+                                                                                          new_order.order_code,
+                                                                                          new_order.id,
                                                                                           shipping_price,
-                                                                                          new_order.order_code,
-                                                                                          new_order.order_code,
                                                                                           settings.SBER_PASSWORD,
                                                                                           settings.SBER_LOGIN,
                                                                                           settings.SBER_SUCCESS_URL,

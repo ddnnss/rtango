@@ -69,8 +69,7 @@ class Order(models.Model):
                               verbose_name='Использованный промо-код')
     status = models.ForeignKey(OrderStatus, blank=True, null=True, default=None, on_delete=models.SET_NULL,
                               verbose_name='Статус заказа')
-    # payment = models.ForeignKey(OrderPayment, blank=True, null=True, default=None, on_delete=models.SET_NULL,
-    #                            verbose_name='Оплата заказа')
+    payment = models.CharField('Оплата', max_length=100, blank=True, null=True)
     shipping = models.ForeignKey(OrderShipping, blank=True, null=True, default=None, on_delete=models.SET_NULL,
                                 verbose_name='Доставка заказа')
 
