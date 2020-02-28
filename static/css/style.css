@@ -5572,6 +5572,7 @@ position: absolute; width: 100%; height: 150px; background-color: white; top: 50
         .one-click-btn{
             font-size: 13px;
             color: #ff3d2a;
+            cursor: pointer;
         }
         .in-cart-btn{
             position: relative;
@@ -5582,6 +5583,7 @@ position: absolute; width: 100%; height: 150px; background-color: white; top: 50
             color: #ff3d2a;
             text-transform: uppercase;
             margin-bottom: 10px;
+            cursor: pointer;
         }
         .in-cart-btn:hover{
             background: #ff3d2a;

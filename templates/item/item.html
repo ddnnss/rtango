@@ -175,15 +175,15 @@
 
                         </div>
                       <div style="display: flex; align-items: center;  flex-wrap: wrap; margin-bottom: 20px" class="">
-            <a style=" display: inline-block; margin: 0 auto; flex-grow: 1; flex-basis: 40%; text-align: center; margin-right: 20px;    margin-bottom: 20px;" class="in-cart-btn"  href="javasript: void(0)"
+            <span style=" display: inline-block; margin: 0 auto; flex-grow: 1; flex-basis: 40%; text-align: center; margin-right: 20px;    margin-bottom: 20px;" class="in-cart-btn"
 
                          data-item_id="{{ item.id }}"
                          data-item_name="{{ item.name }}"
                          data-item_price="{{ item.price }}"
                          data-item_image="{{ item.images.first.image_small }}"
-                         onclick="add_to_cart(this,1)">В корзину</a>
-            <a style="display: inline-block;margin: 0 auto;    flex-basis: 40%;
-    margin-bottom: 20px;" class="one-click-btn" href="#" data-itemid="{{ item.id }}" data-item_image="{{ item.images.first.image_small }}" data-target="#exampleModal" data-toggle="modal">Купить в 1 клик</a>
+                         onclick="add_to_cart(this,1)">В корзину</span>
+            <span style="display: inline-block;margin: 0 auto;    flex-basis: 40%;
+    margin-bottom: 20px;" class="one-click-btn"  data-itemid="{{ item.id }}" data-item_image="{{ item.images.first.image_small }}" data-target="#exampleModal" data-toggle="modal">Купить в 1 клик</span>
         </div>
 
                     </div>
