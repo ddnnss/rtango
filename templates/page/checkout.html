@@ -63,14 +63,6 @@
                         </div>
 
                     </div>
-                    <h4 class="mb-20">Дата доставки</h4>
-                    <div class="row">
-                        <div class="col-lg-6 col-md-6">
-                            <div class="billing-info">
-                                <input name="order-date" required type="text" class="datepicker form-control">
-                            </div>
-                        </div>
-                    </div>
                     <h4 class="mb-20">Время доставки</h4>
                     <div class="row">
                         <div class="col-lg-6 col-md-6">
@@ -85,6 +77,15 @@
                         </div>
 
                     </div>
+                    <h4 class="mb-20">Дата доставки</h4>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6">
+                            <div class="billing-info">
+                                <input name="order-date" autocomplete="off" required type="text" class="datepicker form-control">
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="row">
                         <div class="col-lg-6 col-md-6">
                             <label style="display: flex; align-items: center">Сделать фото при получении
@@ -105,42 +106,42 @@
                     <div class="row">
                         <div class="col-lg-6 col-md-6">
 
-                                <label >Выберите вариант оплаты заказа :</label>
-                                <div class="single-ship">
-                                    <input type="radio" id="payment_card" checked="" value="sber" name="payment">
-                                    <label for="payment_card">Банковской картой</label>
-                                    <div class=""> Оплата происходит через ПАО СБЕРБАНК с использованием банковских карт следующих платёжных систем:<br>
-                                        <b>МИР</b><br>
-                                        <b>VISA International</b><br>
-                                        <b>Mastercard Worldwide</b><br>
-                                        <b>JCB</b></div>
-                                </div>
-                                <div class="single-ship">
-                                    <input id="payment_nal" type="radio" value="nal" name="payment">
-                                    <label for="payment_nal">Наличный расчёт</label>
-                                    <div class=""></div>
+                            <label >Выберите вариант оплаты заказа :</label>
+                            <div class="single-ship">
+                                <input type="radio" id="payment_card" checked="" value="sber" name="payment">
+                                <label for="payment_card">Банковской картой</label>
+                                <div class=""> Оплата происходит через ПАО СБЕРБАНК с использованием банковских карт следующих платёжных систем:<br>
+                                    <b>МИР</b><br>
+                                    <b>VISA International</b><br>
+                                    <b>Mastercard Worldwide</b><br>
+                                    <b>JCB</b></div>
+                            </div>
+                            <div class="single-ship">
+                                <input id="payment_nal" type="radio" value="nal" name="payment">
+                                <label for="payment_nal">Наличный расчёт</label>
+                                <div class=""></div>
 
-                                </div>
+                            </div>
 
 
                         </div>
-  <div class="col-lg-6 col-md-6">
-                                <p>Для оплаты (ввода реквизитов Вашей карты) Вы будете перенаправлены на платёжный шлюз ПАО СБЕРБАНК. Соединение с платёжным шлюзом и передача информации осуществляется в защищённом режиме с использованием протокола шифрования SSL. В случае если Ваш банк поддерживает технологию безопасного проведения интернет-платежей Verified By Visa, MasterCard SecureCode, MIR Accept, J-Secure для проведения платежа также может потребоваться ввод специального пароля.</p>
+                        <div class="col-lg-6 col-md-6">
+                            <p>Для оплаты (ввода реквизитов Вашей карты) Вы будете перенаправлены на платёжный шлюз ПАО СБЕРБАНК. Соединение с платёжным шлюзом и передача информации осуществляется в защищённом режиме с использованием протокола шифрования SSL. В случае если Ваш банк поддерживает технологию безопасного проведения интернет-платежей Verified By Visa, MasterCard SecureCode, MIR Accept, J-Secure для проведения платежа также может потребоваться ввод специального пароля.</p>
 
-                                <p>Настоящий сайт поддерживает 256-битное шифрование. Конфиденциальность сообщаемой персональной информации обеспечивается ПАО СБЕРБАНК. Введённая информация не будет предоставлена третьим лицам за исключением случаев, предусмотренных законодательством РФ. Проведение платежей по банковским картам осуществляется в строгом соответствии с требованиями платёжных систем МИР, Visa Int., MasterCard Europe Sprl, JCB.</p>
-                                <div class="">
-                                    <img src="{% static 'images/visa.png' %}" alt="">
-                                     <img src="{% static 'images/mc.png' %}" alt="">
-                                     <img src="{% static 'images/mir.png' %}" alt="">
-                                     <img src="{% static 'images/jcb.png' %}" alt="">
-                                </div>
+                            <p>Настоящий сайт поддерживает 256-битное шифрование. Конфиденциальность сообщаемой персональной информации обеспечивается ПАО СБЕРБАНК. Введённая информация не будет предоставлена третьим лицам за исключением случаев, предусмотренных законодательством РФ. Проведение платежей по банковским картам осуществляется в строгом соответствии с требованиями платёжных систем МИР, Visa Int., MasterCard Europe Sprl, JCB.</p>
+                            <div class="">
+                                <img src="{% static 'images/visa.png' %}" alt="">
+                                <img src="{% static 'images/mc.png' %}" alt="">
+                                <img src="{% static 'images/mir.png' %}" alt="">
+                                <img src="{% static 'images/jcb.png' %}" alt="">
                             </div>
+                        </div>
                     </div>
                     <input type="hidden" name="form_type" value="new_checkout">
                     <input type="hidden" name="shipping" value="{{ sessionTemp.delivery }}">
                     <div class="billing-btn">
-                                                            <button type="submit" style="background: #ff3d2a; color: #ffffff">Завершить оформление</button>
-                                                        </div>
+                        <button type="submit" style="background: #ff3d2a; color: #ffffff">Завершить оформление</button>
+                    </div>
                 </form>
 
             </div>
