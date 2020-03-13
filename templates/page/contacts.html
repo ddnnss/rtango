@@ -63,34 +63,39 @@
                             </div>
                             <div id="contact-form-tab" class="tab-pane fade row d-flex">
                                 <div class="col">
-                                    <form id="contact-form" action="assets/mail.php" method="post">
+                                    <form  action="{% url 'one_click' %}" method="post">{% csrf_token %}
                                         <div class="row">
                                             <div class="col-lg-6">
                                                 <div class="contact-form-style mb-20">
-                                                    <input name="name" placeholder="Ваше имя" type="text">
+                                                    <input name="name" required placeholder="Ваше имя" type="text">
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="contact-form-style mb-20">
-                                                    <input name="email" placeholder="Ваш телефон" type="email">
+                                                    <input name="phone" required placeholder="Ваш телефон" type="tel">
                                                 </div>
                                             </div>
 
                                             <div class="col-lg-12">
+
                                                 <div class="contact-form-style">
                                                     <textarea name="message" placeholder="Ваше сообщение"></textarea>
                                                     <button class="submit" type="submit">Отправить</button>
+                                                       <p style="color: #a4a4a4; font-size: x-small;">Нажимая кнопку "Отправить", вы соглашаетесь с правилами
+                                                           <a href="{% url 'about_us' %}#user_agreement">Политики конфиденциальности</a></p>
                                                 </div>
                                             </div>
                                         </div>
                                     </form>
-                                    <p class="form-messege"></p>
+
                                 </div>
                             </div>
                             <div id="store-location" class="tab-pane fade row d-flex">
                                 <div class="col-12">
                                     <div class="contact-map">
-                                        <div id="map"></div>
+                                        <div id="map">
+                                            <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A72e0a3fc62568cdf70c23da845992dac7bd4eb7d90b3bd53df2ba688adee1e85&amp;width=100%25&amp;height=400&amp;lang=ru_RU&amp;scroll=true"></script>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
