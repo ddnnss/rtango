@@ -435,7 +435,7 @@ def checkout(request):
                 return HttpResponseRedirect('/order/{}'.format(new_order.order_code))
             elif payment =='sber':
                 print('sber payment')
-                response = requests.get('https://3dsec.sberbank.ru/payment/rest/register.do?'
+                response = requests.get('https://securepayments.sberbank.ru/payment/rest/register.do?'
                                         'amount={}00&'
                                         'currency=643&'
                                         'language=ru&'
