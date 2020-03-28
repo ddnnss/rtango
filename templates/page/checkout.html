@@ -55,10 +55,12 @@
                         </div>
                         <div class="col-lg-12 col-md-6">
                             <div class="billing-info">
-                                {% if town %} <p>Город доставки : <b>{{ town }}</b> </p>  {% endif %}
+                                {% if town %} <p>Доставка : <b>{{ town }}</b> </p>  {% endif %}
+                            {% if not town.price == 0 %}
                                 <label>Адрес доставки</label>
 
                                 <textarea name="receiver-address" required ></textarea>
+                                {% endif %}
                             </div>
                         </div>
 
