@@ -181,20 +181,24 @@
                                 </li>
                             {% endfor %}
 
-                            <li class="mega-menu-position top-hover"><a href="#">подборки</a>
-                                <ul class="mega-menu">
-                                    {% for cat in cats_not_in_menu %}
-                                        <li>
-                                            <ul>
-                                                <li class="mega-menu-title">{{ cat.name }}</li>
-                                                {% for filter in cat.filters.all %}
-                                                    <li><a href="{% url 'category' cat.name_slug filter.name_slug%}">{{ filter.name }}</a></li>
-                                                {% endfor %}
-                                            </ul>
-                                        </li>
-                                    {% endfor %}
-                                </ul>
-                            </li>
+
+                                <li class="top-hover"><a href="#">Подборки</a>
+
+                                     {% for cat in cats_not_in_menu %}
+
+                                                    <ul>
+                                                        <li style="text-align: center; padding: 5px 0;text-transform: uppercase; font-weight: bold;">{{ cat.name }}</li>
+                                                        {% for filter in cat.filters.all %}
+                                                            <li><a href="{% url 'category' cat.name_slug filter.name_slug%}">{{ filter.name }}</a></li>
+                                                        {% endfor %}
+                                                    </ul>
+
+                                            {% endfor %}
+
+                                </li>
+
+
+
                         </ul>
                     </nav>
                 </div>

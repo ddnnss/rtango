@@ -1,6 +1,11 @@
 {% extends 'basic.html' %}
 {% load static %}
-
+{% block title %}
+   {{ block.super }} | Оформление заказа
+{% endblock %}
+{% block description %}
+    {{ description }}
+{% endblock %}
 {% block content %}
     {% if total_cart_price %}
         <div class="breadcrumb-area gray-bg">

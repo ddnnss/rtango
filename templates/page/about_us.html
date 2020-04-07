@@ -1,5 +1,11 @@
 {% extends 'basic.html' %}
 {% load static %}
+{% block title %}
+   {{ block.super }} | О нас
+{% endblock %}
+{% block description %}
+    {{ description }}
+{% endblock %}
 
 {% block content %}
     <div class="breadcrumb-area gray-bg">

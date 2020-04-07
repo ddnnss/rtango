@@ -1,6 +1,11 @@
 {% extends 'basic.html' %}
 {% load static %}
-
+{% block title %}
+   {{ title }}
+{% endblock %}
+{% block description %}
+    {{ description }}
+{% endblock %}
 {% block content %}
     <script>
         fbq('track', 'ViewContent');

@@ -1,6 +1,11 @@
 {% extends 'basic.html' %}
 {% load static %}
-
+{% block title %}
+   {{ block.super }} | Доставка
+{% endblock %}
+{% block description %}
+    {{ description }}
+{% endblock %}
 {% block content %}
 
     <div class="breadcrumb-area gray-bg">

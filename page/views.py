@@ -541,6 +541,13 @@ def category(request, slug, subcat_slug):
         title = filterItem.page_title
         description = filterItem.page_description
         keywords = filterItem.page_keywords
+        text = filterItem.description
+    else:
+        tag_h1 = category.page_h1
+        title = category.page_title
+        description = category.page_description
+        keywords = category.page_keywords
+        text = category.description
     # except:
     #     raise Http404
         # return render(request, '404.html', locals())
