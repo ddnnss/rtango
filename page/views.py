@@ -78,7 +78,7 @@ def order(request, order_code):
         if all_cart_items:
             all_cart_items.delete()
             msg_html = render_to_string('email/new_order.html', {'order': order})
-            send_mail('Новый заказ', None, 'norply@r-tango.ru', [settings.SEND_TO],
+            send_mail('Новый заказ', None, 'support@r-tango.ru', [settings.SEND_TO],
                       fail_silently=False, html_message=msg_html)
         return render(request, 'page/order_complete.html', locals())
     else:
@@ -426,9 +426,9 @@ def checkout(request):
                     shipping_price = 0
             msg_html = render_to_string('email/new_order.html', {'order': new_order})
             if sender_email:
-                send_mail('Заказ успешно размещен', None, 'info@r-tango.ru', [sender_email],
+                send_mail('Заказ успешно размещен', None, 'support@r-tango.ru', [sender_email],
                           fail_silently=False, html_message=msg_html)
-            # send_mail('Новый заказ', None, 'norply@r-tango.ru', [settings.SEND_TO],
+            # send_mail('Новый заказ', None, 'support@r-tango.ru', [settings.SEND_TO],
             #           fail_silently=False, html_message=msg_html)
             if payment == 'nal':
 
@@ -700,7 +700,7 @@ def one_click(request):
                                                              'phone': request.POST.get('phone')})
 
         OneClick.objects.create(item_id=request.POST.get('item-id'),phone=request.POST.get('phone'))
-        send_mail('Заказ в 1клик', None, 'norply@r-tango.ru', [settings.SEND_TO],
+        send_mail('Заказ в 1клик', None, 'support@r-tango.ru', [settings.SEND_TO],
                   fail_silently=False, html_message=msg_html)
 
     if request.POST.get('form_type') == 'callback':
@@ -708,7 +708,7 @@ def one_click(request):
                                                            'phone': request.POST.get('phone')})
 
         Callback.objects.create(name=request.POST.get('name'), phone=request.POST.get('phone'))
-        send_mail('Заказ обратного звонка', None, 'norply@r-tango.ru', [settings.SEND_TO],
+        send_mail('Заказ обратного звонка', None, 'support@r-tango.ru', [settings.SEND_TO],
                   fail_silently=False, html_message=msg_html)
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 

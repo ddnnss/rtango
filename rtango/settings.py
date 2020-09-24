@@ -16,11 +16,14 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
 CKEDITOR_UPLOAD_PATH = "uploads/"
-EMAIL_HOST = settings.SMTP_HOST
+
+EMAIL_HOST = 'smtp.yandex.ru'
 EMAIL_HOST_USER = settings.SMTP_LOGIN
 EMAIL_HOST_PASSWORD = settings.SMTP_PASSWORD
-EMAIL_PORT = settings.SMTP_PORT
-EMAIL_USE_TLS = True
+EMAIL_PORT = 465
+EMAIL_USE_SSL = True
+
+
 AUTH_USER_MODEL = 'customuser.User'
 
 # Application definition
